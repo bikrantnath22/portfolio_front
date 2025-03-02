@@ -67,23 +67,24 @@ const SkillsContactPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);  // Show loader when submitting
+    setLoading(true); // Show loader when submitting
 
     try {
-        const response = await axios.post("https://portfolio-back-j2mg.onrender.com/send-email", formData);
-        setMessage(response.data.message);
-        console.log(response)
-        setFormData({ name: "", email: "", description: "" });
+      const response = await axios.post(
+        "https://portfolio-back-j2mg.onrender.com/send-email",
+        formData
+      );
+      setMessage(response.data.message);
+      console.log(response);
+      setFormData({ name: "", email: "", description: "" });
     } catch (error) {
-        setMessage("Failed to send message. Try again.");
+      setMessage("Failed to send message. Try again.");
     } finally {
-        setLoading(false);  // Hide loader after response
+      setLoading(false); // Hide loader after response
     }
-};
+  };
 
   return (
     <div>
@@ -96,7 +97,9 @@ const SkillsContactPage = () => {
           transition={{ duration: 1 }}
           className="w-full md:w-1/2 md:p-8"
         >
-          <h2 className="text-3xl font-bold mb-4 text-green-400 mt-14 md:mt-0">My Skills</h2>
+          <h2 className="text-3xl font-bold mb-4 text-green-400 mt-14 md:mt-0">
+            My Skills
+          </h2>
 
           {/* Skill Category Tabs */}
           <div className="flex md:justify-normal justify-evenly md:space-x-4 mb-4">
@@ -150,28 +153,43 @@ const SkillsContactPage = () => {
           className="w-full md:w-1/2 md:p-8  rounded-lg shadow-xl mt-6 md:mt-0"
         >
           <h2 className="text-3xl font-bold mb-4 text-blue-400">Contact Me</h2>
-          
+
           <form className="flex flex-col space-y-4 " onSubmit={handleSubmit}>
             <input
-            type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
               className="p-3 rounded bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <input
-            type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
               className="p-3 rounded bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <textarea
-              rows="4"
-              name="description" placeholder="Your Message" value={formData.description} onChange={handleChange} required
+              name="description"
+              placeholder="Your Message"
+              value={formData.description}
+              onChange={handleChange}
+              required
               className="p-3 rounded bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+              style={{ minHeight: window.innerWidth < 768 ? "90px" : "120px" }}
             ></textarea>
+
             {message && <p className="mb-2">{message}</p>}
             <button
-            type="submit" disabled={loading}
-              
+              type="submit"
+              disabled={loading}
               className="p-3 bg-blue-500 text-white rounded hover:bg-blue-600 w-full h-12 flex items-center justify-center"
             >
-            {loading ? <ClipLoader/> : "Send Message"}
+              {loading ? <ClipLoader /> : "Send Message"}
             </button>
           </form>
         </motion.div>

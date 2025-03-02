@@ -52,7 +52,7 @@ const StarsBackground = () => {
     animate();
   }, []);
 
-  return <canvas id="starsCanvas" className="fixed top-0 left-0 w-full h-full -z-10"></canvas>;
+  return <canvas id="starsCanvas" className="fixed top-0 left-0 w-full h-screen -z-10"></canvas>;
 }
 
 export default StarsBackground;

@@ -57,7 +57,7 @@ const App = ({ children }) => {
       <div className="relative z-1 flex flex-col items-center justify-center min-h-screen text-white text-2xl">
         <ProfileCard />
       </div>
-      <div className="md:h-[2vh]"></div> {/* Adds enough space for scrolling */}
+      <div className="h-[2vh]"></div> {/* Adds enough space for scrolling */}
       {children}
       
     </div>

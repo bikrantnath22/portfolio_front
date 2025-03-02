@@ -47,8 +47,8 @@ const Projects = ({ children }) => {
   
 
   return (
-    <div className="overflow-auto min-h-screen md:overflow-hidden md:min-h-[100vh]">
-      <StarsBackground />
+    <div className="overflow-auto min-h-screen md:overflow-hidden md:min-h-[100vh] z-1">
+      
       <div className="relative z-1 md:min-h-screen text-white">
         <ProjectPage setIsPaginating={setIsPaginating} />
       </div>

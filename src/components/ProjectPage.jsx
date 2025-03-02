@@ -142,21 +142,24 @@ const ProjectPage = ({ setIsPaginating }) => {
                 .map((project, index) => (
                   <motion.div
                     key={`project-${page}-${project.id}`}
-                    initial={{ x: index % 2 === 0 ? -200 : 200, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="flex items-center justify-between  rounded-lg shadow-lg p-6 mb-5"
-                    style={{
-                      position: "relative",
-                    }}
+                    className="flex items-center justify-between rounded-lg shadow-lg p-6"
+                    style={{ position: "relative" }}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }} // Triggers when 20% visible
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                   >
                     {/* Odd-indexed project (1,3,5..) - Image on Left, Text on Right */}
                     {index % 2 === 0 ? (
                       <>
-                        <img
+                        <motion.img
                           src={project.image}
                           alt={project.title}
-                          className="md:h-52 object-cover md:w-2/3 rounded-lg  w-1/2"
+                          className="md:h-52 object-cover md:w-2/3 rounded-lg w-1/2"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1.2, ease: "easeOut" }}
                         />
                         <div className="w-1/2 ml-6">
                           <h2 className="text-2xl font-semibold">
@@ -186,10 +189,14 @@ const ProjectPage = ({ setIsPaginating }) => {
                             View Project
                           </a>
                         </div>
-                        <img
+                        <motion.img
                           src={project.image}
                           alt={project.title}
-                          className=" md:h-52 object-cover md:w-2/3 rounded-lg  w-1/2"
+                          className="md:h-52 object-cover md:w-2/3 rounded-lg w-1/2"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1.2, ease: "easeOut" }}
                         />
                       </>
                     )}

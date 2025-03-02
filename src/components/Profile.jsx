@@ -29,7 +29,7 @@ const ProfileCard = () => {
   }, [charIndex, index, descriptions]);
 
   return (
-    <div className="flex flex-col-reverse md:flex-row justify-center items-center w-full max-w-6xl mx-auto p-4 text-white font-poppins">
+    <div className="flex flex-col-reverse md:flex-row justify-center items-center w-full max-w-6xl mx-auto p-2 md:p-4 text-white font-poppins">
       
       {/* Developer Details */}
       <motion.div
@@ -83,7 +83,7 @@ const ProfileCard = () => {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1 }}
-        className="w-full md:w-1/2 flex justify-center mt-8 md:mt-0"
+        className="w-full md:w-1/2 flex justify-center "
       >
         <div
           className="w-64 h-64 sm:w-96 sm:h-96 md:w-96 md:h-96 bg-cover bg-center rounded-full"

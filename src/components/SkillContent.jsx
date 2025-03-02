@@ -74,8 +74,9 @@ const SkillsContactPage = () => {
     setLoading(true);  // Show loader when submitting
 
     try {
-        const response = await axios.post("https://portfolio-back-j2mg.onrender.com//send-email", formData);
+        const response = await axios.post("https://portfolio-back-j2mg.onrender.com/send-email", formData);
         setMessage(response.data.message);
+        console.log(response)
         setFormData({ name: "", email: "", description: "" });
     } catch (error) {
         setMessage("Failed to send message. Try again.");
@@ -87,7 +88,7 @@ const SkillsContactPage = () => {
   return (
     <div>
       <StarsBackground />
-      <div className="flex flex-col md:flex-row justify-center items-center h-screen  text-white p-3 md:p-10">
+      <div className="flex flex-col md:flex-row justify-center items-center md:h-screen overflow-auto h-[80vh] md:overflow-hidden  mt-16 md:mt-6 text-white p-2">
         {/* Left - Skills Section */}
         <motion.div
           initial={{ x: -200, opacity: 0 }}
@@ -95,7 +96,7 @@ const SkillsContactPage = () => {
           transition={{ duration: 1 }}
           className="w-full md:w-1/2 md:p-8"
         >
-          <h2 className="text-3xl font-bold mb-4 text-green-400">My Skills</h2>
+          <h2 className="text-3xl font-bold mb-4 text-green-400 mt-14 md:mt-0">My Skills</h2>
 
           {/* Skill Category Tabs */}
           <div className="flex md:justify-normal justify-evenly md:space-x-4 mb-4">
@@ -103,7 +104,7 @@ const SkillsContactPage = () => {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-lg  ${
+                className={`px-2 md:px-4 py-2 rounded-lg  ${
                   selectedCategory === category
                     ? "bg-green-500 text-black"
                     : "bg-transparent text-white hover:bg-slate-900"

@@ -17,7 +17,7 @@ const BottomNavBar = () => {
     const location = useLocation();
   return (
     <>
-      <div className=" z-50 fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900 bg-opacity-90 flex justify-around items-center w-[90%] max-w-md p-3 rounded-full shadow-lg md:hidden">
+      <div className=" z-50 fixed bottom-2 left-1/2 transform -translate-x-1/2 bg-gray-900 bg-opacity-90 flex justify-around items-center w-[90%] max-w-md p-3 rounded-full shadow-lg md:hidden">
         
       <Link to="/" className="flex items-center">
       <NavBtns

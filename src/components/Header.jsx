@@ -13,7 +13,7 @@ export default function Header() {
   return (
     <nav className="fixed top-0 left-0 w-full bg-transparent  px-7 py-2 flex justify-between items-center z-50">
       {/* Left Side: Logo */}
-      <div className="text-white text-3xl font-mono font-bold">
+      <div className="text-white text-3xl font-mono font-bold ml-8 md:ml-0">
         <Link to="/">Portfolio</Link>
       </div>
 

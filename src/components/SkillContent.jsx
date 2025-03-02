@@ -97,7 +97,7 @@ const SkillsContactPage = () => {
           transition={{ duration: 1 }}
           className="w-full md:w-1/2 md:p-8"
         >
-          <h2 className="text-3xl font-bold mb-4 text-green-400 mt-14 md:mt-0">
+          <h2 className="text-3xl font-bold mb-4 text-green-400  md:mt-0">
             My Skills
           </h2>
 

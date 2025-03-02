@@ -32,7 +32,7 @@ const Abouts = ({ children }) => {
   }, [navigate]);
 
   return (
-    <div className="overflow-auto min-h-screen md:overflow-hidden z-1">
+    <div className=" z-1">
      
       <div className="relative z-1 mb-2">
         <SkillsContactPage />

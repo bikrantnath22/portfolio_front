@@ -187,7 +187,7 @@ const SkillsContactPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="p-3 bg-blue-500 text-white rounded hover:bg-blue-600 w-full h-12 flex items-center justify-center"
+              className="p-3 bg-blue-500 text-white rounded hover:bg-blue-600 w-full h-12 flex items-center justify-center mb-10"
             >
               {loading ? <ClipLoader /> : "Send Message"}
             </button>

@@ -53,7 +53,7 @@ const App = ({ children }) => {
 
   return (
     <div className="overflow-auto min-h-screen">
-      <StarsBackground />
+      
       <div className="relative z-1 flex flex-col items-center justify-center min-h-screen text-white text-2xl">
         <ProfileCard />
       </div>

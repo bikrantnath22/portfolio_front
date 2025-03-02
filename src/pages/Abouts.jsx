@@ -34,7 +34,7 @@ const Abouts = ({ children }) => {
   return (
     <div className="overflow-auto min-h-screen md:overflow-hidden">
       <StarsBackground />
-      <div className="relative z-1">
+      <div className="relative z-1 mb-2">
         <SkillsContactPage />
       </div>
       <div className="md:h-[10vh]"></div>

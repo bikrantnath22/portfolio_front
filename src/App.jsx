@@ -6,13 +6,15 @@ import Home from "./pages/Home";
 import Abouts from "./pages/Abouts";
 import Project from "./pages/Projects";
 import BottomNavBar from "./components/BottomNav";
+import StarsBackground from "./components/StarBackGround";
 
 function App() {
   return (
     <>
       <Router>
+      <StarsBackground />
         <Header />
-
+        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/abouts" element={<Abouts />} />

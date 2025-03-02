@@ -89,7 +89,7 @@ const SkillsContactPage = () => {
   return (
     <div className="">
       
-      <div className="flex flex-col md:flex-row justify-center items-center md:h-screen overflow-auto h-[100vh] md:overflow-hidden  mt-16 md:mt-6 text-white p-2 ">
+      <div className="flex flex-col md:flex-row justify-center items-center md:h-screen overflow-auto h-[100vh] md:overflow-hidden   md:mt-6 text-white p-2 ">
         {/* Left - Skills Section */}
         <motion.div
           initial={{ x: -200, opacity: 0 }}

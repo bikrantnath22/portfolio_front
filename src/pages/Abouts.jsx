@@ -34,7 +34,7 @@ const Abouts = ({ children }) => {
   return (
     <div className=" z-1">
      
-      <div className="relative z-1 mb-2">
+      <div className="relative z-1 mb-2 h-screen">
         <SkillsContactPage />
       </div>
       <div className="md:h-[10vh]"></div>

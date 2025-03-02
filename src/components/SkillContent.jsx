@@ -87,9 +87,9 @@ const SkillsContactPage = () => {
   };
 
   return (
-    <div>
-      <StarsBackground />
-      <div className="flex flex-col md:flex-row justify-center items-center md:h-screen overflow-auto h-[80vh] md:overflow-hidden  mt-16 md:mt-6 text-white p-2">
+    <div className="">
+      
+      <div className="flex flex-col md:flex-row justify-center items-center md:h-screen overflow-auto h-[100vh] md:overflow-hidden  mt-16 md:mt-6 text-white p-2 ">
         {/* Left - Skills Section */}
         <motion.div
           initial={{ x: -200, opacity: 0 }}
@@ -97,7 +97,7 @@ const SkillsContactPage = () => {
           transition={{ duration: 1 }}
           className="w-full md:w-1/2 md:p-8"
         >
-          <h2 className="text-3xl font-bold mb-4 text-green-400  md:mt-0">
+          <h2 className="text-xl md:text-3xl font-bold italic mb-4 text-green-400  md:mt-0">
             My Skills
           </h2>
 
@@ -150,9 +150,9 @@ const SkillsContactPage = () => {
           initial={{ x: 200, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1 }}
-          className="w-full md:w-1/2 md:p-8  rounded-lg shadow-xl mt-6 md:mt-0"
+          className="w-full md:w-1/2 md:p-8  rounded-lg shadow-xl mt-2 md:mt-0"
         >
-          <h2 className="text-3xl font-bold mb-4 text-blue-400">Contact Me</h2>
+          <h2 className="text-xl md:text-3xl font-bold mb-4 text-blue-400 italic">Contact Me</h2>
 
           <form className="flex flex-col space-y-4 " onSubmit={handleSubmit}>
             <input
@@ -187,7 +187,7 @@ const SkillsContactPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="p-3 bg-blue-500 text-white rounded hover:bg-blue-600 w-full h-12 flex items-center justify-center mb-10"
+              className="p-3 bg-blue-500 text-white rounded hover:bg-blue-600 w-full h-12 flex items-center justify-center"
             >
               {loading ? <ClipLoader /> : "Send Message"}
             </button>

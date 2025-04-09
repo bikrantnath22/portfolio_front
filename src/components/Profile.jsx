@@ -29,7 +29,7 @@ const ProfileCard = () => {
   }, [charIndex, index, descriptions]);
 
   return (
-    <div className="flex flex-col-reverse md:flex-row justify-center items-center w-full max-w-6xl mx-auto p-2 md:p-4 text-white font-poppins">
+    <div className="flex flex-col-reverse md:flex-row justify-center  items-center w-full max-w-6xl mx-auto p-2 md:p-4 text-white font-poppins">
       
       {/* Developer Details */}
       <motion.div
@@ -80,26 +80,46 @@ const ProfileCard = () => {
 
       {/* Profile Image */}
       <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="w-full md:w-1/2 flex justify-center "
-      >
-        <div
-          className="w-64 h-64 sm:w-96 sm:h-96 md:w-96 md:h-96 bg-cover bg-center rounded-full"
-          style={{
-            backgroundImage: `url('https://wallpaperaccess.com/full/1672449.jpg')`,
-              maskImage: `url('/image.png')`,
-              WebkitMaskImage: `url('/image.png')`,
-              maskSize: "contain", // Fits inside the div
-              WebkitMaskSize: "contain",
-              maskPosition: "center",
-              WebkitMaskPosition: "center",
-              maskRepeat: "no-repeat",
-              WebkitMaskRepeat: "no-repeat",
-          }}
-        ></div>
-      </motion.div>
+  initial={{ y: 100, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ duration: 1 }}
+  className="w-full flex justify-center"
+>
+  <div className="relative w-60 h-60 sm:w-72 sm:h-72 md:w-96 md:h-96 flex items-center justify-center">
+    {/* Rotating green arc border */}
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
+      className="absolute w-full h-full rounded-full"
+      style={{
+        background: `conic-gradient(
+          #21be5c 0deg 144deg,
+          transparent 144deg 180deg,
+          #21be5c 180deg 324deg,
+          transparent 324deg 360deg
+        )`,
+        maskImage: `radial-gradient(closest-side, transparent 99%, black 100%)`,
+        WebkitMaskImage: `radial-gradient(closest-side, transparent 99%, black 100%)`,
+      }}
+    />
+
+    {/* Profile image with mask */}
+    <div
+      className="w-[90%] h-[90%] rounded-full bg-cover bg-center relative z-10"
+      style={{
+        backgroundImage: `url('https://wallpaperaccess.com/full/1672449.jpg')`,
+        maskImage: `url('/image.png')`,
+        WebkitMaskImage: `url('/image.png')`,
+        maskSize: "contain",
+        WebkitMaskSize: "contain",
+        maskPosition: "center",
+        WebkitMaskPosition: "center",
+        maskRepeat: "no-repeat",
+        WebkitMaskRepeat: "no-repeat",
+      }}
+    />
+  </div>
+</motion.div>
 
     </div>
   );

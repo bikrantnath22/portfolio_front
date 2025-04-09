@@ -15,7 +15,6 @@ import {
   SiNextdotjs,
   SiTailwindcss,
 } from "react-icons/si";
-import StarsBackground from "./StarBackGround";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -27,40 +26,21 @@ const skillCategories = {
   ],
   Database: [
     { name: "MySQL", icon: <SiMysql className="text-blue-500 text-3xl" /> },
-    {
-      name: "MongoDB",
-      icon: <SiMongodb className="text-green-400 text-3xl" />,
-    },
-    {
-      name: "PostgreSQL",
-      icon: <SiPostgresql className="text-blue-300 text-3xl" />,
-    },
+    { name: "MongoDB", icon: <SiMongodb className="text-green-400 text-3xl" /> },
+    { name: "PostgreSQL", icon: <SiPostgresql className="text-blue-300 text-3xl" /> },
   ],
   "Framework/Library": [
     { name: "React", icon: <FaReact className="text-blue-400 text-3xl" /> },
-    {
-      name: "Next.js",
-      icon: <SiNextdotjs className="text-gray-200 text-3xl" />,
-    },
-    {
-      name: "Tailwind CSS",
-      icon: <SiTailwindcss className="text-teal-400 text-3xl" />,
-    },
+    { name: "Next.js", icon: <SiNextdotjs className="text-gray-200 text-3xl" /> },
+    { name: "Tailwind CSS", icon: <SiTailwindcss className="text-teal-400 text-3xl" /> },
     { name: "Node.js", icon: <FaNodeJs className="text-green-500 text-3xl" /> },
   ],
 };
 
 const SkillsContactPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Language");
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    description: "",
-  });
-
+  const [formData, setFormData] = useState({ name: "", email: "", description: "" });
   const [message, setMessage] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -69,27 +49,37 @@ const SkillsContactPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Show loader when submitting
-
+    setLoading(true);
     try {
       const response = await axios.post(
         "https://portfolio-back-j2mg.onrender.com/send-email",
         formData
       );
       setMessage(response.data.message);
-      console.log(response);
       setFormData({ name: "", email: "", description: "" });
     } catch (error) {
       setMessage("Failed to send message. Try again.");
     } finally {
-      setLoading(false); // Hide loader after response
+      setLoading(false);
     }
   };
 
   return (
-    <div className="">
-      
-      <div className="flex flex-col md:flex-row justify-center items-center md:h-screen overflow-auto h-[100vh] md:overflow-hidden   md:mt-6 text-white p-2 ">
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.4,
+          },
+        },
+      }}
+      className="w-full max-w-6xl"
+    >
+      <div className="flex flex-col md:flex-row justify-center items-center md:mt-6 text-white p-2">
         {/* Left - Skills Section */}
         <motion.div
           initial={{ x: -200, opacity: 0 }}
@@ -97,7 +87,7 @@ const SkillsContactPage = () => {
           transition={{ duration: 1 }}
           className="w-full md:w-1/2 md:p-8"
         >
-          <h2 className="text-xl md:text-3xl font-bold italic mb-4 text-green-400  md:mt-0">
+          <h2 className="text-xl md:text-3xl font-bold italic mb-4 text-green-400 md:mt-0">
             My Skills
           </h2>
 
@@ -107,7 +97,7 @@ const SkillsContactPage = () => {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-2 md:px-4 py-2 rounded-lg  ${
+                className={`px-2 md:px-4 py-2 rounded-lg ${
                   selectedCategory === category
                     ? "bg-green-500 text-black"
                     : "bg-transparent text-white hover:bg-slate-900"
@@ -131,7 +121,7 @@ const SkillsContactPage = () => {
               {skillCategories[selectedCategory].map((skill) => (
                 <motion.li
                   key={skill.name}
-                  className="flex items-center space-x-2  p-3 rounded"
+                  className="flex items-center space-x-2 p-3 rounded"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
@@ -150,11 +140,13 @@ const SkillsContactPage = () => {
           initial={{ x: 200, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1 }}
-          className="w-full md:w-1/2 md:p-8  rounded-lg shadow-xl mt-2 md:mt-0"
+          className="w-full md:w-1/2 md:p-8 rounded-lg shadow-xl mt-2 md:mt-0"
         >
-          <h2 className="text-xl md:text-3xl font-bold mb-4 text-blue-400 italic">Contact Me</h2>
+          <h2 className="text-xl md:text-3xl font-bold mb-4 text-blue-400 italic">
+            Contact Me
+          </h2>
 
-          <form className="flex flex-col space-y-4 " onSubmit={handleSubmit}>
+          <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
             <input
               type="text"
               name="name"
@@ -194,7 +186,7 @@ const SkillsContactPage = () => {
           </form>
         </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

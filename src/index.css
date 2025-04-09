@@ -3,10 +3,19 @@
   background-color: black
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 6s linear infinite;
+  }
+}
 #nav-icon1, #nav-icon2, #nav-icon3, #nav-icon4 {
   width:40px;
   height: 40px;

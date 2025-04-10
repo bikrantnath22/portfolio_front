@@ -213,7 +213,7 @@ const ProjectPage = ({ setIsPaginating }) => {
                     </>
                   ) : (
                     <>
-                      <div className=" mr-6 order-2 md:order-1">
+                      <div className="w-full  mr-6 order-2 md:order-1">
                         <h2 className="text-2xl font-semibold md:text-right">
                           {project.title}
                         </h2>
@@ -247,7 +247,7 @@ const ProjectPage = ({ setIsPaginating }) => {
                       <motion.img
                         src={project.image}
                         alt={project.title}
-                        className="md:h-60 object-cover md:w-2/3 rounded-sm w-full order-1 md:order-2"
+                        className="md:h-64 object-cover md:w-2/3 rounded-sm w-full order-1 md:order-2"
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}

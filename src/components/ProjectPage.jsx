@@ -1,6 +1,21 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import {
+  FaJs,
+  FaCuttlefish,
+  FaPython,
+  FaDatabase,
+  FaReact,
+  FaNodeJs,
+} from "react-icons/fa";
+import {
+  SiMysql,
+  SiMongodb,
+  SiPostgresql,
+  SiNextdotjs,
+  SiTailwindcss,
+} from "react-icons/si";
 
 const projects = [
   {
@@ -9,7 +24,9 @@ const projects = [
     image:
       "https://th.bing.com/th/id/OIP.5lgvHjtEF7VAX6sQVVszeQHaFe?rs=1&pid=ImgDetMain",
     link: "#",
-    description: "Description for Project 1",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+    techStack: ["React", "Node.js", "MongoDB", "Firebase"],
   },
   {
     id: 2,
@@ -17,7 +34,9 @@ const projects = [
     image:
       "https://th.bing.com/th/id/OIP.5lgvHjtEF7VAX6sQVVszeQHaFe?rs=1&pid=ImgDetMain",
     link: "#",
-    description: "Description for Project 2",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+    techStack: ["React", "Node.js", "MongoDB"],
   },
   {
     id: 3,
@@ -25,7 +44,9 @@ const projects = [
     image:
       "https://th.bing.com/th/id/OIP.5lgvHjtEF7VAX6sQVVszeQHaFe?rs=1&pid=ImgDetMain",
     link: "#",
-    description: "Description for Project 3",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+    techStack: ["React", "Node.js", "MongoDB", "Firebase"],
   },
   {
     id: 4,
@@ -85,6 +106,21 @@ const projects = [
   },
 ];
 
+const getTechIcon = (tech) => {
+  switch (tech) {
+    case "React":
+      return <FaReact className="text-cyan-400 hover:text-cyan-500" />;
+    case "Node.js":
+      return <FaNodeJs className="text-green-600 hover:text-green-500" />;
+    case "MongoDB":
+      return <SiMongodb className="text-green-500 hover:text-green-600" />;
+    case "Firebase":
+      return <FaDatabase className="text-yellow-400 hover:text-yellow-500" />;
+    default:
+      return <FaJs className="text-yellow-300 hover:text-yellow-400" />;
+  }
+};
+
 const ProjectPage = ({ setIsPaginating }) => {
   const [page, setPage] = useState(0);
   const projectsPerPage = 3;
@@ -127,7 +163,7 @@ const ProjectPage = ({ setIsPaginating }) => {
               .map((project, index) => (
                 <motion.div
                   key={`project-${page}-${project.id}`}
-                  className="flex  justify-between rounded-lg shadow-lg p-6"
+                  className="flex flex-col md:flex-row justify-between rounded-lg shadow-lg p-6"
                   style={{ position: "relative" }}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -139,49 +175,79 @@ const ProjectPage = ({ setIsPaginating }) => {
                       <motion.img
                         src={project.image}
                         alt={project.title}
-                        className="md:h-64 object-cover md:w-2/3 rounded-md w-1/2 "
+                        className="md:h-64 object-cover md:w-2/3 rounded-sm w-full "
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 1.2, ease: "easeOut" }}
                       />
-                      <div className="w-3/4 ml-6">
+                      <div className="w-full md:ml-6 ">
                         <h2 className="text-2xl font-semibold">
                           {project.title}
                         </h2>
-                        <p className="text-gray-400">{project.description}</p>
-                        <a
-                          href={project.link}
-                          className="mt-2 inline-block text-blue-400 hover:text-blue-300"
-                        >
-                          View Project
-                        </a>
+                        <p className="text-gray-400 line-clamp-5 hover:line-clamp-none overflow-hidden hover:overflow-y-auto max-h-32 transition-all duration-300 ease-in-out scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-transparent pr-2">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-4 mt-4 text-blue-400 items-center cursor-pointer">
+                          {project.techStack.map((tech) => (
+                            <div
+                              key={tech}
+                              className="flex items-center space-x-2 text-sm "
+                            >
+                              <span>{getTechIcon(tech)}</span>
+                              <span className="text-gray-500">{tech}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex  mt-2">
+                          <a
+                            href={project.link}
+                            className="text-blue-400 hover:text-blue-300 text-sm flex gap-2"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                          <span className="hidden md:block">←</span> View Project
+                          </a>
+                        </div>
                       </div>
                     </>
                   ) : (
                     <>
-                      <div className="w-3/4 mr-6">
-                        <h2 className="text-2xl font-semibold text-right">
+                      <div className=" mr-6 order-2 md:order-1">
+                        <h2 className="text-2xl font-semibold md:text-right">
                           {project.title}
                         </h2>
-                        <p className="text-gray-400 text-right">
+                        <p className="text-gray-400 md:text-right line-clamp-5 hover:line-clamp-none overflow-hidden hover:overflow-y-auto max-h-32 transition-all duration-300 ease-in-out scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-transparent pr-2">
                           {project.description}
                         </p>
-                        <div className="flex justify-end">
+
+                        <div className="flex flex-wrap gap-4 mt-4 text-blue-400 items-center md:justify-end cursor-pointer">
+                          {project.techStack.map((tech) => (
+                            <div
+                              key={tech}
+                              className="flex items-center space-x-2 text-sm"
+                            >
+                              <span>{getTechIcon(tech)}</span>
+                              <span className="text-gray-500">{tech}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="flex md:justify-end mt-2">
                           <a
                             href={project.link}
-                            className="text-blue-400 hover:text-blue-300 text-sm"
+                            className="text-blue-400 hover:text-blue-300 text-sm flex gap-2"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            View Project →
+                            View Project <span className="hidden md:block">→</span>
                           </a>
                         </div>
                       </div>
                       <motion.img
                         src={project.image}
                         alt={project.title}
-                        className="md:h-60 object-cover md:w-2/3 rounded-lg w-1/2"
+                        className="md:h-60 object-cover md:w-2/3 rounded-sm w-full order-1 md:order-2"
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
@@ -192,7 +258,7 @@ const ProjectPage = ({ setIsPaginating }) => {
                 </motion.div>
               ))}
           </div>
-          <div className="flex space-x-6 mt-4 text-sm text-gray-300">
+          <div className="flex space-x-6 mt-4 text-sm text-gray-300 mb-6">
             {page > 0 && (
               <button
                 onClick={handlePrev}

@@ -6,31 +6,51 @@ import StarsBackground from "../components/StarBackGround";
 import BottomNavBar from "../components/BottomNav";
 import ProjectPage from "../components/ProjectPage";
 import SkillsContactPage from "../components/SkillContent";
-import { Element } from 'react-scroll';
+import { Element } from "react-scroll";
+import { motion } from "framer-motion";
+import BouncingBallTransition from "../components/BallTransition"
 
 const App = ({ children }) => {
-  // Check if device is mobile
-
   return (
     <div className="">
-      <div className="snap-y snap-mandatory h-screen ">
-        <section id="Home" className="flex justify-center items-center w-full min-h-screen">
+      <StarsBackground />
+
+      <div className="md:snap-y md:snap-mandatory md:h-screen overflow-y-scroll scroll-smooth">
+
+        {/* Home Section */}
+        <section
+          id="Home"
+          className="flex justify-center items-center w-full min-h-[86vh] md:min-h-screen md:snap-start"
+        >
           <ProfileCard />
         </section>
 
-        <section id="project" className="flex justify-center items-center w-full min-h-screen">
+        {/* ✨ Mobile-Only Animation Between Sections */}
+        
+        <BouncingBallTransition />
+
+
+        {/* Project Section */}
+        <section
+          id="project"
+          className="flex justify-center items-center w-full min-h-[86vh] md:min-h-screen md:snap-start mb-6"
+        >
           <ProjectPage />
         </section>
 
-        <section id="about" className="flex justify-center items-center w-full min-h-screen">
+        <BouncingBallTransition />
+
+
+        {/* About Section */}
+        <section
+          id="about"
+          className="flex justify-center items-center w-full min-h-[90vh] md:min-h-screen md:snap-start"
+        >
           <SkillsContactPage />
         </section>
-
-        
       </div>
-      
 
-      {/* Adds enough space for scrolling */}
+      <BottomNavBar />
       {children}
     </div>
   );

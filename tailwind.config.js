@@ -11,7 +11,10 @@ export default {
         openSans: ["Open Sans", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
       },
+      
     },
+    
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
+
 }

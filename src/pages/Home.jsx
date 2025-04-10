@@ -33,7 +33,7 @@ const App = ({ children }) => {
         {/* Project Section */}
         <section
           id="project"
-          className="flex justify-center items-center w-full min-h-[86vh] md:min-h-screen md:snap-start mb-6"
+          className="flex justify-center items-center w-full min-h-[86vh] md:min-h-screen md:snap-start mb-2"
         >
           <ProjectPage />
         </section>

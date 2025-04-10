@@ -46,7 +46,7 @@ const BallTransitionMobile = () => {
       {visible && (
         <motion.div
           onClick={handleBallClick}
-          className="w-4 h-4 rounded-full bg-green-600 mx-auto absolute left-1/2 transform -translate-x-1/2 bottom-5 cursor-pointer"
+          className="w-3 h-3 rounded-full bg-green-600 mx-auto absolute left-1/2 transform -translate-x-1/2 bottom-5 cursor-pointer"
           variants={{
             bounce: {
               y: [0, -40, 0],

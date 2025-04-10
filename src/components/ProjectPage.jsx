@@ -189,7 +189,7 @@ const ProjectPage = ({ setIsPaginating }) => {
                           {project.description}
                         </p>
                         <div className="flex flex-wrap gap-4 mt-4 text-blue-400 items-center cursor-pointer">
-                          {project.techStack.map((tech) => (
+                          {project?.techStack?.map((tech) => (
                             <div
                               key={tech}
                               className="flex items-center space-x-2 text-sm "
@@ -222,7 +222,7 @@ const ProjectPage = ({ setIsPaginating }) => {
                         </p>
 
                         <div className="flex flex-wrap gap-4 mt-4 text-blue-400 items-center md:justify-end cursor-pointer">
-                          {project.techStack.map((tech) => (
+                          {project?.techStack?.map((tech) => (
                             <div
                               key={tech}
                               className="flex items-center space-x-2 text-sm"

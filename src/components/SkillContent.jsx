@@ -77,7 +77,7 @@ const SkillsContactPage = () => {
           },
         },
       }}
-      className="w-full max-w-6xl p-4"
+      className="w-full max-w-6xl p-4 mb-6 md:mb-0"
     >
       <div className="flex flex-col md:flex-row justify-center items-center md:mt-6 text-white p-2">
         {/* Left - Skills Section */}

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+
 import { motion } from "framer-motion";
 import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import {
@@ -206,7 +207,8 @@ const ProjectPage = ({ setIsPaginating }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                          <span className="hidden md:block">←</span> View Project
+                            <span className="hidden md:block">←</span> View
+                            Project
                           </a>
                         </div>
                       </div>
@@ -240,7 +242,8 @@ const ProjectPage = ({ setIsPaginating }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            View Project <span className="hidden md:block">→</span>
+                            View Project{" "}
+                            <span className="hidden md:block">→</span>
                           </a>
                         </div>
                       </div>

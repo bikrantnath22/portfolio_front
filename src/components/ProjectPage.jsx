@@ -11,8 +11,9 @@ import {
   SiMysql,
   SiFirebase,
   SiJavascript,
+  SiUnity
 } from "react-icons/si";
-
+import { FaCode } from "react-icons/fa";
 const projects = [
   {
     id: 1,
@@ -38,13 +39,18 @@ const projects = [
     image:
       "/Vr.gif",
     stack: [
-      { name: "React", icon: <SiReact className="text-blue-400" /> },
+ { name: "C#", icon: <FaCode className="text-purple-500" /> },  // C# icon
+
+      { name: "Unity", icon: <SiUnity className="text-gray-400" /> }, // Unity icon
+       
+      { name: "React Native", icon: <SiReact className="text-blue-400" /> },
       { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
       { name: "MongoDB", icon: <SiMongodb className="text-green-600" /> },
       {
         name: "Tailwind CSS",
         icon: <SiTailwindcss className="text-sky-400" />,
       },
+      
     ],
   },
   {

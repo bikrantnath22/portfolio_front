@@ -34,9 +34,10 @@ export default function Header() {
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-transparent  px-7 py-2 flex justify-between items-center z-50">
-      {/* Left Side: Logo */}
-      <div className="text-white text-3xl font-mono font-bold mr-24 md:mr-0 justify-start">
-        <Link to="/">
+     <div className="text-white text-3xl font-mono font-bold mr-24 md:mr-0 justify-start">
+      {/* Left Side: Logo 
+        
+         <Link to="/">
           <span className="text-green-400">P</span>
           <span className="text-green-500">o</span>
           <span className="text-green-50">r</span>
@@ -47,6 +48,10 @@ export default function Header() {
           <span className="text-green-500">i</span>
           <span className="text-green-600">o</span>
         </Link>
+        
+        */}
+     
+       
       </div>
 
       {/* Right Side: Navigation Links */}

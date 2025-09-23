@@ -2,11 +2,22 @@ import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { GithubOutlined, LinkedinOutlined } from "@ant-design/icons";
 import "./styles.css";
+import ShinyText from "./ShinyText";
+
 const ProfileCard = () => {
+
+  
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/CV-Bikrant_Nath.pdf"; // path to your file in public folder
+    link.download = "CV-Bikrant-Nath.pdf"; // file name when downloaded
+    link.click();
+  };
   const descriptions = [
-    "Hello, my name is Vikrant",
-    "I am a Freelancer.",
-    "Hello World.",
+    "Full-stack web Developer ",
+    "Mobile app Developer ",
+    "VR Developer ",
+    "Experienced in AI/ML and GenAI ",
   ];
   const [text, setText] = useState("");
   const [index, setIndex] = useState(0);
@@ -29,8 +40,11 @@ const ProfileCard = () => {
   }, [charIndex, index, descriptions]);
 
   return (
-    <div className="flex flex-col-reverse md:flex-row justify-center  items-center w-full max-w-6xl mx-auto p-2 md:p-4 text-white font-poppins">
+    <div className="relative flex flex-col-reverse md:flex-row justify-center items-center w-full max-w-6xl mx-auto p-2 md:p-4 text-white font-poppins bg-transparent rounded-xl mb-6 md:mb-0
+                ">
       {/* Developer Details */}
+      
+      
       <motion.div
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -48,18 +62,22 @@ const ProfileCard = () => {
             repeatType: "reverse",
           }}
         >
-          My name is Vikrant
+          Hello, I'm Bikrant
         </motion.h1>
 
-        <p className="text-green-500 text-lg sm:text-xl mt-2">
+        <p className="text-green-500 text-lg sm:text-xl mt-2 font-bold">
           {text}
           <span className="animate-blink">|</span>
         </p>
 
-        <p className="mt-2 text-gray-400 text-sm sm:text-base italic font-openSans">
-          Hello, my name is Vikrant. And I am a Lorem Ipsum is simply dummy text
-          of the printing and typesetting industry.
-        </p>
+        <ShinyText
+          text="Results-driven software engineer with expertise in AI/ML, Generative AI, and LLM-powered applications alongside full-stack development,
+                mobile applications, and scalable system design. Proficient in delivering efficient, maintainable, and high-quality code, with strong problemsolving skills and a passion for continuous learning and emerging technologies. Experienced in collaborating across teams to deliver innovative,
+                user-focused solutions, and committed to building impactful software that drives value and enhances user experience."
+          disabled={false}
+          speed={3}
+          className="custom-class text-justify text-gray-300 max-w-3xl mx-auto leading-relaxed italic"
+        />
 
         {/* Button & Icons */}
         <motion.div
@@ -68,20 +86,22 @@ const ProfileCard = () => {
           transition={{ duration: 1, delay: 1 }}
           className="mt-6 flex flex-col sm:flex-row items-center sm:items-start gap-4"
         >
-          <motion.button className="button-34  border-green-500 text-green-500 hover:bg-green-500 hover:text-black">
+          <motion.button
+          onClick={handleDownload}
+          className="button-34  border-green-500 text-green-500 hover:bg-green-500 hover:text-black">
             Download CV
           </motion.button>
 
           <div className="flex gap-6 pt-1 sm:mt-0">
             <a
-              href="https://github.com"
+              href="https://github.com/bikrantnath22"
               target="_blank"
               rel="noopener noreferrer"
             >
               <GithubOutlined className="text-3xl text-white hover:text-gray-400 transition" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/bikrant-nath-7747781a7/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -96,14 +116,14 @@ const ProfileCard = () => {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1 }}
-        className="w-full flex justify-center mb-2 md:mb-0"
+        className="w-full flex justify-center mb-4 mt-2 md:mb-0 md:mt-0"
       >
         <div className="relative w-60 h-60 sm:w-72 sm:h-72 md:w-96 md:h-96 flex items-center justify-center">
           {/* Rotating green arc border */}
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
-            className="absolute w-full h-full rounded-full"
+            className="absolute w-full h-full rounded-full "
             style={{
               background: `conic-gradient(
           #21be5c 0deg 144deg,
@@ -133,6 +153,7 @@ const ProfileCard = () => {
           />
         </div>
       </motion.div>
+    
     </div>
   );
 };

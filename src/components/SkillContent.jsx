@@ -7,6 +7,7 @@ import {
   FaDatabase,
   FaReact,
   FaNodeJs,
+  FaGit,
 } from "react-icons/fa";
 import {
   SiMysql,
@@ -14,6 +15,8 @@ import {
   SiPostgresql,
   SiNextdotjs,
   SiTailwindcss,
+  SiFirebase,
+  SiUnity,
 } from "react-icons/si";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -23,17 +26,21 @@ const skillCategories = {
     { name: "JavaScript", icon: <FaJs className="text-yellow-400 text-3xl" /> },
     { name: "C", icon: <FaCuttlefish className="text-blue-500 text-3xl" /> },
     { name: "Python", icon: <FaPython className="text-blue-300 text-3xl" /> },
+    { name: "C#", icon: <SiUnity className="text-purple-500 text-3xl" /> }, // Using Unity icon for C#
   ],
   Database: [
     { name: "MySQL", icon: <SiMysql className="text-blue-500 text-3xl" /> },
     { name: "MongoDB", icon: <SiMongodb className="text-green-400 text-3xl" /> },
     { name: "PostgreSQL", icon: <SiPostgresql className="text-blue-300 text-3xl" /> },
+    { name: "Firebase", icon: <SiFirebase className="text-orange-400 text-3xl" /> },
   ],
   "Framework/Library": [
     { name: "React", icon: <FaReact className="text-blue-400 text-3xl" /> },
     { name: "Next.js", icon: <SiNextdotjs className="text-gray-200 text-3xl" /> },
     { name: "Tailwind CSS", icon: <SiTailwindcss className="text-teal-400 text-3xl" /> },
     { name: "Node.js", icon: <FaNodeJs className="text-green-500 text-3xl" /> },
+    { name: "Unity", icon: <SiUnity className="text-gray-400 text-3xl" /> },
+    { name: "Git", icon: <FaGit className="text-orange-500 text-3xl" /> },
   ],
 };
 

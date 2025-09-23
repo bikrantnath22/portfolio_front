@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import BottomNavBar from "./components/BottomNav";
 import StarsBackground from "./components/StarBackGround";
 import ProgressLoader from "./components/ProgressLoader";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 
 function App() {
   const [loading, setLoading] = useState(!localStorage.getItem('dataLoaded'));
@@ -32,6 +33,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/project/:id" element={<ProjectDetailPage />} />
       </Routes>
       <BottomNavBar />
     </Router>

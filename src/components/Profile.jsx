@@ -14,7 +14,7 @@ const descriptions = [
   "AI/ML Engineer",
   "Full-Stack Developer",
   "VR Developer",
-  "GenAI & LLM Builder",
+  "GenAI, LLM, RAG & GAN",
 ];
 
 const skillTags = [

@@ -3,12 +3,7 @@ import StarsBackground from "./StarBackGround";
 import { motion, AnimatePresence } from "framer-motion";
 
 const loadingMessages = [
-  "Initializing modules...",
-  "Loading AI models...",
-  "Deploying pixels...",
-  "Brewing coffee ☕",
-  "Compiling awesomeness...",
-  "Almost there...",
+  "Loading...",
 ];
 
 export default function ProgressLoader() {

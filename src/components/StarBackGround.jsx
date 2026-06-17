@@ -15,6 +15,36 @@ const StarsBackground = () => {
     resize();
     window.addEventListener("resize", resize);
 
+    // Pre-render star glows (Sprite Caching for MASSIVE performance gain)
+    const colors = ["57, 255, 20", "6, 182, 212", "255, 255, 255"];
+    const glowCache = {};
+    
+    colors.forEach(color => {
+      const gCanvas = document.createElement("canvas");
+      const gSize = 20; // 20x20 sprite
+      gCanvas.width = gSize;
+      gCanvas.height = gSize;
+      const gCtx = gCanvas.getContext("2d");
+      
+      const grad = gCtx.createRadialGradient(gSize/2, gSize/2, 0, gSize/2, gSize/2, gSize/2);
+      grad.addColorStop(0, `rgba(${color}, 1)`);
+      grad.addColorStop(1, `rgba(${color}, 0)`);
+      gCtx.fillStyle = grad;
+      gCtx.fillRect(0, 0, gSize, gSize);
+      glowCache[color] = gCanvas;
+    });
+
+    // Pre-render shooting star head glow
+    const shootingCache = document.createElement("canvas");
+    shootingCache.width = 16;
+    shootingCache.height = 16;
+    const sCtx = shootingCache.getContext("2d");
+    const sGrad = sCtx.createRadialGradient(8, 8, 0, 8, 8, 8);
+    sGrad.addColorStop(0, `rgba(255, 255, 255, 1)`);
+    sGrad.addColorStop(1, `rgba(180, 230, 255, 0)`);
+    sCtx.fillStyle = sGrad;
+    sCtx.fillRect(0, 0, 16, 16);
+
     // Create stars with FIXED colors (no per-frame randomization)
     const count = window.innerWidth <= 800 ? 70 : 120;
     const stars = [];
@@ -33,8 +63,8 @@ const StarsBackground = () => {
         color: isGreen
           ? "57, 255, 20"
           : isCyan
-          ? "6, 182, 212"
-          : "255, 255, 255",
+            ? "6, 182, 212"
+            : "255, 255, 255",
         glowSize: Math.random() * 3 + 1,
       });
     }
@@ -85,24 +115,18 @@ const StarsBackground = () => {
           Math.sin(frame * star.twinkleSpeed + star.twinklePhase) * 0.3 + 0.7;
         const opacity = star.baseOpacity * twinkle;
 
-        // Outer glow
-        const glowGradient = ctx.createRadialGradient(
-          star.x,
-          star.y,
-          0,
-          star.x,
-          star.y,
-          star.glowSize * 3
+        // Outer glow (stamped from sprite cache for 60FPS performance)
+        const cachedCanvas = glowCache[star.color];
+        const drawSize = star.glowSize * 6; // diameter
+        
+        ctx.globalAlpha = opacity * 0.4;
+        ctx.drawImage(
+          cachedCanvas, 
+          star.x - drawSize/2, 
+          star.y - drawSize/2, 
+          drawSize, 
+          drawSize
         );
-        glowGradient.addColorStop(
-          0,
-          `rgba(${star.color}, ${opacity * 0.4})`
-        );
-        glowGradient.addColorStop(1, `rgba(${star.color}, 0)`);
-        ctx.fillStyle = glowGradient;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.glowSize * 3, 0, Math.PI * 2);
-        ctx.fill();
 
         // Core star
         ctx.globalAlpha = opacity;
@@ -143,14 +167,10 @@ const StarsBackground = () => {
         ctx.lineTo(s.x, s.y);
         ctx.stroke();
 
-        // Head glow
-        ctx.beginPath();
-        const headGlow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, 4);
-        headGlow.addColorStop(0, `rgba(255, 255, 255, ${s.opacity})`);
-        headGlow.addColorStop(1, `rgba(180, 230, 255, 0)`);
-        ctx.fillStyle = headGlow;
-        ctx.arc(s.x, s.y, 4, 0, Math.PI * 2);
-        ctx.fill();
+        // Head glow (Stamped from cache)
+        ctx.globalAlpha = s.opacity;
+        ctx.drawImage(shootingCache, s.x - 4, s.y - 4, 8, 8);
+        ctx.globalAlpha = 1;
       }
 
       requestAnimationFrame(animate);

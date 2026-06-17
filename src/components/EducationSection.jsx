@@ -117,7 +117,10 @@ const EducationSection = () => {
               >
                 <span className="text-xs text-gray-400 uppercase tracking-wider">CGPA</span>
                 <span className="text-sm font-bold text-green-400">
-                  <CountUp target={edu.cgpa.split(" ")[0]} /> / 10
+                  <CountUp target={edu.cgpa.split(" ")[0]} />
+                  <span className="ml-1 text-[11px] md:text-xs text-green-400/80 font-normal tracking-normal">
+                    {edu.cgpa.substring(edu.cgpa.indexOf(" ") + 1)}
+                  </span>
                 </span>
               </div>
             </div>

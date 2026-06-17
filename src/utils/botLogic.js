@@ -75,7 +75,7 @@ export const getBotResponse = (userInput) => {
       return "Hello! I am Bikrant's Resume Chatbot. I can tell you all about his AI/ML experience, Full-Stack projects, education, and contact details. Type 'help' to see example questions!";
     
     case "education":
-      return "Bikrant is currently pursuing his M.Tech in Computer Science & Engineering at Tezpur University (2024–2026). Previously, he completed his MCA from Tripura University (2022–2024) with a 7.71 CGPA.";
+      return "Bikrant is currently pursuing his M.Tech in Computer Science & Engineering at Tezpur University (2024–2026) with a CGPA of 7.28/10 (till 3rd semester). Previously, he completed his MCA from Tripura University (2022–2024) with a 7.71 CGPA.";
     
     case "experience":
       return "Bikrant worked as a Software Development Intern at Fineworks Media & Solution Technologies (Jan-Jul 2022). He built a full-stack hotel booking platform using React, Node.js, and MongoDB, and designed RESTful APIs for inventory tracking.";

@@ -70,7 +70,8 @@ export default function AiTerminal() {
               opacity: { duration: 0.3 }
             }}
             onClick={() => setIsOpen(true)}
-            className="absolute top-0 left-0 w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:shadow-[0_0_40px_rgba(34,197,94,0.8)] bg-black/80 backdrop-blur-md border border-green-500 theme-ignore cursor-pointer pointer-events-auto"
+            className="absolute top-0 left-0 w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:shadow-[0_0_40px_rgba(34,197,94,0.8)] bg-black/90 border border-green-500 theme-ignore cursor-pointer pointer-events-auto"
+            style={{ willChange: "transform, opacity" }}
             whileHover={{ scale: 1.15, transition: { duration: 0.2 } }}
             whileTap={{ scale: 0.9 }}
             title="Catch me to chat!"
@@ -88,11 +89,12 @@ export default function AiTerminal() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="absolute w-[340px] md:w-[380px] h-[500px] rounded-3xl flex flex-col overflow-hidden shadow-[0_0_50px_rgba(34,197,94,0.15)] border border-green-500/20 theme-ignore pointer-events-auto"
+            className="absolute w-[340px] md:w-[380px] h-[500px] rounded-3xl flex flex-col overflow-hidden shadow-[0_0_30px_rgba(34,197,94,0.15)] border border-green-500/20 theme-ignore pointer-events-auto"
             style={{
               left: safeX,
               top: safeY,
               background: "linear-gradient(145deg, rgba(15, 23, 42, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%)",
+              willChange: "transform, opacity",
             }}
           >
             <ChatBox onClose={() => setIsOpen(false)} />

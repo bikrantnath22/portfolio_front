@@ -99,7 +99,7 @@ export default function ChatBox({ onClose }) {
       </div>
 
       {/* Input Form */}
-      <form onSubmit={handleSubmit} className="p-3 bg-white/5 border-t border-green-500/10 backdrop-blur-md">
+      <form onSubmit={handleSubmit} className="p-3 bg-white/5 border-t border-green-500/10">
         <div className="relative flex items-center">
           <span className="absolute left-3 text-green-500/50 font-mono text-base">›</span>
           <input

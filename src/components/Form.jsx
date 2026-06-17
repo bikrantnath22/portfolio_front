@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
 
 export default function Form() {

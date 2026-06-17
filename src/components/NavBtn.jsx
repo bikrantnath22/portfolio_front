@@ -1,8 +1,6 @@
-import React from "react";
-
 function NavBtns({ icon, title, isActive }) {
   return (
-    <div className={`group flex flex-row mr-5 items-center transition-all duration-300
+    <div className={`group flex flex-row items-center transition-all duration-300
       ${isActive ? "text-green-400  scale-105" : "text-white opacity-50"}
     `}>
       <span 

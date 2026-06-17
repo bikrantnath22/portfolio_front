@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import StarsBackground from "../components/StarBackGround";
 import SkillsContactPage from "../components/SkillContent";

@@ -1,27 +1,21 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-
+import { memo, useEffect, useState } from "react";
 import {
   HomeOutlined,
-  ProjectOutlined,
   InfoCircleOutlined,
+  ExperimentOutlined,
+  ReadOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-
-import { FaProjectDiagram } from "react-icons/fa"; // Project icon
+import { FaProjectDiagram } from "react-icons/fa";
 import NavBtns from "./NavBtn";
 
 
 
 const BottomNavBar = () => {
-    const location = useLocation();
-
     const [activeSection, setActiveSection] = useState("");
     
       useEffect(() => {
         const handleScroll = () => {
-          const sections = ["Home", "project", "about"];
+          const sections = ["Home", "experience", "project", "education", "about"];
           for (let section of sections) {
             const el = document.getElementById(section);
             if (el) {
@@ -39,13 +33,20 @@ const BottomNavBar = () => {
       }, []);
   return (
     <>
-      <div className=" z-50 fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900 bg-opacity-90 flex justify-around items-center w-[90%] max-w-md p-3 rounded-full shadow-lg md:hidden">
+      <div className=" z-50 fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900 bg-opacity-90 flex justify-around items-center w-[95%] max-w-lg p-2.5 rounded-full shadow-lg md:hidden backdrop-blur-sm border border-green-500/10">
         
       <a href="#Home" className="flex items-center" onClick={() => setActiveSection("Home")}>
           <NavBtns
             icon={<HomeOutlined />}
             title="Home"
             isActive={activeSection === "Home"}
+          />
+        </a>
+        <a href="#experience" className="flex items-center" onClick={() => setActiveSection("experience")}>
+          <NavBtns
+            icon={<ExperimentOutlined />}
+            title="Exp"
+            isActive={activeSection === "experience"}
           />
         </a>
         <a href="#project" className="flex items-center" onClick={() => setActiveSection("project")}>
@@ -55,10 +56,17 @@ const BottomNavBar = () => {
             isActive={activeSection === "project"}
           />
         </a>
+        <a href="#education" className="flex items-center" onClick={() => setActiveSection("education")}>
+          <NavBtns
+            icon={<ReadOutlined />}
+            title="Edu"
+            isActive={activeSection === "education"}
+          />
+        </a>
         <a href="#about" className="flex items-center" onClick={() => setActiveSection("about")}>
           <NavBtns
             icon={<InfoCircleOutlined />}
-            title={"Abouts"}
+            title="About"
             isActive={activeSection === "about"}
           />
         </a>
@@ -68,4 +76,4 @@ const BottomNavBar = () => {
   );
 };
 
-export default React.memo(BottomNavBar);;
+export default memo(BottomNavBar);

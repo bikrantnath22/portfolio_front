@@ -238,7 +238,7 @@ const SkillsContactPage = () => {
                       <span className="text-sm md:text-base text-gray-200 font-semibold block truncate">
                         {skill.name}
                       </span>
-                      <span className="text-[10px] text-gray-500 font-medium">{skill.level}%</span>
+            
                     </div>
                   </div>
                   {/* Animated proficiency bar */}

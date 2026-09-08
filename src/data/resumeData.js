@@ -13,7 +13,7 @@ export const experience = [
       "Implemented RESTful backend APIs and structured MongoDB data models to support scalable product catalog and order records.",
       "Designed fully responsive shopping and checkout UIs optimised for both mobile and desktop users.",
     ],
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "CSS"],
   },
   {
     id: 2,

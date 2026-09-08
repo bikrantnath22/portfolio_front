@@ -79,7 +79,7 @@ export const projects = [
     image: "/dpctgan.png",
     detailImage: "/dpctgan.png",
     role: "AI/ML Engineer",
-    year: "2025–2026",
+    year: "2026",
     highlights: [
       "Multi-agent pipeline: Planner → Retriever → Synthesizer → Verifier with automatic re-retrieval loop.",
       "Verifier combines Semantic Entropy (50%), Ensemble Disagreement (30%), and Faithfulness (20%) for hallucination risk scoring.",
@@ -105,7 +105,7 @@ export const projects = [
     image: "/dpctgan.png",
     detailImage: "/dpctgan.png",
     role: "AI Security Engineer",
-    year: "2025",
+    year: "2026",
     highlights: [
       "4-layer input guard: Regex heuristics → DeBERTa classifier → MiniLM-L6 semantic similarity → LLM Judge fallback.",
       "Role-aware output PII redaction and sensitivity leak verification across public/restricted/confidential data tiers.",
@@ -131,7 +131,7 @@ export const projects = [
     image: "/dpctgan.png",
     detailImage: "/dpctgan.png",
     role: "Full-stack developer",
-    year: "2025",
+    year: "2026",
     highlights: [
       "Server-controlled open/closed status via computed isOpen boolean — ordering never depends on device clock.",
       "Google OAuth with role-based access: Customer, Admin, and Superadmin with JWT httpOnly cookie sessions.",
@@ -158,7 +158,7 @@ export const projects = [
     image: "/dpctgan.png",
     detailImage: "/dpctgan.png",
     role: "Data Engineer",
-    year: "2025",
+    year: "2026",
     highlights: [
       "AFTER INSERT trigger for real-time per-transaction fraud evaluation with configurable risk weight thresholds.",
       "Detects High Velocity, High Value Anomaly, and Structuring (Smurfing) fraud patterns.",
@@ -182,7 +182,7 @@ export const projects = [
     image: "/dpctgan.png",
     detailImage: "/dpctgan.png",
     role: "Data Analyst / ML Engineer",
-    year: "2025",
+    year: "2026",
     highlights: [
       "Full analytical pipeline: data cleaning → EDA → segmentation → financial impact → retention curves → prediction.",
       "K-Means clustering for customer segmentation with Silhouette Score optimization.",
@@ -208,7 +208,7 @@ export const projects = [
     image: "/dpctgan.png",
     detailImage: "/dpctgan.png",
     role: "AI/ML Engineer",
-    year: "2025",
+    year: "2026",
     highlights: [
       "Semantic Entropy: N high-temperature samples → NLI-based bidirectional entailment clustering → Shannon entropy hallucination risk.",
       "Ensemble Disagreement: cross-model factual claim comparison between 8B and 70B LLMs via Groq API.",
@@ -283,7 +283,7 @@ export const projects = [
     image: "/Vr.gif",
     detailImage: "/Vr.gif",
     role: "VR and full-stack developer",
-    year: "2024",
+    year: "2023-2024",
     highlights: [
       "Built interactive Unity modules for quiz-based learning and practical computer literacy tasks.",
       "Connected learning progress to a companion app for tracking student performance.",
@@ -331,7 +331,7 @@ export const projects = [
     image: "/Animal.png",
     detailImage: "/Animal.png",
     role: "Full-stack developer",
-    year: "2024",
+    year: "2024-2025",
     highlights: [
       "Implemented real-time NGO matching and status updates using WebSockets.",
       "Integrated location-based rescue alerts to speed up response coordination.",

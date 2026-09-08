@@ -15,6 +15,13 @@ const ExperienceSection = () => {
 
   const rocketTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
+  const experienceColors = [
+    { primary: "#22c55e", bg: "rgba(34,197,94,0.12)", border: "rgba(34,197,94,0.3)" },
+    { primary: "#06b6d4", bg: "rgba(6,182,212,0.12)", border: "rgba(6,182,212,0.3)" },
+    { primary: "#8b5cf6", bg: "rgba(139,92,246,0.12)", border: "rgba(139,92,246,0.3)" },
+    { primary: "#f59e0b", bg: "rgba(245,158,11,0.12)", border: "rgba(245,158,11,0.3)" },
+  ];
+
   return (
     <motion.div
       ref={containerRef}
@@ -50,12 +57,15 @@ const ExperienceSection = () => {
 
       <div className="relative pl-12 md:pl-16 space-y-12">
         {/* Scrollytelling Track Background */}
-        <div className="absolute left-[20px] md:left-[28px] top-6 bottom-6 w-[2px] bg-white/10 rounded-full" />
+        <div className="absolute left-[20px] md:left-[28px] top-6 bottom-6 w-[2px] bg-white/5 rounded-full" />
         
         {/* Scrollytelling Animated Line */}
         <motion.div 
-          className="absolute left-[20px] md:left-[28px] top-6 bottom-6 w-[2px] bg-gradient-to-b from-green-500 via-cyan-500 to-purple-500 origin-top rounded-full shadow-[0_0_15px_rgba(34,197,94,0.6)]"
-          style={{ scaleY: scrollYProgress }}
+          className="absolute left-[20px] md:left-[28px] top-6 bottom-6 w-[2px] bg-gradient-to-b from-green-500 via-cyan-500 to-purple-500 origin-top rounded-full"
+          style={{ 
+            scaleY: scrollYProgress,
+            filter: "drop-shadow(0 0 8px rgba(34,197,94,0.8)) drop-shadow(0 0 20px rgba(34,197,94,0.4))",
+          }}
         />
 
         {/* The Rocket Explorer */}
@@ -83,31 +93,63 @@ const ExperienceSection = () => {
             {/* Timeline Planet / Node */}
             <div className="absolute -left-12 md:-left-16 top-6">
               <motion.div 
-                className="w-4 h-4 rounded-full bg-black border-2 border-green-500 shadow-[0_0_10px_#22c55e]"
-                whileInView={{ scale: [1, 1.5, 1], boxShadow: ["0 0 10px #22c55e", "0 0 30px #22c55e", "0 0 10px #22c55e"] }}
+                className="w-4 h-4 rounded-full bg-black border-2 border-green-500"
+                style={{ boxShadow: "0 0 12px #22c55e, 0 0 30px rgba(34,197,94,0.4)" }}
+                whileInView={{ scale: [1, 1.5, 1] }}
                 transition={{ duration: 1, ease: "easeInOut" }}
               />
             </div>
 
-            {/* Speech bubble card with tilt + neon hover */}
+            {/* Card */}
             <motion.div
-              className="glass p-6 md:p-8 rounded-2xl border border-white/10 hover:border-green-500/30 transition-all duration-300 shadow-xl group"
+              className="glass p-6 md:p-8 rounded-2xl border border-white/8 hover:border-green-500/30 transition-all duration-300 shadow-xl group relative overflow-hidden"
               whileHover={{
                 y: -6,
-                boxShadow: "0 10px 40px -10px rgba(34, 197, 94, 0.2)",
+                boxShadow: "0 15px 50px -10px rgba(34, 197, 94, 0.2), 0 4px 20px rgba(0,0,0,0.4)",
               }}
             >
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4">
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-green-400 transition-colors">
-                    {exp.role}
-                  </h3>
-                  <p className="text-gray-400 text-sm md:text-base font-medium mt-1">
-                    {exp.company}
-                  </p>
+              {/* Top accent line */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${experienceColors[index % experienceColors.length].primary}60, transparent)`,
+                }}
+              />
+
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                <div className="flex items-start gap-4">
+                  {/* Company Initials Badge */}
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 mt-0.5"
+                    style={{
+                      background: experienceColors[index % experienceColors.length].bg,
+                      border: `1px solid ${experienceColors[index % experienceColors.length].border}`,
+                      color: experienceColors[index % experienceColors.length].primary,
+                      fontFamily: "var(--font-heading, 'Space Grotesk', sans-serif)",
+                    }}
+                  >
+                    {exp.company.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
+                  </div>
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-green-400 transition-colors leading-tight"
+                      style={{ fontFamily: "var(--font-heading, 'Space Grotesk', sans-serif)", letterSpacing: "-0.02em" }}
+                    >
+                      {exp.role}
+                    </h3>
+                    <p className="text-gray-400 text-sm md:text-base font-medium mt-1">
+                      {exp.company}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-left md:text-right">
-                  <p className="text-green-400 text-sm font-bold flex items-center gap-1.5 md:justify-end bg-green-500/10 px-3 py-1 rounded-full w-fit md:ml-auto">
+                <div className="text-left md:text-right shrink-0">
+                  <p
+                    className="text-sm font-bold flex items-center gap-1.5 md:justify-end px-3 py-1 rounded-full w-fit md:ml-auto"
+                    style={{
+                      background: experienceColors[index % experienceColors.length].bg,
+                      color: experienceColors[index % experienceColors.length].primary,
+                      border: `1px solid ${experienceColors[index % experienceColors.length].border}`,
+                    }}
+                  >
                     {exp.duration}
                   </p>
                   <p className="text-gray-500 text-xs flex items-center gap-1.5 md:justify-end mt-2">
@@ -125,18 +167,36 @@ const ExperienceSection = () => {
                     key={idx}
                     className="flex gap-3 text-gray-300 text-sm leading-relaxed"
                   >
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400/80 shadow-[0_0_5px_#06b6d4]" />
+                    <span
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
+                      style={{
+                        background: experienceColors[index % experienceColors.length].primary,
+                        boxShadow: `0 0 6px ${experienceColors[index % experienceColors.length].primary}`,
+                      }}
+                    />
                     <span>{highlight}</span>
                   </motion.li>
                 ))}
               </ul>
 
-              {/* Tech tags with gradient hover */}
+              {/* Tech tags */}
               <div className="flex flex-wrap gap-2 mt-6">
                 {exp.tech.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1 text-xs rounded-lg border border-white/5 bg-white/5 text-gray-300 group-hover:border-cyan-500/20 group-hover:text-cyan-300 transition-all cursor-default shadow-sm"
+                    className="px-3 py-1 text-xs rounded-lg text-gray-300 transition-all cursor-default"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      border: `1px solid rgba(255,255,255,0.07)`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = experienceColors[index % experienceColors.length].border;
+                      e.currentTarget.style.color = experienceColors[index % experienceColors.length].primary;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
+                      e.currentTarget.style.color = "#d1d5db";
+                    }}
                   >
                     {tech}
                   </span>

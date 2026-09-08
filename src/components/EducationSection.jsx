@@ -85,13 +85,30 @@ const EducationSection = () => {
             <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-green-400 via-cyan-400 to-purple-500 rounded-full opacity-60 group-hover:opacity-100 transition-opacity" />
 
             <div className="pl-3">
-              <h3 className="text-lg md:text-xl font-bold text-white mb-1 pr-10">
-                {edu.degree}
-              </h3>
-              <p className="text-green-400 font-medium text-sm md:text-base mb-2">
-                {edu.institution}
-              </p>
-
+              {/* Institution badge + degree row */}
+              <div className="flex items-start gap-3 mb-3">
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold shrink-0"
+                  style={{
+                    background: index === 0 ? "rgba(34,197,94,0.12)" : "rgba(6,182,212,0.12)",
+                    border: index === 0 ? "1px solid rgba(34,197,94,0.3)" : "1px solid rgba(6,182,212,0.3)",
+                    color: index === 0 ? "#22c55e" : "#06b6d4",
+                    fontFamily: "var(--font-heading, 'Space Grotesk', sans-serif)",
+                  }}
+                >
+                  {edu.institution.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg md:text-xl font-bold text-white pr-10 leading-tight"
+                    style={{ fontFamily: "var(--font-heading, 'Space Grotesk', sans-serif)", letterSpacing: "-0.02em" }}
+                  >
+                    {edu.degree}
+                  </h3>
+                  <p className="text-green-400 font-medium text-sm md:text-base mt-0.5">
+                    {edu.institution}
+                  </p>
+                </div>
+              </div>
               <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400 mb-3">
                 <span className="flex items-center gap-1.5">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,16 +126,20 @@ const EducationSection = () => {
               </div>
 
               {/* CGPA badge with count-up animation */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border"
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border mt-1"
                 style={{
-                  background: "linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(6, 182, 212, 0.08))",
-                  borderColor: "rgba(34, 197, 94, 0.2)",
+                  background: index === 0
+                    ? "linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(6, 182, 212, 0.08))"
+                    : "linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(139, 92, 246, 0.08))",
+                  borderColor: index === 0 ? "rgba(34, 197, 94, 0.3)" : "rgba(6, 182, 212, 0.3)",
+                  boxShadow: index === 0 ? "0 0 20px rgba(34,197,94,0.08)" : "0 0 20px rgba(6,182,212,0.08)",
                 }}
               >
-                <span className="text-xs text-gray-400 uppercase tracking-wider">CGPA</span>
-                <span className="text-sm font-bold text-green-400">
+                <span className="text-lg">🎓</span>
+                <span className="text-xs text-gray-400 uppercase tracking-wider font-medium">CGPA</span>
+                <span className="text-base font-bold" style={{ color: index === 0 ? "#4ade80" : "#22d3ee" }}>
                   <CountUp target={edu.cgpa.split(" ")[0]} />
-                  <span className="ml-1 text-[11px] md:text-xs text-green-400/80 font-normal tracking-normal">
+                  <span className="ml-1 text-[11px] md:text-xs font-normal tracking-normal opacity-80">
                     {edu.cgpa.substring(edu.cgpa.indexOf(" ") + 1)}
                   </span>
                 </span>

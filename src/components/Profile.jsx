@@ -18,9 +18,9 @@ const descriptions = [
 ];
 
 const skillTags = [
-  { label: "AI/ML + Privacy", color: "green" },
-  { label: "Full-Stack Apps", color: "cyan" },
-  { label: "VR & GenAI", color: "purple" },
+  { label: "AI/ML + Privacy", color: "green", emoji: "🧠" },
+  { label: "Full-Stack Apps", color: "cyan", emoji: "⚡" },
+  { label: "VR & GenAI", color: "purple", emoji: "🚀" },
 ];
 
 // Orbital particle ring around profile photo
@@ -315,6 +315,14 @@ const ProfileCard = () => {
       <StarDoodle className="text-green-300 bottom-16 right-4 hidden md:block" delay={3} />
 
       <div className="w-full text-center md:text-left px-4">
+        {/* Availability Badge */}
+        <motion.div variants={childVariants} className="mb-3">
+          <span className="status-badge status-badge-green">
+            <span className="pulse-dot" />
+            Available for Hire
+          </span>
+        </motion.div>
+
         {/* Greeting */}
         <motion.div variants={childVariants}>
           <span className="text-sm md:text-base font-medium text-gray-400 tracking-widest uppercase mb-2 block">
@@ -342,10 +350,10 @@ const ProfileCard = () => {
         {/* Bio */}
         <motion.div variants={childVariants}>
           <ShinyText
-            text="Results-driven AI/ML Engineer and Full-Stack Developer with expertise in privacy-preserving machine learning, Generative AI, LLM-powered applications, and scalable system design. M.Tech in CS&E from Tezpur University with hands-on research in differentially private synthetic data generation."
+            text="Results-driven AI/ML Engineer and Full-Stack Developer with expertise in privacy-preserving machine learning, Generative AI, LLM-powered applications, and scalable system design. M.Tech in CS&E from Tezpur University."
             disabled={false}
             speed={3}
-            className="custom-class text-left md:text-justify text-gray-300 max-w-3xl mx-auto md:mx-0 leading-relaxed italic mt-4"
+            className="custom-class text-left md:text-justify text-gray-300 text-sm md:text-base max-w-2xl mx-auto md:mx-0 leading-relaxed italic mt-4"
           />
         </motion.div>
 
@@ -361,20 +369,21 @@ const ProfileCard = () => {
               return (
                 <motion.div
                   key={item.label}
-                  className="relative rounded-lg px-4 py-3.5 text-sm text-gray-200 glass neon-hover cursor-default"
+                  className="relative rounded-lg px-4 py-3 text-sm text-gray-200 glass neon-hover cursor-default"
                   style={{
                     borderRadius: "14px 6px 14px 6px",
                     border: `1px solid ${colors.border}`,
                     background: colors.bg,
                   }}
                   whileHover={{
-                    scale: 1.03,
-                    boxShadow: `0 0 25px ${colors.glow}`,
+                    scale: 1.04,
+                    boxShadow: `0 0 30px ${colors.glow}`,
                   }}
                   transition={{ duration: 0.2 }}
                 >
                   {item.label === "VR & GenAI" && <SittingCartoon />}
-                  <span className="font-medium">{item.label}</span>
+                  <span className="text-base mr-1.5">{item.emoji}</span>
+                  <span className="font-semibold">{item.label}</span>
                 </motion.div>
               );
             })}
@@ -388,12 +397,25 @@ const ProfileCard = () => {
         >
           <motion.button
             onClick={handleDownload}
-            className="btn-premium border border-green-500/50 text-green-400 hover:bg-green-500 hover:text-black font-semibold px-6 py-2.5 rounded-full transition-all duration-300"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(34, 197, 94, 0.25)" }}
+            className="btn-premium font-semibold px-7 py-2.5 rounded-full transition-all duration-300 text-black"
+            style={{
+              background: "linear-gradient(135deg, #22c55e, #06b6d4)",
+              boxShadow: "0 4px 20px rgba(34,197,94,0.3)",
+            }}
+            whileHover={{ scale: 1.05, boxShadow: "0 6px 30px rgba(34, 197, 94, 0.45)" }}
             whileTap={{ scale: 0.97 }}
           >
-            Download CV
+            ↓ Download CV
           </motion.button>
+
+          <motion.a
+            href="#project"
+            className="btn-premium border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/10 font-semibold px-7 py-2.5 rounded-full transition-all duration-300"
+            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(6,182,212,0.2)" }}
+            whileTap={{ scale: 0.97 }}
+          >
+            View Projects →
+          </motion.a>
 
           <div className="flex gap-5 pt-1 sm:mt-0 items-center">
             <motion.a

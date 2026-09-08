@@ -101,13 +101,13 @@ const ProjectDetailPage = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 z-10 pointer-events-none rounded-2xl" />
-        <motion.img
+        {/* <motion.img
           src={project.detailImage || project.image}
           alt={project.title}
           className="w-full h-[320px] md:h-[430px] object-contain rounded-2xl bg-black/20"
           whileHover={{ scale: 1.03 }}
           transition={{ duration: 0.4 }}
-        />
+        /> */}
       </motion.div>
 
       <motion.p

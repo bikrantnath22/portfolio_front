@@ -109,7 +109,11 @@ const AchievementsSection = () => {
             onMouseLeave={() => setHoveredId(null)}
             whileHover={{ y: -4 }}
             style={{
-              borderColor: "rgba(245, 158, 11, 0.2)",
+              borderColor: hoveredId === award.id ? "rgba(245, 158, 11, 0.45)" : "rgba(245, 158, 11, 0.2)",
+              boxShadow: hoveredId === award.id
+                ? "0 0 30px rgba(245,158,11,0.2), 0 0 60px rgba(245,158,11,0.08), 0 12px 40px rgba(0,0,0,0.4)"
+                : "0 2px 20px rgba(0,0,0,0.3)",
+              transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
             }}
           >
             {/* Particle burst on hover */}
@@ -117,32 +121,64 @@ const AchievementsSection = () => {
               {hoveredId === award.id && <ParticleBurst active={true} />}
             </AnimatePresence>
 
+            {/* Top accent bar on hover */}
+            <div
+              className="absolute top-0 left-0 right-0 h-[1px] transition-opacity duration-500"
+              style={{
+                background: "linear-gradient(90deg, transparent, rgba(245,158,11,0.7), rgba(251,191,36,0.7), transparent)",
+                opacity: hoveredId === award.id ? 1 : 0,
+              }}
+            />
+
             <div className="flex items-start gap-4 md:gap-6">
-              {/* Trophy doodle with golden shimmer */}
-              <motion.div
-                className="shrink-0 text-yellow-400"
-                animate={
-                  hoveredId === award.id
-                    ? { scale: [1, 1.2, 1], rotate: [0, -10, 10, 0] }
-                    : { scale: 1 }
-                }
-                transition={{ duration: 0.6 }}
-              >
-                <TrophyDoodle className="relative" delay={0} />
-              </motion.div>
+              {/* Trophy doodle with golden shimmer + pulse ring */}
+              <div className="shrink-0 relative">
+                {hoveredId === award.id && (
+                  <motion.div
+                    className="absolute inset-0 rounded-full"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: [0.6, 0], scale: [1, 1.8] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                    style={{ background: "radial-gradient(circle, rgba(245,158,11,0.3), transparent)" }}
+                  />
+                )}
+                <motion.div
+                  className="text-yellow-400"
+                  animate={
+                    hoveredId === award.id
+                      ? { scale: [1, 1.2, 1], rotate: [0, -10, 10, 0] }
+                      : { scale: 1 }
+                  }
+                  transition={{ duration: 0.6 }}
+                >
+                  <TrophyDoodle className="relative" delay={0} />
+                </motion.div>
+              </div>
 
               <div className="flex-1">
+                {/* Rank badge + category tag row */}
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <span className="status-badge status-badge-amber">
+                    🥈 1st Runner-Up
+                  </span>
+                  <span className="status-badge status-badge-purple">
+                    🏆 Hackathon
+                  </span>
+                </div>
+
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1 mb-2">
-                  <h3 className="text-lg md:text-xl font-bold text-white">
-                    🏆 {award.title}
+                  <h3 className="text-lg md:text-xl font-bold text-white"
+                    style={{ fontFamily: "var(--font-heading, 'Space Grotesk', sans-serif)", letterSpacing: "-0.01em" }}
+                  >
+                    {award.title}
                   </h3>
-                  <span className="text-amber-400 text-sm font-medium px-3 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 w-fit">
+                  <span className="text-amber-400 text-sm font-semibold px-3 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/25 w-fit">
                     {award.year}
                   </span>
                 </div>
 
-                <p className="text-amber-400/70 text-sm font-medium mb-2">
-                  {award.organization}
+                <p className="text-amber-400/80 text-sm font-medium mb-2">
+                  📍 {award.organization}
                 </p>
 
                 <p className="text-gray-300 text-sm leading-relaxed">

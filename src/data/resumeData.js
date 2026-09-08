@@ -3,6 +3,20 @@
 export const experience = [
   {
     id: 1,
+    role: "Founder & Full-Stack Developer",
+    company: "Athaana — Grocery eCommerce Startup",
+    duration: "2022",
+    location: "Nalbari, Assam",
+    highlights: [
+      "Built and deployed a production full-stack grocery eCommerce platform for a local startup in Nalbari, serving real customers end-to-end.",
+      "Developed product listings, cart management, user authentication, checkout flow, and a live order tracking system from scratch.",
+      "Implemented RESTful backend APIs and structured MongoDB data models to support scalable product catalog and order records.",
+      "Designed fully responsive shopping and checkout UIs optimised for both mobile and desktop users.",
+    ],
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+  },
+  {
+    id: 2,
     role: "Software Development Intern",
     company: "Fineworks Media & Solution Technologies",
     duration: "Jan 2022 – Jul 2022",
@@ -23,7 +37,7 @@ export const education = [
     institution: "Tezpur University",
     duration: "2024 – 2026",
     location: "Tezpur, Assam",
-    cgpa: "7.28 / 10 (till 3rd semester)",
+    cgpa: "7.63 / 10 ",
   },
   {
     id: 2,

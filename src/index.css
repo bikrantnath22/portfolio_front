@@ -1,5 +1,27 @@
-:root{
-  background-color: black
+/* ============================================
+   GOOGLE FONTS
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Baloo+2:wght@400;600;700;800&display=swap');
+
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  background-color: #020409;
+  --font-heading: 'Space Grotesk', 'Inter', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --color-accent-green: #22c55e;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-purple: #8b5cf6;
+  --color-accent-amber: #f59e0b;
+  --color-bg-dark: #020409;
+  --color-bg-card: rgba(10, 16, 30, 0.6);
+  --color-border-subtle: rgba(255,255,255,0.06);
+  --color-border-accent: rgba(34,197,94,0.25);
+}
+
+body {
+  font-family: var(--font-body);
 }
 
 html {
@@ -352,17 +374,86 @@ html {
    GLASSMORPHISM UTILITY
    ============================================ */
 .glass {
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(10, 16, 30, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .glass-strong {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 14, 26, 0.75);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Premium card with elevated shadow */
+.card-premium {
+  background: rgba(10, 16, 30, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.04) inset;
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+.card-premium:hover {
+  border-color: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 30px rgba(34,197,94,0.08), 0 1px 0 rgba(255,255,255,0.05) inset;
+  transform: translateY(-4px);
+}
+
+/* Status badge (open to work, rank, etc.) */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.status-badge-green {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+
+.status-badge-amber {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+.status-badge-cyan {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: #22d3ee;
+}
+
+.status-badge-purple {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #a78bfa;
+}
+
+/* Pulsing availability dot */
+@keyframes availability-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: availability-pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 /* ============================================
@@ -445,14 +536,36 @@ html {
    NEON BORDER GLOW ON HOVER
    ============================================ */
 .neon-hover {
-  transition: all 0.4s ease;
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
 }
 
 .neon-hover:hover {
-  box-shadow: 0 0 15px rgba(34, 197, 94, 0.2),
-              0 0 30px rgba(34, 197, 94, 0.08),
-              inset 0 0 15px rgba(34, 197, 94, 0.03);
-  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.25),
+              0 0 50px rgba(34, 197, 94, 0.1),
+              0 8px 32px rgba(0,0,0,0.35),
+              inset 0 0 20px rgba(34, 197, 94, 0.04);
+  border-color: rgba(34, 197, 94, 0.45) !important;
+}
+
+/* Skill proficiency bar */
+.skill-bar-track {
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 1s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Heading with Space Grotesk */
+.heading-grotesk {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
 }
 
 /* ============================================

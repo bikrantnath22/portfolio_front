@@ -3,7 +3,11 @@ import StarsBackground from "./StarBackGround";
 import { motion, AnimatePresence } from "framer-motion";
 
 const loadingMessages = [
-  "Loading...",
+  "🔧 Initializing AI systems...",
+  "📦 Loading projects...",
+  "☕ Brewing some coffee...",
+  "🧠 Wiring neural networks...",
+  "🚀 Almost there...",
 ];
 
 export default function ProgressLoader() {
@@ -51,17 +55,19 @@ export default function ProgressLoader() {
             >
               {/* Animated logo/monogram */}
               <motion.div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-extrabold aurora-text"
+                className="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-extrabold aurora-text"
                 style={{
-                  background: "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(6, 182, 212, 0.15))",
-                  border: "1px solid rgba(34, 197, 94, 0.2)",
+                  background: "linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(6, 182, 212, 0.12))",
+                  border: "1px solid rgba(34, 197, 94, 0.25)",
+                  fontFamily: "var(--font-heading, 'Space Grotesk', sans-serif)",
+                  boxShadow: "0 0 40px rgba(34,197,94,0.15), 0 0 80px rgba(6,182,212,0.08)",
                 }}
                 animate={{
                   rotate: [0, 5, -5, 0],
-                  scale: [1, 1.05, 1],
+                  scale: [1, 1.07, 1],
                 }}
                 transition={{
-                  duration: 2,
+                  duration: 2.5,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}

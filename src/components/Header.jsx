@@ -71,7 +71,7 @@ export default function Header() {
         </motion.a>
 
         {/* Right: Nav Links */}
-        <div className="flex gap-1 items-center text-[13px]">
+        <div className="flex gap-4 items-center text-[13px]">
           {navItems.map((item) => (
             <a
               key={item.id}

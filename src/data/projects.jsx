@@ -18,7 +18,7 @@ import {
   SiGooglecloud,
 } from "react-icons/si";
 import { FaCode, FaBrain, FaRobot, FaPlug, FaDatabase, FaShieldAlt } from "react-icons/fa";
-
+ 
 export const projects = [
   {
     id: 1,

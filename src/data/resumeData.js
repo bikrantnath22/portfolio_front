@@ -3,7 +3,7 @@
 export const experience = [
   {
     id: 1,
-    role: "Founder & Full-Stack Developer",
+    role: "Co-Founder & Full-Stack Developer",
     company: "Athaana — Grocery eCommerce Startup",
     duration: "2022",
     location: "Nalbari, Assam",

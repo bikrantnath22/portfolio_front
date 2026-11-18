@@ -4,15 +4,38 @@ export const experience = [
   {
     id: 3,
     role: "Agentic RAG Development Intern",
-    company: "Skilaudit",
+    company: "SkillAudit Ai",
     duration: "Sep 2026 – Oct 2026",
-    location: "", // TODO: confirm (Remote?)
+    location: "Remote",
     highlights: [
       "Built an Agentic RAG pipeline with LLM-based routing, query decomposition, and self-check with query rewriting and retries.",
       "Ingested PDF, CSV, and TXT files into ChromaDB and improved retrieval with Sentence-Transformers cross-encoder re-ranking.",
       "Shipped a Streamlit app that shows the agent’s decisions live alongside each answer.",
     ],
     tech: ["Python", "Streamlit", "ChromaDB", "Groq (gpt-oss-120b)", "Sentence-Transformers"],
+  },
+  {
+    id: 4,
+    role: "Graduate Researcher (Differential Privacy & ML)",
+    company: "Tezpur University",
+    duration: "Aug 2025 – Jul 2026",
+    location: "Tezpur, Assam",
+    highlights: [
+      "Built DP-CTGAN with rare-class sampling (PyTorch, Opacus) so differential-privacy noise no longer erases rare cases like fraud in synthetic tabular data.",
+      "Evaluated on 4 datasets (Credit Card Fraud, Adult Census, Taiwan Credit Card, MIMIC-III) at privacy budget ε = 3.",
+      "On Credit Card Fraud (0.17% fraud) reached AUPRC 0.7933 and F1 0.7512 with near-zero privacy leakage.",
+    ],
+    tech: [
+      "Python",
+      "PyTorch",
+      "CTGAN",
+      "Opacus DP-SGD",
+      "Rényi accountant",
+      "normalizing flows",
+      "Optuna",
+      "Pandas",
+      "Scikit-learn",
+    ],
   },
   {
     id: 1,
@@ -64,24 +87,34 @@ export const education = [
 
 export const awards = [
   {
+    id: 3,
+    title: "NPTEL Certifications",
+    organization: "NPTEL / IIT",
+    year: "2023 – 2024",
+    badge: "Certified",
+    category: "Certification",
+    description:
+      "Completed certifications in Machine Learning, Cloud Computing, IoT, and Ethical Hacking.",
+  },
+  {
     id: 2,
-    title: "NGIN Seed Funding for VR Learning Project", // CONFIRM exact name
+    title: "NGIN Seed Funding for VR Learning Project",
     organization: "NGIN",
     year: "2024",
     badge: "Seed Funding",
     category: "Grant",
     description:
-      "Received ₹1 lakh seed funding to develop a VR-based computer-assisted learning intervention for school students on Meta Quest.",
+      "Received ₹1,00,000 seed funding to develop a VR-based computer-assisted learning intervention for school students.",
   },
   {
     id: 1,
-    title: "Codestellation Hackathon First Runner-Up",
+    title: "Codestellation Hackathon: 1st Runner-Up",
     organization: "Assam Engineering College (AEC)",
     year: "2022",
     badge: "1st Runner-Up",
     category: "Hackathon",
     description:
-      "Built a resume builder web application in a competitive hackathon setting — featured template selection, real-time preview, and one-click PDF export.",
+      "Built a resume builder with live template selection and real-time previews, securing top-2 finish among 50+ teams.",
   },
 ];
 

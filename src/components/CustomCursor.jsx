@@ -1,21 +1,23 @@
-import { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 
 export default function CustomCursor() {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
-  const [isMobile, setIsMobile] = useState(true);
-  const trailRef = useRef({ x: -100, y: -100 });
+  const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
-    // Detect touch devices
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (isTouch || window.innerWidth < 768) {
-      setIsMobile(true);
+    // Only enable for fine-pointer devices and when user has not requested reduced motion
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!hasFinePointer || prefersReducedMotion) {
+      setIsEnabled(false);
       return;
     }
-    setIsMobile(false);
+
+    setIsEnabled(true);
 
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
@@ -24,16 +26,19 @@ export default function CustomCursor() {
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
-    // Track hoverable elements
+    // Track hoverable elements across the entire website including chatbox
     const handleMouseOver = (e) => {
       const el = e.target;
       if (
-        el.tagName === "A" ||
-        el.tagName === "BUTTON" ||
-        el.closest("a") ||
-        el.closest("button") ||
-        el.classList.contains("cursor-pointer") ||
-        el.closest(".cursor-pointer")
+        el &&
+        (el.tagName === "A" ||
+          el.tagName === "BUTTON" ||
+          el.tagName === "INPUT" ||
+          el.tagName === "TEXTAREA" ||
+          el.closest?.("a") ||
+          el.closest?.("button") ||
+          el.classList?.contains("cursor-pointer") ||
+          el.closest?.(".cursor-pointer"))
       ) {
         setIsHovering(true);
       }
@@ -49,12 +54,14 @@ export default function CustomCursor() {
     document.addEventListener("mouseover", handleMouseOver);
     document.addEventListener("mouseout", handleMouseOut);
 
-    // Hide default cursor
+    // Hide native cursor everywhere across the entire website including modals
     document.body.style.cursor = "none";
     const style = document.createElement("style");
     style.id = "custom-cursor-style";
     style.textContent = `
-      *, *::before, *::after { cursor: none !important; }
+      *, *::before, *::after {
+        cursor: none !important;
+      }
     `;
     document.head.appendChild(style);
 
@@ -70,13 +77,13 @@ export default function CustomCursor() {
     };
   }, []);
 
-  if (isMobile) return null;
+  if (!isEnabled) return null;
 
   return (
     <>
-      {/* Main cursor dot */}
+      {/* Main cursor dot (highest z-index so it renders on top of everything including chatbox) */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[100002] mix-blend-difference"
         animate={{
           x: mousePos.x - 4,
           y: mousePos.y - 4,
@@ -90,24 +97,21 @@ export default function CustomCursor() {
         }}
       >
         <div
-          className="w-2 h-2 rounded-full bg-white"
+          className="w-2 h-2 rounded-full bg-cyan-300"
           style={{
-            boxShadow: "0 0 8px rgba(255,255,255,0.5)",
+            boxShadow: "0 0 8px rgba(34, 211, 238, 0.9)",
           }}
         />
       </motion.div>
 
-      {/* Trailing ring */}
+      {/* Trailing reactive ring (floats above modal, reacts to buttons, chips, and links) */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998]"
+        className="fixed top-0 left-0 pointer-events-none z-[100001]"
         animate={{
           x: mousePos.x - (isHovering ? 24 : 16),
           y: mousePos.y - (isHovering ? 24 : 16),
           width: isHovering ? 48 : 32,
           height: isHovering ? 48 : 32,
-          borderColor: isHovering
-            ? "rgba(34, 197, 94, 0.6)"
-            : "rgba(255, 255, 255, 0.2)",
           scale: isClicking ? 0.8 : 1,
         }}
         transition={{
@@ -121,11 +125,14 @@ export default function CustomCursor() {
           className="w-full h-full rounded-full border-[1.5px] transition-colors duration-200"
           style={{
             borderColor: isHovering
-              ? "rgba(34, 197, 94, 0.6)"
-              : "rgba(255, 255, 255, 0.15)",
+              ? "rgba(34, 211, 238, 0.85)"
+              : "rgba(255, 255, 255, 0.25)",
             background: isHovering
-              ? "rgba(34, 197, 94, 0.05)"
+              ? "rgba(34, 211, 238, 0.12)"
               : "transparent",
+            boxShadow: isHovering
+              ? "0 0 18px rgba(34, 211, 238, 0.4)"
+              : "none",
           }}
         />
       </motion.div>

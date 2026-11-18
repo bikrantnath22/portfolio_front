@@ -1,7 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const StarsBackground = () => {
   const canvasRef = useRef(null);
+  const [opacity, setOpacity] = useState(0);
+
+  // Fade in stars only as user scrolls down past the 3D hero
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = window.innerHeight * 0.8;
+      const progress = Math.min(1, Math.max(0, (window.scrollY - 80) / (heroHeight - 80)));
+      setOpacity(progress);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -15,18 +29,25 @@ const StarsBackground = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    // Pre-render star glows (Sprite Caching for MASSIVE performance gain)
-    const colors = ["57, 255, 20", "6, 182, 212", "255, 255, 255"];
+    // Pre-render star glows (Single Cyan Accent + White)
+    const colors = ["34, 211, 238", "255, 255, 255"];
     const glowCache = {};
-    
-    colors.forEach(color => {
+
+    colors.forEach((color) => {
       const gCanvas = document.createElement("canvas");
-      const gSize = 20; // 20x20 sprite
+      const gSize = 20;
       gCanvas.width = gSize;
       gCanvas.height = gSize;
       const gCtx = gCanvas.getContext("2d");
-      
-      const grad = gCtx.createRadialGradient(gSize/2, gSize/2, 0, gSize/2, gSize/2, gSize/2);
+
+      const grad = gCtx.createRadialGradient(
+        gSize / 2,
+        gSize / 2,
+        0,
+        gSize / 2,
+        gSize / 2,
+        gSize / 2
+      );
       grad.addColorStop(0, `rgba(${color}, 1)`);
       grad.addColorStop(1, `rgba(${color}, 0)`);
       gCtx.fillStyle = grad;
@@ -34,174 +55,89 @@ const StarsBackground = () => {
       glowCache[color] = gCanvas;
     });
 
-    // Pre-render shooting star head glow
-    const shootingCache = document.createElement("canvas");
-    shootingCache.width = 16;
-    shootingCache.height = 16;
-    const sCtx = shootingCache.getContext("2d");
-    const sGrad = sCtx.createRadialGradient(8, 8, 0, 8, 8, 8);
-    sGrad.addColorStop(0, `rgba(255, 255, 255, 1)`);
-    sGrad.addColorStop(1, `rgba(180, 230, 255, 0)`);
-    sCtx.fillStyle = sGrad;
-    sCtx.fillRect(0, 0, 16, 16);
-
-    // Create stars with FIXED colors (no per-frame randomization)
-    const count = window.innerWidth <= 800 ? 70 : 120;
+    // Create lightweight stars
+    const count = window.innerWidth <= 800 ? 50 : 90;
     const stars = [];
     for (let i = 0; i < count; i++) {
-      const isGreen = Math.random() < 0.15;
-      const isCyan = Math.random() < 0.1;
+      const isCyan = Math.random() < 0.2;
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.35,
-        size: Math.random() * 1.8 + 0.5,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.25,
+        size: Math.random() * 1.5 + 0.5,
         baseOpacity: Math.random() * 0.4 + 0.2,
         twinkleSpeed: Math.random() * 0.02 + 0.005,
         twinklePhase: Math.random() * Math.PI * 2,
-        color: isGreen
-          ? "57, 255, 20"
-          : isCyan
-            ? "6, 182, 212"
-            : "255, 255, 255",
+        color: isCyan ? "34, 211, 238" : "255, 255, 255",
         glowSize: Math.random() * 3 + 1,
       });
     }
 
-    // Shooting stars
-    const shootingStars = [];
-    const createShootingStar = () => {
-      if (shootingStars.length < 2 && Math.random() < 0.003) {
-        const startX = Math.random() * canvas.width;
-        const startY = Math.random() * canvas.height * 0.4;
-        shootingStars.push({
-          x: startX,
-          y: startY,
-          length: Math.random() * 80 + 50,
-          speed: Math.random() * 8 + 6,
-          angle: (Math.random() * 30 + 20) * (Math.PI / 180),
-          opacity: 1,
-          life: 1,
-          decay: Math.random() * 0.015 + 0.01,
-        });
-      }
-    };
-
     let frame = 0;
+    let animId;
+
     const animate = () => {
       frame++;
 
-      // Background gradient
-      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, "rgb(5, 5, 15)");
-      gradient.addColorStop(0.5, "rgb(8, 8, 20)");
-      gradient.addColorStop(1, "rgb(5, 5, 18)");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw stars with twinkle + glow
-      stars.forEach((star) => {
+      // Render stars
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
+
         star.x += star.vx;
         star.y += star.vy;
 
         if (star.x < 0) star.x = canvas.width;
-        else if (star.x > canvas.width) star.x = 0;
+        if (star.x > canvas.width) star.x = 0;
         if (star.y < 0) star.y = canvas.height;
-        else if (star.y > canvas.height) star.y = 0;
+        if (star.y > canvas.height) star.y = 0;
 
-        // Twinkle effect
-        const twinkle =
-          Math.sin(frame * star.twinkleSpeed + star.twinklePhase) * 0.3 + 0.7;
-        const opacity = star.baseOpacity * twinkle;
+        const currentOpacity =
+          star.baseOpacity +
+          Math.sin(frame * star.twinkleSpeed + star.twinklePhase) * 0.2;
 
-        // Outer glow (stamped from sprite cache for 60FPS performance)
-        const cachedCanvas = glowCache[star.color];
-        const drawSize = star.glowSize * 6; // diameter
-        
-        ctx.globalAlpha = opacity * 0.4;
-        ctx.drawImage(
-          cachedCanvas, 
-          star.x - drawSize/2, 
-          star.y - drawSize/2, 
-          drawSize, 
-          drawSize
-        );
+        if (star.size > 1.2 && glowCache[star.color]) {
+          const gSize = star.glowSize * 4;
+          ctx.globalAlpha = Math.max(0, currentOpacity * 0.6);
+          ctx.drawImage(
+            glowCache[star.color],
+            star.x - gSize / 2,
+            star.y - gSize / 2,
+            gSize,
+            gSize
+          );
+        }
 
-        // Core star
-        ctx.globalAlpha = opacity;
-        ctx.fillStyle = `rgba(${star.color}, 1)`;
+        ctx.globalAlpha = Math.max(0, currentOpacity);
+        ctx.fillStyle = `rgb(${star.color})`;
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.globalAlpha = 1;
-      });
-
-      // Shooting stars
-      createShootingStar();
-      for (let i = shootingStars.length - 1; i >= 0; i--) {
-        const s = shootingStars[i];
-        s.x += Math.cos(s.angle) * s.speed;
-        s.y += Math.sin(s.angle) * s.speed;
-        s.life -= s.decay;
-        s.opacity = s.life;
-
-        if (s.life <= 0) {
-          shootingStars.splice(i, 1);
-          continue;
-        }
-
-        // Draw shooting star trail
-        const tailX = s.x - Math.cos(s.angle) * s.length;
-        const tailY = s.y - Math.sin(s.angle) * s.length;
-
-        const trailGradient = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
-        trailGradient.addColorStop(0, `rgba(255, 255, 255, 0)`);
-        trailGradient.addColorStop(0.7, `rgba(180, 230, 255, ${s.opacity * 0.4})`);
-        trailGradient.addColorStop(1, `rgba(255, 255, 255, ${s.opacity * 0.9})`);
-
-        ctx.strokeStyle = trailGradient;
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(tailX, tailY);
-        ctx.lineTo(s.x, s.y);
-        ctx.stroke();
-
-        // Head glow (Stamped from cache)
-        ctx.globalAlpha = s.opacity;
-        ctx.drawImage(shootingCache, s.x - 4, s.y - 4, 8, 8);
-        ctx.globalAlpha = 1;
       }
 
-      requestAnimationFrame(animate);
+      animId = requestAnimationFrame(animate);
     };
 
-    const animId = requestAnimationFrame(animate);
+    animId = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener("resize", resize);
       cancelAnimationFrame(animId);
+      window.removeEventListener("resize", resize);
     };
   }, []);
 
   return (
-    <>
+    <div
+      className="fixed inset-0 pointer-events-none -z-10 transition-opacity duration-700 ease-out"
+      style={{ opacity }}
+    >
       <canvas
         ref={canvasRef}
-        className="fixed top-0 left-0 w-full h-screen -z-10"
+        className="w-full h-full"
       />
-      {/* Nebula overlay */}
-      <div
-        className="fixed inset-0 -z-[9] pointer-events-none"
-        style={{
-          background: `
-            radial-gradient(ellipse 60% 50% at 20% 30%, rgba(88, 28, 135, 0.08) 0%, transparent 70%),
-            radial-gradient(ellipse 50% 60% at 80% 70%, rgba(6, 95, 124, 0.07) 0%, transparent 70%),
-            radial-gradient(ellipse 40% 40% at 50% 50%, rgba(34, 197, 94, 0.03) 0%, transparent 60%)
-          `,
-        }}
-      />
-    </>
+    </div>
   );
 };
 

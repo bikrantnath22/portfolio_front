@@ -1,0 +1,607 @@
+{
+  "generatedAt": "2026-11-18T15:38:50.057Z",
+  "author": {
+    "name": "Bikrant Nath",
+    "title": "AI/ML Engineer & Full-Stack Developer",
+    "degree": "M.Tech in Computer Science & Engineering, Tezpur University (2024–2026)",
+    "email": "bikrantnath4@gmail.com",
+    "phone": "+91 9101121475",
+    "location": "Guwahati, Assam, India (open to remote & relocation)",
+    "github": "https://github.com/bikrantnath22",
+    "linkedin": "https://www.linkedin.com/in/bikrant-nath-7747781a7/"
+  },
+  "professionalSummary": "AI/ML Engineer and Full-Stack Developer with expertise in AI agents, Agentic RAG systems, cloud-native orchestration with Kubernetes and Docker, high-throughput caching with Redis, and relational/vector databases (PostgreSQL, MySQL, ChromaDB). Holds M.Tech in Computer Science & Engineering from Tezpur University (2026) with hands-on research in privacy-preserving generative AI.",
+  "experience": [
+    {
+      "id": 3,
+      "role": "Agentic RAG Development Intern",
+      "company": "Skilaudit",
+      "duration": "Sep 2026 – Oct 2026",
+      "location": "",
+      "highlights": [
+        "Built an Agentic RAG pipeline with LLM-based routing, query decomposition, and self-check with query rewriting and retries.",
+        "Ingested PDF, CSV, and TXT files into ChromaDB and improved retrieval with Sentence-Transformers cross-encoder re-ranking.",
+        "Shipped a Streamlit app that shows the agent’s decisions live alongside each answer."
+      ],
+      "tech": [
+        "Python",
+        "Streamlit",
+        "ChromaDB",
+        "Groq (gpt-oss-120b)",
+        "Sentence-Transformers"
+      ]
+    },
+    {
+      "id": 1,
+      "role": "Co-Founder & Full-Stack Developer",
+      "company": "Athaana — Grocery eCommerce Startup",
+      "duration": "Feb 2022 – Jun 2022",
+      "location": "Nalbari, Assam",
+      "highlights": [
+        "Built and launched a full-stack grocery eCommerce platform for a local startup in Nalbari, reaching 1000+ real orders before the business closed.",
+        "Developed product listings, cart management, user authentication, checkout flow, and an order tracking system from scratch.",
+        "Implemented RESTful backend APIs and structured MongoDB data models to support scalable product catalog and order records.",
+        "Designed fully responsive shopping and checkout UIs optimised for both mobile and desktop users."
+      ],
+      "tech": [
+        "React",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "id": 2,
+      "role": "Software Development Intern",
+      "company": "Fineworks Media & Solution Technologies",
+      "duration": "Jan 2022 – Jul 2022",
+      "location": "Assam",
+      "highlights": [
+        "Built a full-stack hotel booking platform from scratch (React frontend + Node.js/Express backend + MongoDB), reducing manual booking errors through automated availability checks and reservation workflows.",
+        "Designed and implemented RESTful APIs for booking management, inventory tracking, and reservation workflows — supporting concurrent room lookups and live status updates.",
+        "Integrated a third-party online payment gateway, enabling secure end-to-end transactions with confirmation receipts."
+      ],
+      "tech": [
+        "React",
+        "Node.js",
+        "Express.js",
+        "MongoDB"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": 1,
+      "degree": "M.Tech — Computer Science & Engineering",
+      "institution": "Tezpur University",
+      "duration": "2024 – 2026",
+      "location": "Tezpur, Assam",
+      "cgpa": "7.63 / 10 "
+    },
+    {
+      "id": 2,
+      "degree": "MCA — Master of Computer Applications",
+      "institution": "Tripura University",
+      "duration": "2022 – 2024",
+      "location": "Agartala, Tripura",
+      "cgpa": "7.71 / 10"
+    }
+  ],
+  "awards": [
+    {
+      "id": 2,
+      "title": "NGIN Seed Funding for VR Learning Project",
+      "organization": "NGIN",
+      "year": "2024",
+      "badge": "Seed Funding",
+      "category": "Grant",
+      "description": "Received ₹1 lakh seed funding to develop a VR-based computer-assisted learning intervention for school students on Meta Quest."
+    },
+    {
+      "id": 1,
+      "title": "Codestellation Hackathon First Runner-Up",
+      "organization": "Assam Engineering College (AEC)",
+      "year": "2022",
+      "badge": "1st Runner-Up",
+      "category": "Hackathon",
+      "description": "Built a resume builder web application in a competitive hackathon setting — featured template selection, real-time preview, and one-click PDF export."
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "rank": null,
+      "status": "Finished",
+      "featured": true,
+      "title": "DP-CTGAN with Rare Minority Sampling",
+      "tagline": "Privacy-preserving synthetic data generation using differentially private CTGAN pipelines.",
+      "role": "ML Researcher",
+      "year": "2025–2026",
+      "metric": "Attack score ~0.50",
+      "description": "Designed and implemented a Differentially Private CTGAN pipeline using PyTorch and Opacus, evaluated across multiple privacy budget configurations on four real-world datasets with formal (ε, δ)-DP guarantees tracked via the Rényi Differential Privacy accountant. Integrated StableNVP normalizing flow scoring and gradient refinement to improve sample fidelity. Benchmarked against PATE-GAN (SynCity) and DP-CGAN (dp-cgans) — DP-CTGAN combined consistently outperformed both on AUC and distributional fidelity (KS). Implemented MIA privacy auditing with KNN-MIA and LR-MIA; confirmed attack scores near 0.50 across all configurations. Tuned hyperparameters with Optuna using a three-stage search.",
+      "highlights": [
+        "Built a differentially private CTGAN pipeline with formal (ε, δ)-DP guarantees using PyTorch and Opacus.",
+        "Outperformed PATE-GAN and DP-CGAN baselines on AUC and distributional fidelity across 4 datasets.",
+        "Validated privacy with MIA auditing (KNN-MIA, LR-MIA) — attack scores near 0.50 across all configs.",
+        "Used Optuna for 3-stage hyperparameter search with sealed holdout to prevent evaluation leakage."
+      ],
+      "stack": [
+        "PyTorch",
+        "Python",
+        "NumPy",
+        "Pandas"
+      ],
+      "github": "https://github.com/bikrantnath22/dp-ctgan",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 16,
+      "rank": 2,
+      "status": "Finished",
+      "featured": true,
+      "title": "Agentic RAG Service with Evaluation",
+      "tagline": "A RAG pipeline that fuses dense and keyword search, reranks, retries on weak evidence, and verifies every cited claim.",
+      "role": "AI/ML Engineer",
+      "year": "2026",
+      "metric": "0.82 MRR · 78% P@3 · <50ms cache",
+      "description": "Built a RAG API over a synthetic 500-page corpus (2,461 chunks). Redis caching serves repeat queries in under 50 ms, against 4.16 s (P50) for a cold query.\n• Designed a LangGraph agent that chooses between 4 tools (retriever, Python, math, web search) and retries when its self-check scores an answer low. It refused 15/15 out-of-domain test queries.\n• Benchmarked on 85 queries: 0.82 MRR (0.91 single-hop), 78% Precision@3, and 153/153 claims LLM-judged as grounded (56 answers); 16 automated tests passing.",
+      "highlights": [
+        "Built a hybrid RAG API fusing dense semantic search and keyword retrieval over a 2,461-chunk corpus with Redis caching.",
+        "Designed a LangGraph agent routing between 4 specialized tools with self-checking and retry on weak evidence.",
+        "Achieved 0.82 MRR (0.91 single-hop), 78% Precision@3, and 153/153 grounded claim verifications across 85 benchmark queries.",
+        "Implemented 16 automated tests and integrated LangSmith tracing with Prometheus metrics."
+      ],
+      "stack": [
+        "FastAPI",
+        "Google Gemini",
+        "LangGraph",
+        "ChromaDB",
+        "Sentence-Transformers",
+        "Redis",
+        "Docker",
+        "Prometheus"
+      ],
+      "github": "https://github.com/bikrantnath22/Agentic-rag-agent",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 3,
+      "rank": null,
+      "status": "Finished",
+      "featured": true,
+      "title": "AI Research & Fact-Verification Agent",
+      "tagline": "A multi-agent LangGraph system that plans, retrieves, synthesizes, and verifies answers for hallucination risk.",
+      "role": "AI/ML Engineer",
+      "year": "2025–2026",
+      "metric": "4-signal verifier (50/30/20%)",
+      "description": "Built a multi-agent AI research system with LangGraph that decomposes queries into sub-questions, retrieves from a Qdrant vector DB and live Tavily web search, synthesizes answers with inline source citations, and runs a four-signal hallucination verifier (Semantic Entropy + Ensemble Disagreement + Faithfulness). High-risk answers automatically trigger a re-retrieval loop with a refined query. Deployed via FastAPI with Dockerized MCP microservices.",
+      "highlights": [
+        "Multi-agent pipeline: Planner → Retriever → Synthesizer → Verifier with automatic re-retrieval loop.",
+        "Verifier combines Semantic Entropy (50%), Ensemble Disagreement (30%), and Faithfulness (20%) for hallucination risk scoring.",
+        "Retrieves from local Qdrant vector DB and live Tavily web search with confidence-based deduplication.",
+        "Deployed with FastAPI + Docker Compose using MCP microservices for Qdrant and Tavily integrations."
+      ],
+      "stack": [
+        "Python",
+        "LangGraph",
+        "FastAPI",
+        "Docker",
+        "AI Agents"
+      ],
+      "github": "https://github.com/bikrantnath22/AI-Research-Fact-Verification-Agent",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 18,
+      "rank": 4,
+      "status": "Finished",
+      "featured": true,
+      "title": "WooCommerce Store Platform with MCP Gateway on Kubernetes",
+      "tagline": "Runs WooCommerce stores on Kubernetes and exposes them to an AI agent through MCP servers and a gateway.",
+      "role": "Full-Stack / AI Engineer",
+      "year": "2026",
+      "metric": null,
+      "description": "Built for the Urumi AI FDE internship take-home. Provisions a WooCommerce store on Kubernetes with a Helm chart (MySQL 8.4, secrets script, bootstrap Job that installs the store, enables cash on delivery and places a test order), runs locally on k3d and targets a VPS with k3s, with a React dashboard and FastAPI backend. Store operations are exposed to an AI chat agent through MCP servers behind a gateway.",
+      "highlights": [
+        "Helm chart that deploys WooCommerce and MySQL 8.4 on Kubernetes, with a bootstrap Job that installs the store and places a test order.",
+        "Local cluster on k3d inside WSL2; secrets created by a script and kept out of the repo.",
+        "woo-mcp server with tools such as create_product (name, price, image URL).",
+        "Read-only analytics MCP server using a restricted WooCommerce key.",
+        "Gateway that routes the chat agent to the MCP servers.",
+        "React dashboard and chat agent on a FastAPI backend."
+      ],
+      "stack": [
+        "Kubernetes",
+        "Helm",
+        "MySQL",
+        "WooCommerce",
+        "FastAPI",
+        "React",
+        "k3d / k3s"
+      ],
+      "github": "https://github.com/bikrantnath22/urumi-mcp-platform",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 2,
+      "rank": null,
+      "status": "Finished",
+      "featured": true,
+      "title": "Athaana — eCommerce (Startup Nalbari, Assam based)",
+      "tagline": "A full-stack grocery ordering platform with checkout, order tracking, and admin-ready data flows.",
+      "role": "Co-Founder & Full-Stack Developer",
+      "year": "2022",
+      "metric": null,
+      "description": "Developed a full-stack grocery eCommerce platform for a local startup in Nalbari, reaching 1000+ real orders before the business closed — product listings, cart, order management, and order tracking. Implemented user authentication, checkout flow, and order tracking system serving real customers.",
+      "highlights": [
+        "Built and launched a full-stack grocery eCommerce platform for a local startup in Nalbari, reaching 1000+ real orders before the business closed.",
+        "Designed responsive shopping and checkout flows for mobile and desktop users.",
+        "Implemented backend APIs for products, carts, authentication, and order tracking.",
+        "Structured the MongoDB data model to support scalable catalog and order records."
+      ],
+      "stack": [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "Tailwind CSS"
+      ],
+      "github": "https://github.com/bikrantnath22/AthaanaProdMain",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 11,
+      "rank": null,
+      "status": "Finished",
+      "featured": true,
+      "title": "VR Computer Literacy Assessment",
+      "tagline": "A Meta Quest learning and assessment prototype for improving student engagement.",
+      "role": "VR and full-stack developer",
+      "year": "2024",
+      "metric": null,
+      "description": "Designed a VR-based computer literacy learning and assessment system for school students on Meta Quest, supported by a companion mobile and desktop app for progress tracking. Developed assessment modules to deliver quizzes, collect responses, and track per-student performance — 3D VR interface simulated computer hardware interactions. Conducted controlled experiment comparing VR vs. text-based learning groups; VR group demonstrated measurably higher engagement and quiz comprehension scores. Proposed a hybrid pedagogy model combining text-based theory with VR practical simulations.",
+      "highlights": [
+        "Received ₹1 lakh seed funding (NGIN, 2024) to develop this project.",
+        "Built interactive Unity modules for quiz-based learning and practical computer literacy tasks.",
+        "Connected learning progress to a companion app for tracking student performance.",
+        "Proposed a hybrid model that combines text theory with VR simulations for stronger engagement.",
+        "VR group demonstrated measurably higher engagement and comprehension scores in controlled testing."
+      ],
+      "stack": [
+        "Unity",
+        "C#",
+        "React Native",
+        "Node.js",
+        "MongoDB"
+      ],
+      "github": "",
+      "live": "",
+      "mediaType": "square"
+    },
+    {
+      "id": 5,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "eCafe — Online Food Ordering",
+      "tagline": "A full-stack cafe ordering platform with Google auth, Cloudinary images, real-time order tracking, and role-based access.",
+      "role": "Full-Stack Developer",
+      "year": "2025",
+      "metric": null,
+      "description": "Built a full-stack food ordering platform for eCafe — React frontend with Zustand state management and a Node.js/Express backend. Features Google OAuth sign-in, role-based access (Customer / Admin / Superadmin), mobile-first cart and checkout flow, COD order placement and status tracking, Cloudinary image hosting, and server-controlled open/closed hours so ordering availability is never dependent on the device clock.",
+      "highlights": [
+        "Server-controlled open/closed status via computed isOpen boolean — ordering never depends on device clock.",
+        "Google OAuth with role-based access: Customer, Admin, and Superadmin with JWT httpOnly cookie sessions.",
+        "Zustand cart persisted to localStorage, Cloudinary image hosting for menu items.",
+        "Full RESTful API: menu, cart, addresses, orders, settings with mobile-first React UI."
+      ],
+      "stack": [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "Tailwind CSS",
+        "Google Auth"
+      ],
+      "github": "https://github.com/bikrantnath22/Cafe-res",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 4,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "RAG Guardrail System",
+      "tagline": "A multi-layered input/output security shield protecting RAG systems from prompt injections and data exfiltration.",
+      "role": "AI Security Engineer",
+      "year": "2025",
+      "metric": "4 input + 2 output layers",
+      "description": "Designed and built a comprehensive security guardrail system for RAG-based AI assistants, defending against prompt injections, jailbreaks, and sensitive data leakage. Implemented a 4-layer input guard (Regex → DeBERTa classifier → Semantic Similarity via MiniLM-L6 → LLM Judge) and a 2-layer output guard (PII Redaction + Sensitivity Leak Check). Includes an interactive glassmorphism dashboard with a real-time toggleable guardrail switch and role-based access control (Guest/Employee/Admin) for testing data boundaries.",
+      "highlights": [
+        "4-layer input guard: Regex heuristics → DeBERTa classifier → MiniLM-L6 semantic similarity → LLM Judge fallback.",
+        "Role-aware output PII redaction and sensitivity leak verification across public/restricted/confidential data tiers.",
+        "Interactive glassmorphism dashboard with real-time guardrail toggle and RBAC simulation.",
+        "Stack: FastAPI backend, PyTorch, HuggingFace Transformers, Groq LLM API, Docker."
+      ],
+      "stack": [
+        "Python",
+        "FastAPI",
+        "PyTorch",
+        "Docker",
+        "AI Security"
+      ],
+      "github": "https://github.com/bikrantnath22/RAG-Guardrail-System",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 8,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "LLM Hallucination Detector",
+      "tagline": "An information-theoretic pipeline using Semantic Entropy and Ensemble Disagreement to flag hallucinating LLMs.",
+      "role": "AI/ML Engineer",
+      "year": "2025",
+      "metric": null,
+      "description": "Designed an end-to-end, locally verifiable hallucination detection pipeline for LLMs using two complementary techniques: Semantic Entropy (clustering generative variance via NLI-based bidirectional entailment, then computing Shannon entropy over cluster distributions) and Ensemble Disagreement (cross-examining factual claims from an 8B vs. 70B model). High entropy or cross-model contradiction signals hallucination risk without requiring external retrieval. Served via FastAPI with HuggingFace Transformers and Groq API.",
+      "highlights": [
+        "Semantic Entropy: N high-temperature samples → NLI-based bidirectional entailment clustering → Shannon entropy hallucination risk.",
+        "Ensemble Disagreement: cross-model factual claim comparison between 8B and 70B LLMs via Groq API.",
+        "No external RAG needed — interrogates the model's internal consistency for epistemic uncertainty.",
+        "FastAPI service with HuggingFace Transformers (DeBERTa NLI), locally verifiable on any dataset."
+      ],
+      "stack": [
+        "Python",
+        "FastAPI",
+        "PyTorch",
+        "LLM API"
+      ],
+      "github": "https://github.com/bikrantnath22/llm-hallucination-detector",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 20,
+      "rank": 9,
+      "status": "Finished",
+      "featured": false,
+      "title": "Chat with Your Documents (Agentic RAG)",
+      "tagline": "Internship project: agentic RAG with routing, self-check, re-ranking and a document chat app.",
+      "role": "AI/ML Engineer Intern",
+      "year": "2026",
+      "metric": null,
+      "description": "Built during the Skilaudit internship. Starts with basic RAG (ChromaDB, sentence-transformers, top-4 retrieval) and adds agentic routing, self-checking with up to 2 query-rewrite retries, multi-source ingestion with metadata, top-10 re-ranking to the best 3 to 4 chunks, sub-query rewriting and a chat-with-your-documents app.",
+      "highlights": [
+        "Engineered agentic routing and query decomposition to direct user queries through specialized retrieval paths.",
+        "Built self-checking evaluation mechanism with automatic query rewriting and up to two retries.",
+        "Multi-source ingestion pipeline supporting PDF, CSV, and TXT with structured metadata into ChromaDB.",
+        "Cross-encoder re-ranking filtering top-10 candidate chunks down to the highest-confidence 3 to 4 chunks.",
+        "Shipped a Streamlit app that visualizes the agent's routing decisions and citations live alongside answers."
+      ],
+      "stack": [
+        "Python",
+        "ChromaDB",
+        "Sentence-Transformers",
+        "Streamlit"
+      ],
+      "github": "https://github.com/bikrantnath22/Internship-agentic-rag",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 12,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "AI Chat Agent — Human-like Messaging",
+      "tagline": "An AI-powered conversational agent that replicates individual messaging styles using LLMs.",
+      "role": "AI/ML Developer",
+      "year": "2025",
+      "metric": "< 200ms latency",
+      "description": "Built an AI-powered conversational agent that replicates individual messaging styles using LLM-based generation with persistent memory/context handling. Designed the system to learn from prior conversations and adapt tone, vocabulary, and response cadence to match a target user's communication patterns. Implemented real-time message delivery using Node.js + WebSockets, with sub-200ms response latency under normal load.",
+      "highlights": [
+        "Replicates individual messaging styles using LLM-based generation with persistent memory.",
+        "Adapts tone, vocabulary, and response cadence from prior conversation patterns.",
+        "Sub-200ms response latency using Node.js + WebSockets for real-time delivery."
+      ],
+      "stack": [
+        "Node.js",
+        "WebSockets",
+        "LLM API",
+        "AI Agents"
+      ],
+      "github": "",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 6,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "SQL Bank Fraud Detection System",
+      "tagline": "A pure-SQL bank fraud detection engine with real-time triggers, stored procedures, and risk-weighted flagging.",
+      "role": "Data Engineer",
+      "year": "2025",
+      "metric": "2000+ seeded txns · 10× anomaly",
+      "description": "Built a comprehensive SQL-based fraud detection system for banking transactions in MySQL 8.x — pure relational intelligence, no external ML frameworks. Features 2000+ seeded transactions with planted fraud scenarios, an AFTER INSERT trigger for real-time per-transaction evaluation, stored procedures for on-demand risk assessment, and a SQL VIEW for dashboard reporting. Detects High Velocity (5+ txns in 2 min), High Value Anomaly (10× account average), and Structuring/Smurfing patterns.",
+      "highlights": [
+        "AFTER INSERT trigger for real-time per-transaction fraud evaluation with configurable risk weight thresholds.",
+        "Detects High Velocity, High Value Anomaly, and Structuring (Smurfing) fraud patterns.",
+        "Rolling average anomaly detection and LAG() window function velocity queries.",
+        "SQL VIEW-based fraud dashboard — 2000+ seeded transactions with planted fraud scenarios."
+      ],
+      "stack": [
+        "MySQL",
+        "SQL"
+      ],
+      "github": "https://github.com/bikrantnath22/SQL-Fraud-Detection-",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 7,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "Telco Customer Churn Analysis",
+      "tagline": "End-to-end analytics pipeline — EDA, K-Means segmentation, SQL BI, and Random Forest churn prediction (AUC 0.846).",
+      "role": "Data Analyst / ML Engineer",
+      "year": "2025",
+      "metric": "AUC = 0.846",
+      "description": "Performed a full analytical pipeline on the IBM Telco Customer Churn dataset (7,043 customers, 21 features) — from raw data cleaning and EDA to K-Means customer segmentation, financial impact analysis, retention curve modeling, MySQL database creation for BI pipelines, and a predictive churn model. Best-fit model selection landed on Random Forest with AUC = 0.846.",
+      "highlights": [
+        "Full analytical pipeline: data cleaning → EDA → segmentation → financial impact → retention curves → prediction.",
+        "K-Means clustering for customer segmentation with Silhouette Score optimization.",
+        "Best-fit churn prediction model: Random Forest with AUC = 0.846.",
+        "MySQL database schema for BI pipelines with SQL VIEW-based analytics dashboard."
+      ],
+      "stack": [
+        "Python",
+        "Pandas",
+        "Scikit-learn",
+        "MySQL",
+        "NumPy"
+      ],
+      "github": "https://github.com/bikrantnath22/Telco-Customer-Churn",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 9,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "Image Annotation & Quality-Audit Pipeline",
+      "tagline": "An end-to-end data annotation and quality-control workflow with dual-pass auditing and automated reporting.",
+      "role": "ML Data Engineer",
+      "year": "2025",
+      "metric": "20% audit sample",
+      "description": "Built a structured image annotation and quality-control pipeline following a formal SOP: images are labeled (bounding box + class) in two independent passes, then audited using IoU for bounding box overlap agreement and Cohen's Kappa for label agreement. Outputs a structured quality audit CSV report and visualizations. Designed to simulate real-world annotation quality workflows used in computer vision data pipelines.",
+      "highlights": [
+        "Dual-pass annotation: full pass 1 labeling + random 20% audit sample in pass 2.",
+        "Quality metrics: IoU (bounding box overlap) and Cohen's Kappa (label agreement) per image.",
+        "Automated quality audit CSV report and visualization generation.",
+        "SOP-driven workflow simulating production annotation pipelines for computer vision datasets."
+      ],
+      "stack": [
+        "Python",
+        "NumPy",
+        "Pandas",
+        "Scikit-learn"
+      ],
+      "github": "https://github.com/bikrantnath22/Image-Annotation-Quality-Audit-Pipeline",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 10,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "Text Data Quality Checker",
+      "tagline": "A Python pipeline and Streamlit dashboard for auditing real Amazon review data quality before ML use.",
+      "role": "Data Engineer",
+      "year": "2025",
+      "metric": null,
+      "description": "Built a comprehensive text data quality auditing pipeline for real Amazon review data — normalizes raw CSV input into a clean audit format, then checks each review against multiple quality rules: schema validation, language detection, grammar/spelling flags, and content flags (profanity, PII exposure). Outputs a structured CSV report and an interactive Streamlit dashboard for visual quality inspection.",
+      "highlights": [
+        "Multi-rule audit: schema validation, language detection, grammar/spelling flags, and content moderation.",
+        "Reads real Amazon Reviews CSV — no synthetic data; errors out cleanly if source file is missing.",
+        "Outputs a structured quality audit CSV report and an interactive Streamlit visual dashboard.",
+        "Covers PII exposure flags (phone numbers, emails) and profanity detection per review."
+      ],
+      "stack": [
+        "Python",
+        "Pandas",
+        "Streamlit",
+        "NumPy"
+      ],
+      "github": "https://github.com/bikrantnath22/Text-quality-checker",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 13,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "Animal Rescue Platform",
+      "tagline": "A real-time rescue coordination platform with NGO matching and geolocation alerts.",
+      "role": "Full-stack developer",
+      "year": "2024",
+      "metric": null,
+      "description": "Built a full-stack NGO-facing rescue coordination platform with React.js, Node.js (WebSockets), MongoDB, and Cloudinary image uploads. Implemented real-time geolocation-based NGO matching and alert dispatch, reducing manual coordination overhead for rescue case intake. Designed an admin dashboard with case tracking, status analytics, and NGO management — supporting multi-role access.",
+      "highlights": [
+        "Implemented real-time NGO matching and status updates using WebSockets.",
+        "Integrated location-based rescue alerts to speed up response coordination.",
+        "Created dashboard-oriented flows for case tracking and operational visibility."
+      ],
+      "stack": [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "WebSockets"
+      ],
+      "github": "https://github.com/bikrantnath22/AnimalMain",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 14,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "Task Management System",
+      "tagline": "A company task platform with role-based access, deadlines, messaging, and attachments.",
+      "role": "Full-stack developer",
+      "year": "2023",
+      "metric": null,
+      "description": "Built a project and task management system that lets companies create projects with deadlines, assign managers, manage role-based access, and support employee-to-manager messaging with file attachments. The platform focuses on clear accountability, collaboration, and scalable team workflows.",
+      "highlights": [
+        "Added role-based access so managers and employees see the correct workflows.",
+        "Supported project deadlines, assignment flows, and task progress visibility.",
+        "Built messaging with attachment support for smoother internal communication."
+      ],
+      "stack": [
+        "React",
+        "Node.js",
+        "MongoDB"
+      ],
+      "github": "https://github.com/bikrantnath22/TAsk_manegment",
+      "live": "",
+      "mediaType": "browser"
+    },
+    {
+      "id": 15,
+      "rank": null,
+      "status": "Finished",
+      "featured": false,
+      "title": "Vastramaniae — Shopify Clothing Store",
+      "tagline": "A customized Shopify storefront for an online clothing brand with Liquid templates.",
+      "role": "Frontend developer",
+      "year": "2024",
+      "metric": null,
+      "description": "Customized a Shopify storefront for an online clothing brand — implemented Liquid templates for product pages, collections, and UI enhancements. Focused on delivering a polished shopping experience with clean product layouts and brand-consistent styling.",
+      "highlights": [
+        "Implemented custom Liquid templates for product pages and collections.",
+        "Delivered brand-consistent UI enhancements for an online clothing store.",
+        "Optimized storefront layout for a polished shopping experience."
+      ],
+      "stack": [
+        "Shopify",
+        "JavaScript",
+        "CSS"
+      ],
+      "github": "",
+      "live": "",
+      "mediaType": "browser"
+    }
+  ]
+}

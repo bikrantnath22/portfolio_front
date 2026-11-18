@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { education } from "../data/resumeData";
-import { GradCapDoodle, StarDoodle } from "./CartoonDoodles";
-import "./styles.css";
 
 // Count-up animation for CGPA
-const CountUp = ({ target, duration = 2000 }) => {
+const CountUp = ({ target, duration = 1800 }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const hasAnimated = useRef(false);
@@ -21,14 +18,14 @@ const CountUp = ({ target, duration = 2000 }) => {
           const animate = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
             setCount((numericTarget * eased).toFixed(2));
             if (progress < 1) requestAnimationFrame(animate);
           };
           requestAnimationFrame(animate);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     if (ref.current) observer.observe(ref.current);
@@ -40,118 +37,67 @@ const CountUp = ({ target, duration = 2000 }) => {
 
 const EducationSection = () => {
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: { staggerChildren: 0.3 },
-        },
-      }}
-      className="w-full max-w-5xl mx-auto px-4 py-8 md:py-12 relative"
-    >
-      {/* Floating cartoon doodles */}
-      <StarDoodle className="text-cyan-400 -top-2 left-10 hidden md:block" delay={1} />
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 font-body text-white">
+      {/* Eyebrow + Section Header */}
+      <div className="text-center max-w-2xl mx-auto mb-14">
+        <span className="text-xs font-mono uppercase tracking-widest text-cyan-400">
+          ACADEMIC FOUNDATION
+        </span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading text-white tracking-tight mt-2">
+          Education
+        </h2>
+        <p className="mt-3 text-sm sm:text-base text-gray-400 max-w-[65ch] mx-auto leading-relaxed">
+          Postgraduate engineering and computing degrees with specialized coursework in machine learning and distributed systems.
+        </p>
+      </div>
 
-      <motion.h2
-        className="cartoon-heading text-2xl md:text-4xl font-bold text-center mb-10 aurora-text tracking-wide"
-        initial={{ y: 20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        Education
-      </motion.h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-        {education.map((edu, index) => (
-          <motion.div
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {education.map((edu) => (
+          <div
             key={edu.id}
-            className="hand-drawn-border p-6 md:p-7 glass cartoon-card group relative overflow-hidden neon-hover"
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: index * 0.2 }}
-            whileHover={{ y: -6 }}
+            className="card-unified p-6 md:p-8 rounded-2xl group relative overflow-hidden transition-all duration-300 flex flex-col justify-between"
           >
-            {/* Graduation cap doodle in corner */}
-            <div className="absolute -top-1 -right-1 opacity-60 group-hover:opacity-100 transition-opacity">
-              <GradCapDoodle className="text-green-400" delay={index} />
-            </div>
-
-            {/* Gradient accent strip */}
-            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-green-400 via-cyan-400 to-purple-500 rounded-full opacity-60 group-hover:opacity-100 transition-opacity" />
-
-            <div className="pl-3">
+            <div>
               {/* Institution badge + degree row */}
-              <div className="flex items-start gap-3 mb-3">
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold shrink-0"
-                  style={{
-                    background: index === 0 ? "rgba(34,197,94,0.12)" : "rgba(6,182,212,0.12)",
-                    border: index === 0 ? "1px solid rgba(34,197,94,0.3)" : "1px solid rgba(6,182,212,0.3)",
-                    color: index === 0 ? "#22c55e" : "#06b6d4",
-                    fontFamily: "var(--font-heading, 'Space Grotesk', sans-serif)",
-                  }}
-                >
-                  {edu.institution.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 font-heading bg-cyan-950/40 border border-cyan-400/30 text-cyan-400">
+                  {edu.institution.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()}
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-lg md:text-xl font-bold text-white pr-10 leading-tight"
-                    style={{ fontFamily: "var(--font-heading, 'Space Grotesk', sans-serif)", letterSpacing: "-0.02em" }}
-                  >
+                <div>
+                  <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug font-heading">
                     {edu.degree}
                   </h3>
-                  <p className="text-green-400 font-medium text-sm md:text-base mt-0.5">
+                  <p className="text-cyan-400 font-medium text-sm mt-1">
                     {edu.institution}
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400 mb-3">
-                <span className="flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  {edu.duration}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  {edu.location}
-                </span>
-              </div>
 
-              {/* CGPA badge with count-up animation */}
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border mt-1"
-                style={{
-                  background: index === 0
-                    ? "linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(6, 182, 212, 0.08))"
-                    : "linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(139, 92, 246, 0.08))",
-                  borderColor: index === 0 ? "rgba(34, 197, 94, 0.3)" : "rgba(6, 182, 212, 0.3)",
-                  boxShadow: index === 0 ? "0 0 20px rgba(34,197,94,0.08)" : "0 0 20px rgba(6,182,212,0.08)",
-                }}
-              >
-                <span className="text-lg">🎓</span>
-                <span className="text-xs text-gray-400 uppercase tracking-wider font-medium">CGPA</span>
-                <span className="text-base font-bold" style={{ color: index === 0 ? "#4ade80" : "#22d3ee" }}>
-                  <CountUp target={edu.cgpa.split(" ")[0]} />
-                  <span className="ml-1 text-[11px] md:text-xs font-normal tracking-normal opacity-80">
-                    {edu.cgpa.substring(edu.cgpa.indexOf(" ") + 1)}
-                  </span>
-                </span>
+              {/* Meta row */}
+              <div className="flex flex-wrap items-center gap-3 text-xs text-gray-400 mb-6 font-mono">
+                <span>📅 {edu.duration}</span>
+                <span>📍 {edu.location}</span>
               </div>
             </div>
 
-            {/* Ambient glow on hover */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-green-500/0 group-hover:bg-green-500/5 rounded-full blur-3xl transition-all duration-500" />
-          </motion.div>
+            {/* CGPA badge */}
+            <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+              <span className="text-xs text-gray-400 uppercase tracking-wider font-mono">
+                Cumulative Grade
+              </span>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-400/30">
+                <span className="text-sm font-bold font-mono text-cyan-300">
+                  <CountUp target={edu.cgpa.split(" ")[0]} />
+                </span>
+                <span className="text-xs text-gray-400 font-mono">
+                  {edu.cgpa.substring(edu.cgpa.indexOf(" ") + 1)}
+                </span>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 };
 

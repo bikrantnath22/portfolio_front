@@ -2,14 +2,27 @@
 
 export const experience = [
   {
+    id: 3,
+    role: "Agentic RAG Development Intern",
+    company: "Skilaudit",
+    duration: "Sep 2026 – Oct 2026",
+    location: "", // TODO: confirm (Remote?)
+    highlights: [
+      "Built an Agentic RAG pipeline with LLM-based routing, query decomposition, and self-check with query rewriting and retries.",
+      "Ingested PDF, CSV, and TXT files into ChromaDB and improved retrieval with Sentence-Transformers cross-encoder re-ranking.",
+      "Shipped a Streamlit app that shows the agent’s decisions live alongside each answer.",
+    ],
+    tech: ["Python", "Streamlit", "ChromaDB", "Groq (gpt-oss-120b)", "Sentence-Transformers"],
+  },
+  {
     id: 1,
     role: "Co-Founder & Full-Stack Developer",
     company: "Athaana — Grocery eCommerce Startup",
-    duration: "2022",
+    duration: "Feb 2022 – Jun 2022",
     location: "Nalbari, Assam",
     highlights: [
-      "Built and deployed a production full-stack grocery eCommerce platform for a local startup in Nalbari, serving real customers end-to-end.",
-      "Developed product listings, cart management, user authentication, checkout flow, and a live order tracking system from scratch.",
+      "Built and launched a full-stack grocery eCommerce platform for a local startup in Nalbari, reaching 1000+ real orders before the business closed.",
+      "Developed product listings, cart management, user authentication, checkout flow, and an order tracking system from scratch.",
       "Implemented RESTful backend APIs and structured MongoDB data models to support scalable product catalog and order records.",
       "Designed fully responsive shopping and checkout UIs optimised for both mobile and desktop users.",
     ],
@@ -51,14 +64,26 @@ export const education = [
 
 export const awards = [
   {
+    id: 2,
+    title: "NGIN Seed Funding for VR Learning Project", // CONFIRM exact name
+    organization: "NGIN",
+    year: "2024",
+    badge: "Seed Funding",
+    category: "Grant",
+    description:
+      "Received ₹1 lakh seed funding to develop a VR-based computer-assisted learning intervention for school students on Meta Quest.",
+  },
+  {
     id: 1,
     title: "Codestellation Hackathon First Runner-Up",
     organization: "Assam Engineering College (AEC)",
     year: "2022",
+    badge: "1st Runner-Up",
+    category: "Hackathon",
     description:
       "Built a resume builder web application in a competitive hackathon setting — featured template selection, real-time preview, and one-click PDF export.",
   },
 ];
 
 export const professionalSummary =
-  "Results-driven AI/ML Engineer and Full-Stack Developer with expertise in privacy-preserving machine learning, Generative AI, LLM-powered applications, and scalable system design. Holds M.Tech in Computer Science & Engineering from Tezpur University (2026) with hands-on research experience in differentially private synthetic data generation.";
+  "AI/ML Engineer and Full-Stack Developer with expertise in AI agents, Agentic RAG systems, cloud-native orchestration with Kubernetes and Docker, high-throughput caching with Redis, and relational/vector databases (PostgreSQL, MySQL, ChromaDB). Holds M.Tech in Computer Science & Engineering from Tezpur University (2026) with hands-on research in privacy-preserving generative AI.";

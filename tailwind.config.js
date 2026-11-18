@@ -7,14 +7,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        robotoSlab: ["Roboto Slab", "serif"],
-        openSans: ["Open Sans", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"],
+        heading: ["'Space Grotesk'", "sans-serif"],
+        body: ["'Inter'", "sans-serif"],
       },
-      
+      colors: {
+        accent: "var(--accent, #22d3ee)",
+      },
     },
-    
   },
-  
-
-}
+};

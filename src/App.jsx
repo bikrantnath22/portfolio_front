@@ -1,13 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
+import Lenis from "lenis";
 import Header from "./components/Header";
-import ProgressLoader from "./components/ProgressLoader";
 import StarsBackground from "./components/StarBackGround";
 import Home from "./pages/Home";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import CustomCursor from "./components/CustomCursor";
-import ThemePeel from "./components/ThemePeel";
+import AiTerminal from "./components/AiTerminal";
+
+// Robust scroll manager: handles hash scrolling across routes & resets top on route change
+function ScrollManager() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      let attempts = 0;
+      const interval = setInterval(() => {
+        attempts += 1;
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+          clearInterval(interval);
+        } else if (attempts > 20) {
+          clearInterval(interval);
+        }
+      }, 50);
+      return () => clearInterval(interval);
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [location.pathname, location.hash]);
+
+  return null;
+}
 
 // Animated routes wrapper
 function AnimatedRoutes() {
@@ -48,32 +75,53 @@ function AnimatedRoutes() {
 }
 
 function App() {
-  const [loading, setLoading] = useState(!localStorage.getItem("dataLoaded"));
-
+  // Dynamic browser tab title switcher on visibility change
   useEffect(() => {
-    if (!localStorage.getItem("dataLoaded")) {
-      const timer = setTimeout(() => {
-        setLoading(false);
-        localStorage.setItem("dataLoaded", "true");
-      }, 3100);
-
-      return () => clearTimeout(timer);
-    }
-
-    setLoading(false);
+    const originalTitle = document.title;
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        document.title = "Bikrant Nath | Ready to build 🚀";
+      } else {
+        document.title = originalTitle;
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  if (loading) {
-    return <ProgressLoader />;
-  }
+  useEffect(() => {
+    // Respect user's motion preferences
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, []);
 
   return (
     <Router>
-      <ThemePeel />
+      <ScrollManager />
       <StarsBackground />
       <CustomCursor />
       <Header />
       <AnimatedRoutes />
+      <AiTerminal />
     </Router>
   );
 }

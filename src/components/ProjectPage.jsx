@@ -1,32 +1,9 @@
-﻿import { useRef, useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-  EyeOutlined,
-  GithubOutlined,
-} from "@ant-design/icons";
+import { useRef, useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { ArrowRightOutlined, EyeOutlined, GithubOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { projects } from "../data/projects";
-
-// Unique gradient banner per project â€” no repeated images
-const projectBanners = {
-  1:  { gradient: "linear-gradient(135deg, #0f2027 0%, #1a1a2e 40%, #16213e 70%, #0d1b2a 100%)", accent: "#f97316", label: "Privacy ML" },
-  2:  { gradient: "linear-gradient(135deg, #0a2e1a 0%, #064e3b 50%, #065f46 100%)", accent: "#34d399", label: "eCommerce" },
-  3:  { gradient: "linear-gradient(135deg, #1a0533 0%, #2d1b69 50%, #1e1b4b 100%)", accent: "#a78bfa", label: "Multi-Agent AI" },
-  4:  { gradient: "linear-gradient(135deg, #1a0000 0%, #3b0f0f 50%, #450a0a 100%)", accent: "#f87171", label: "AI Security" },
-  5:  { gradient: "linear-gradient(135deg, #0c1a33 0%, #1e3a5f 50%, #1e40af 100%)", accent: "#60a5fa", label: "Data Analytics" },
-  6:  { gradient: "linear-gradient(135deg, #1a1200 0%, #3d2b00 50%, #451a00 100%)", accent: "#fbbf24", label: "SQL" },
-  7:  { gradient: "linear-gradient(135deg, #001a0c 0%, #033f1a 50%, #064e3b 100%)", accent: "#4ade80", label: "Full-Stack" },
-  8:  { gradient: "linear-gradient(135deg, #1a0a1a 0%, #3b0764 50%, #2e1065 100%)", accent: "#c084fc", label: "LLM Research" },
-  9:  { gradient: "linear-gradient(135deg, #0a1628 0%, #1e3a5f 45%, #0c4a6e 100%)", accent: "#38bdf8", label: "CV Pipeline" },
-  10: { gradient: "linear-gradient(135deg, #0f1a10 0%, #1e3a23 50%, #14532d 100%)", accent: "#86efac", label: "Data Quality" },
-  11: { gradient: "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)", accent: "#818cf8", label: "VR / Unity" },
-  12: { gradient: "linear-gradient(135deg, #001a1a 0%, #0e4d4d 50%, #0c4a6e 100%)", accent: "#22d3ee", label: "AI Chat" },
-  13: { gradient: "linear-gradient(135deg, #0d1f0d 0%, #1a3a1a 50%, #166534 100%)", accent: "#4ade80", label: "Full-Stack" },
-  14: { gradient: "linear-gradient(135deg, #0a0a1a 0%, #1e1e3f 50%, #1e1b4b 100%)", accent: "#a5b4fc", label: "Full-Stack" },
-  15: { gradient: "linear-gradient(135deg, #1a0a00 0%, #431407 50%, #7c2d12 100%)", accent: "#fb923c", label: "Frontend" },
-};
+import { projectBanners } from "../data/projectBanners";
 
 const categoryFilters = [
   { label: "All", value: "all" },
@@ -38,414 +15,472 @@ const categoryFilters = [
 ];
 
 const projectCategories = {
-  1: "ai", 2: "fullstack", 3: "ai", 4: "security",
-  5: "data", 6: "data", 7: "fullstack", 8: "ai",
-  9: "data", 10: "data", 11: "vr", 12: "ai",
-  13: "fullstack", 14: "fullstack", 15: "fullstack",
+  1: "ai",
+  2: "fullstack",
+  3: "ai",
+  4: "security",
+  5: "fullstack",
+  6: "data",
+  7: "data",
+  8: "ai",
+  9: "data",
+  10: "data",
+  11: "vr",
+  12: "ai",
+  13: "fullstack",
+  14: "fullstack",
+  15: "fullstack",
+  16: "ai",
+  18: "fullstack",
+  20: "ai",
 };
 
-// Mouse-tracking tilt card
-const TiltCard = ({ children, className, style, onClick }) => {
+// Pointer-event based 3D tilt with specular glare, disabled on touch & reduced motion
+const TiltCard = ({ children, className = "", onClick, onMouseEnter, onMouseLeave }) => {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+  const [isTiltDisabled, setIsTiltDisabled] = useState(false);
 
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+  useEffect(() => {
+    const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setIsTiltDisabled(isCoarse || prefersReducedMotion);
+  }, []);
+
+  const handlePointerMove = (e) => {
+    if (isTiltDisabled || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
 
-    setTilt({
-      x: ((y - centerY) / centerY) * -3,
-      y: ((x - centerX) / centerX) * 3,
-    });
-    setGlowPos({
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-    });
+    // Max 8 degrees tilt on each axis
+    const tiltX = (0.5 - py) * 16;
+    const tiltY = (px - 0.5) * 16;
+    const clampedX = Math.max(-8, Math.min(8, tiltX));
+    const clampedY = Math.max(-8, Math.min(8, tiltY));
+
+    setTilt({ x: clampedX, y: clampedY });
+    setGlare({ x: px * 100, y: py * 100, opacity: 0.18 });
   };
 
-  const handleMouseLeave = () => {
+  const handlePointerLeave = () => {
+    if (isTiltDisabled) return;
     setTilt({ x: 0, y: 0 });
-    setGlowPos({ x: 50, y: 50 });
+    setGlare((prev) => ({ ...prev, opacity: 0 }));
   };
 
   return (
-    <motion.div
+    <div
       ref={cardRef}
-      className={className}
-      style={{
-        ...style,
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transformStyle: "preserve-3d",
-        transition: "transform 0.15s ease-out",
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      className={`relative col-span-1 h-full select-none ${className}`}
+      style={{ perspective: isTiltDisabled ? "none" : "1000px" }}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       onClick={onClick}
     >
-      {/* Glow follower */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-[20px]"
+        className="w-full h-full rounded-2xl transition-transform duration-200 ease-out flex flex-col"
         style={{
-          background: `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, rgba(34, 197, 94, 0.10) 0%, transparent 65%)`,
+          transform: isTiltDisabled
+            ? "none"
+            : `rotateX(${tilt.x.toFixed(2)}deg) rotateY(${tilt.y.toFixed(2)}deg)`,
+          transformStyle: isTiltDisabled ? "flat" : "preserve-3d",
         }}
-      />
-      {children}
-    </motion.div>
-  );
-};
-
-// Project banner â€” unique gradient per project (no repeated images)
-const ProjectBanner = ({ project }) => {
-  const banner = projectBanners[project.id] || {
-    gradient: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)",
-    accent: "#22c55e",
-    label: "Project",
-  };
-
-  return (
-    <div className="relative overflow-hidden h-44" style={{ background: banner.gradient }}>
-      {/* Geometric accent shapes */}
-      <div
-        className="absolute -top-8 -right-8 w-32 h-32 rounded-full opacity-20 blur-xl"
-        style={{ background: banner.accent }}
-      />
-      <div
-        className="absolute bottom-4 -left-6 w-20 h-20 rounded-full opacity-10 blur-lg"
-        style={{ background: banner.accent }}
-      />
-      {/* Grid pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `linear-gradient(${banner.accent}33 1px, transparent 1px), linear-gradient(90deg, ${banner.accent}33 1px, transparent 1px)`,
-          backgroundSize: "24px 24px",
-        }}
-      />
-      {/* Category label pill */}
-      <div
-        className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
-        style={{ background: `${banner.accent}22`, color: banner.accent, border: `1px solid ${banner.accent}40` }}
       >
-        {banner.label}
-      </div>
-      {/* Project ID watermark */}
-      <div
-        className="absolute bottom-4 right-4 text-6xl font-black opacity-10 select-none"
-        style={{ color: banner.accent }}
-      >
-        #{String(project.id).padStart(2, "0")}
-      </div>
-      {/* Project title overlay */}
-      <div className="absolute inset-0 flex flex-col justify-end p-4 pb-3">
-        <div
-          className="w-8 h-0.5 mb-2 rounded-full"
-          style={{ background: banner.accent }}
-        />
-      </div>
-      {/* Hover tagline */}
-      <div className="absolute inset-0 flex items-end p-3 opacity-0 group-hover:opacity-100 transition-all duration-400">
-        <div
-          className="w-full rounded-xl p-2.5 transform translate-y-2 group-hover:translate-y-0 transition-all duration-400"
-          style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(10px)", border: `1px solid ${banner.accent}25` }}
-        >
-          <p className="text-xs text-gray-300 leading-relaxed line-clamp-2">{project.tagline}</p>
-        </div>
+        {children}
+
+        {/* Soft Glare Specular Highlight */}
+        {!isTiltDisabled && (
+          <div
+            className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
+            style={{
+              opacity: glare.opacity,
+              background: `radial-gradient(circle 380px at ${glare.x}% ${glare.y}%, rgba(34, 211, 238, 0.2), transparent 70%)`,
+            }}
+          />
+        )}
       </div>
     </div>
   );
 };
 
-const ProjectPage = () => {
-  const [page, setPage] = useState(0);
-  const [activeFilter, setActiveFilter] = useState("all");
-  const projectsPerPage = 6;
-  const topRef = useRef(null);
+// Upgraded Gradient Banner Cover (uniform 176px height across every card)
+const CardCover = ({ project, isHovered, banner }) => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    if (isHovered) {
+      videoRef.current.play().catch(() => {});
+    } else {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [isHovered]);
+
+  return (
+    <div
+      className="relative w-full h-44 rounded-t-2xl overflow-hidden flex flex-col justify-between p-4 select-none transition-all duration-500 shrink-0"
+      style={{ background: banner.gradient }}
+    >
+      {/* Subtle Dot Grid Texture */}
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(#22d3ee 1px, transparent 1px)",
+          backgroundSize: "18px 18px",
+        }}
+      />
+
+      {/* Large faint domain icon watermark */}
+      <div className="absolute right-3 -bottom-4 text-7xl text-white opacity-[0.07] pointer-events-none select-none transition-transform duration-500 group-hover:scale-110">
+        {banner.icon}
+      </div>
+
+      {/* Hover Video Layer (muted & looping on hover, gradient as poster) */}
+      {project.video && (
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none z-[1]"
+          style={{ opacity: isHovered ? 0.95 : 0 }}
+        >
+          {project.webm && <source src={project.webm} type="video/webm" />}
+          <source src={project.video} type="video/mp4" />
+        </video>
+      )}
+
+      {/* Top Meta: Category Chip + Featured Tag + Metric + Year */}
+      <div className="flex items-center justify-between gap-2 z-10">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span
+            className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full border"
+            style={{
+              borderColor: `${banner.accent}55`,
+              backgroundColor: `${banner.accent}15`,
+              color: banner.accent,
+            }}
+          >
+            {banner.label}
+          </span>
+          {project.featured && (
+            <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-400/40 text-cyan-300 flex items-center gap-1 shadow-[0_0_8px_rgba(34,211,238,0.25)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              Featured
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          {project.metric && (
+            <span className="text-[10px] font-mono text-cyan-300 bg-cyan-950/60 border border-cyan-400/35 px-2 py-0.5 rounded-md">
+              {project.metric}
+            </span>
+          )}
+          {project.year && (
+            <span className="text-xs font-mono text-gray-400">
+              {project.year}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom preview info inside cover */}
+      <div className="z-10">
+        <p className="text-xs text-gray-300/90 font-medium line-clamp-1 leading-snug">
+          {project.tagline}
+        </p>
+      </div>
+
+      {/* Subtle edge vignette */}
+      <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+    </div>
+  );
+};
+
+// Project Card Component (100% uniform slot dimensions across all 15 cards)
+const ProjectCard = ({ project, onClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const banner = projectBanners[project.id] || {
+    gradient: "linear-gradient(135deg, #071322 0%, #0d2238 100%)",
+    accent: "#22d3ee",
+    label: "Engineering",
+    icon: null,
+  };
+
+  return (
+    <TiltCard
+      className="group cursor-pointer rounded-2xl bg-gradient-to-br from-gray-950 via-[#070c14] to-black border border-white/10 hover:border-cyan-400/40 transition-all duration-300 shadow-xl flex flex-col overflow-hidden h-full"
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Cover (Fixed 176px height) */}
+      <CardCover
+        project={project}
+        isHovered={isHovered}
+        banner={banner}
+      />
+
+      {/* Card Content Body with fixed slot heights for 100% uniform card geometry */}
+      <div className="p-5 flex flex-col flex-1 justify-between gap-3">
+        <div className="space-y-2">
+          {/* Title slot: exactly 48px height (2 lines) */}
+          <div className="h-[48px] flex items-start overflow-hidden">
+            <h3 className="font-heading font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug text-base sm:text-lg line-clamp-2">
+              {project.title}
+            </h3>
+          </div>
+
+          {/* Tagline slot: exactly 36px height (2 lines) */}
+          <div className="h-[36px] overflow-hidden">
+            <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">
+              {project.tagline}
+            </p>
+          </div>
+
+          {/* Highlights snippet slot: exactly 32px height */}
+          <div className="h-[32px] overflow-hidden flex items-center">
+            {project.highlights && project.highlights.length > 0 ? (
+              <div className="flex items-start gap-2 text-[11px] text-gray-400 leading-snug">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_#22d3ee]" />
+                <span className="line-clamp-2">{project.highlights[0]}</span>
+              </div>
+            ) : (
+              <div className="text-[11px] font-mono text-gray-500">
+                Full architecture details in case study
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="pt-3 border-t border-white/5 space-y-3">
+          {/* Tech stack chips slot: exactly 28px height */}
+          <div className="h-7 flex items-center gap-1.5 overflow-hidden">
+            {project.stack.slice(0, 3).map((tech, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-1.5 text-xs px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-300 font-mono whitespace-nowrap shrink-0"
+              >
+                <span className="text-xs">{tech.icon}</span>
+                <span>{tech.name}</span>
+              </div>
+            ))}
+            {project.stack.length > 3 && (
+              <span className="text-xs font-mono text-cyan-400/80 px-1 shrink-0">
+                +{project.stack.length - 3}
+              </span>
+            )}
+          </div>
+
+          {/* Action Buttons slot: exactly 34px height */}
+          <div className="flex items-center justify-between gap-3 h-[34px]">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClick();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-cyan-400 text-black hover:bg-cyan-300 transition-colors shadow-[0_0_12px_rgba(34,211,238,0.2)] cursor-pointer shrink-0"
+            >
+              <EyeOutlined /> Case Study <ArrowRightOutlined className="text-[10px]" />
+            </button>
+
+            {project.github ? (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors shrink-0"
+              >
+                <GithubOutlined /> GitHub
+              </a>
+            ) : (
+              <span className="text-[11px] font-mono text-gray-500">Case study only</span>
+            )}
+          </div>
+        </div>
+      </div>
+    </TiltCard>
+  );
+};
+
+export default function ProjectPage() {
   const navigate = useNavigate();
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [techFilter, setTechFilter] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const INITIAL_LIMIT = 9;
 
+  // Listen to cross-component skill clicks (from Bento grid)
+  useEffect(() => {
+    const handleFilterTech = (e) => {
+      if (e.detail && e.detail.tech) {
+        setTechFilter(e.detail.tech);
+        setActiveFilter("all");
+        setIsExpanded(true);
+        const el = document.getElementById("project");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    };
+    window.addEventListener("filter-tech", handleFilterTech);
+    return () => window.removeEventListener("filter-tech", handleFilterTech);
+  }, []);
+
+  // Filter projects across all entries (preserves custom display order from projects.jsx)
   const filteredProjects = useMemo(() => {
-    if (activeFilter === "all") return projects;
-    return projects.filter((p) => projectCategories[p.id] === activeFilter);
-  }, [activeFilter]);
-
-  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
-
-  const handleNext = () => {
-    if ((page + 1) * projectsPerPage < filteredProjects.length) {
-      setPage((prev) => prev + 1);
-      topRef.current?.scrollIntoView({ behavior: "smooth" });
+    let result = projects;
+    if (activeFilter !== "all") {
+      result = result.filter((p) => (projectCategories[p.id] || "ai") === activeFilter);
     }
-  };
-
-  const handlePrev = () => {
-    if (page > 0) {
-      setPage((prev) => prev - 1);
-      topRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (techFilter) {
+      const q = techFilter.toLowerCase();
+      result = result.filter((p) =>
+        (p.stack || []).some((s) => s.name.toLowerCase().includes(q)) ||
+        (p.description || "").toLowerCase().includes(q) ||
+        (p.tagline || "").toLowerCase().includes(q)
+      );
     }
-  };
+    return result;
+  }, [activeFilter, techFilter]);
 
-  const handleFilterChange = (filter) => {
-    setActiveFilter(filter);
-    setPage(0);
+  // Display projects directly in defined order
+  const sortedProjects = filteredProjects;
+
+  // Initially render 9 cards, then reveal the rest
+  const displayedProjects = isExpanded
+    ? sortedProjects
+    : sortedProjects.slice(0, INITIAL_LIMIT);
+
+  const handleFilterChange = (val) => {
+    setActiveFilter(val);
+    setIsExpanded(false);
   };
 
   const openProject = (id) => {
     navigate(`/project/${id}`);
   };
 
-  const currentProjects = filteredProjects.slice(
-    page * projectsPerPage,
-    (page + 1) * projectsPerPage
-  );
-
-  const filterColors = {
-    all: "#22c55e", ai: "#a78bfa", fullstack: "#06b6d4",
-    data: "#f59e0b", security: "#ef4444", vr: "#818cf8",
-  };
-
   return (
-    <div className="w-full max-w-6xl mx-auto py-12 px-4 md:px-6">
-      <motion.h1
-        ref={topRef}
-        className="cartoon-heading text-4xl md:text-5xl font-extrabold text-center aurora-text mb-3 tracking-wide"
-        initial={{ y: 20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        My Projects
-      </motion.h1>
-
-      <motion.p
-        className="text-center text-gray-400 text-sm mb-6 max-w-lg mx-auto"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
-      >
-        {filteredProjects.length} projects spanning AI/ML, full-stack, data engineering, and more
-      </motion.p>
+    <div id="project" className="w-full max-w-6xl mx-auto px-4 sm:px-6 font-body text-white">
+      {/* Section Header */}
+      <div className="text-center max-w-2xl mx-auto mb-10">
+        <span className="text-xs font-mono uppercase tracking-widest text-cyan-400">
+          SYSTEMS &amp; PRODUCTION
+        </span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading text-white tracking-tight mt-2">
+          Projects
+        </h2>
+        <p className="mt-3 text-sm sm:text-base text-gray-400 max-w-[65ch] mx-auto leading-relaxed">
+          {activeFilter === "all"
+            ? `Showing ${displayedProjects.length} of ${projects.length} projects spanning AI/ML, full-stack, data engineering, and more`
+            : `Showing ${displayedProjects.length} of ${sortedProjects.length} ${
+                categoryFilters.find((c) => c.value === activeFilter)?.label
+              } projects`}
+        </p>
+      </div>
 
       {/* Category Filter Tabs */}
-      <motion.div
-        className="flex flex-wrap justify-center gap-2 mb-10"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
-      >
+      <div className="flex flex-wrap justify-center gap-2 mb-10">
         {categoryFilters.map(({ label, value }) => {
           const isActive = activeFilter === value;
-          const color = filterColors[value];
+          const count =
+            value === "all"
+              ? projects.length
+              : projects.filter((p) => projectCategories[p.id] === value).length;
+
           return (
-            <motion.button
+            <button
               key={value}
+              type="button"
               onClick={() => handleFilterChange(value)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 ${
-                isActive ? "text-black" : "text-white/60 border border-white/10 hover:text-white hover:border-white/20"
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+                isActive
+                  ? "text-black bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+                  : "text-gray-400 border border-white/10 hover:text-white hover:border-white/20 bg-white/[0.02]"
               }`}
-              style={{
-                backgroundColor: isActive ? color : "transparent",
-                boxShadow: isActive ? `0 4px 18px ${color}40` : "none",
-              }}
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
             >
               {label}
-              {value !== "all" && (
-                <span className="ml-1.5 opacity-60">
-                  ({projects.filter((p) => projectCategories[p.id] === value).length})
-                </span>
-              )}
-            </motion.button>
+              <span className="ml-1.5 opacity-60 font-mono text-[11px]">
+                ({count})
+              </span>
+            </button>
           );
         })}
-      </motion.div>
+      </div>
 
-      {/* Projects Grid â€” 3 columns on large screen */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${activeFilter}-${page}`}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.3 }}
-        >
-          {currentProjects.map((project, index) => {
-            const banner = projectBanners[project.id] || { accent: "#22c55e" };
-            return (
-              <TiltCard
-                key={`project-${activeFilter}-${page}-${project.id}`}
-                className="group relative rounded-2xl bg-gradient-to-br from-gray-900/90 via-gray-950 to-black shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden cursor-pointer border border-gray-800/50"
-                style={{
-                  borderRadius: "16px",
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
-                }}
-                onClick={() => openProject(project.id)}
-              >
-                {/* Hover border glow */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    boxShadow: `inset 0 0 0 1px ${banner.accent}35`,
-                    borderRadius: "16px",
-                  }}
-                />
-
-                {/* Project Banner */}
-                <ProjectBanner project={project} />
-
-                {/* Card content */}
-                <div className="p-4 flex flex-col gap-2 flex-1">
-                  <h2 className="text-base font-bold text-white group-hover:text-green-300 transition-colors duration-300 leading-snug line-clamp-2">
-                    {project.title}
-                  </h2>
-
-                  {/* Role badge */}
-                  <span
-                    className="text-xs font-medium uppercase tracking-widest"
-                    style={{ color: `${banner.accent}bb` }}
-                  >
-                    {project.role}
-                  </span>
-
-                  {/* Tech stack pills â€” max 3 shown + overflow count */}
-                  <div className="flex gap-1.5 mt-1 flex-wrap">
-                    {project.stack.slice(0, 3).map((tech, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
-                        style={{
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          color: "#9ca3af",
-                        }}
-                      >
-                        <span className="text-sm">{tech.icon}</span>
-                        <span>{tech.name}</span>
-                      </div>
-                    ))}
-                    {project.stack.length > 3 && (
-                      <div
-                        className="flex items-center text-xs px-2 py-0.5 rounded-full"
-                        style={{
-                          background: `${banner.accent}15`,
-                          border: `1px solid ${banner.accent}30`,
-                          color: banner.accent,
-                        }}
-                      >
-                        +{project.stack.length - 3}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Action buttons */}
-                  <div className="mt-auto pt-3 flex flex-wrap gap-2">
-                    <motion.button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openProject(project.id);
-                      }}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200"
-                      style={{
-                        border: `1px solid ${banner.accent}40`,
-                        color: banner.accent,
-                        background: `${banner.accent}08`,
-                      }}
-                      whileHover={{
-                        scale: 1.04,
-                        background: banner.accent,
-                        color: "#000",
-                      }}
-                      whileTap={{ scale: 0.96 }}
-                    >
-                      <EyeOutlined /> Case Study
-                    </motion.button>
-                    {project.github && (
-                      <motion.a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg text-gray-400 transition-all duration-200"
-                        style={{
-                          border: "1px solid rgba(255,255,255,0.10)",
-                          background: "rgba(255,255,255,0.03)",
-                        }}
-                        whileHover={{ scale: 1.04, borderColor: "rgba(255,255,255,0.25)", color: "#fff" }}
-                        whileTap={{ scale: 0.96 }}
-                      >
-                        <GithubOutlined /> GitHub
-                      </motion.a>
-                    )}
-                  </div>
-                </div>
-              </TiltCard>
-            );
-          })}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Empty state */}
-      {currentProjects.length === 0 && (
-        <div className="text-center py-20 text-gray-500">
-          <p className="text-4xl mb-3">ðŸ”</p>
-          <p className="text-sm">No projects in this category yet.</p>
+      {/* Active Skill Filter Badge */}
+      {techFilter && (
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <span className="text-xs font-mono text-cyan-300 bg-cyan-950/70 border border-cyan-400/40 px-4 py-1.5 rounded-full flex items-center gap-2.5 shadow-[0_0_15px_rgba(34,211,238,0.25)]">
+            <span>
+              Skill filter: <strong className="text-white">{techFilter}</strong> ({filteredProjects.length} match{filteredProjects.length === 1 ? "" : "es"})
+            </span>
+            <button
+              type="button"
+              onClick={() => setTechFilter(null)}
+              className="w-4 h-4 rounded-full bg-cyan-400/20 hover:bg-cyan-400 hover:text-black flex items-center justify-center text-[10px] transition-colors cursor-pointer"
+              title="Clear skill filter"
+            >
+              ✕
+            </button>
+          </span>
         </div>
       )}
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-5 mt-12">
-          {page > 0 && (
-            <motion.button
-              onClick={handlePrev}
-              className="flex items-center gap-2 px-5 py-2 rounded-xl border border-green-500/40 text-green-400 font-medium text-sm transition-all duration-200"
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(34,197,94,0.1)" }}
-              whileTap={{ scale: 0.97 }}
+      {/* Single Unified Grid: auto-rows-fr guarantees identical height for all cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+        <AnimatePresence mode="popLayout">
+          {displayedProjects.map((project, idx) => (
+            <motion.div
+              key={project.id}
+              layout
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.35, delay: Math.min(idx * 0.03, 0.25) }}
+              className="col-span-1 h-full"
             >
-              <ArrowLeftOutlined /> Previous
-            </motion.button>
-          )}
-
-          {/* Page dots */}
-          <div className="flex gap-2 items-center">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <motion.button
-                key={i}
-                onClick={() => {
-                  setPage(i);
-                  topRef.current?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  i === page ? "bg-green-400 w-6" : "bg-gray-600 hover:bg-gray-400 w-2"
-                }`}
-                whileHover={{ scale: 1.3 }}
+              <ProjectCard
+                project={project}
+                onClick={() => openProject(project.id)}
               />
-            ))}
-          </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
 
-          {(page + 1) * projectsPerPage < filteredProjects.length && (
-            <motion.button
-              onClick={handleNext}
-              className="flex items-center gap-2 px-5 py-2 rounded-xl border border-green-500/40 text-green-400 font-medium text-sm transition-all duration-200"
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(34,197,94,0.1)" }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Next <ArrowRightOutlined />
-            </motion.button>
-          )}
+      {/* Empty State */}
+      {sortedProjects.length === 0 && (
+        <div className="text-center py-20 text-gray-500">
+          <p className="text-3xl mb-2">🔍</p>
+          <p className="text-sm font-mono">No projects in this category.</p>
+        </div>
+      )}
+
+      {/* Reveal Rest Button */}
+      {sortedProjects.length > INITIAL_LIMIT && !isExpanded && (
+        <div className="flex justify-center mt-12">
+          <motion.button
+            type="button"
+            onClick={() => setIsExpanded(true)}
+            className="px-6 py-3 rounded-full text-xs font-semibold font-mono tracking-wider bg-white/5 hover:bg-cyan-400 hover:text-black border border-cyan-400/40 hover:border-cyan-400 text-cyan-300 transition-all duration-300 shadow-[0_0_20px_rgba(34,211,238,0.15)] cursor-pointer"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+          >
+            Show all {sortedProjects.length} projects →
+          </motion.button>
         </div>
       )}
     </div>
   );
-};
-
-export default ProjectPage;
-
+}

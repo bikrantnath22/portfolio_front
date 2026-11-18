@@ -6,7 +6,6 @@ import {
   SiUnity,
   SiPytorch,
   SiShopify,
-  SiFirebase,
   SiPython,
   SiNumpy,
   SiPandas,
@@ -16,19 +15,28 @@ import {
   SiScikitlearn,
   SiStreamlit,
   SiGooglecloud,
+  SiKubernetes,
+  SiHelm,
+  SiWoocommerce,
+  SiHuggingface,
+  SiRedis,
+  SiPrometheus,
 } from "react-icons/si";
 import { FaCode, FaBrain, FaRobot, FaPlug, FaDatabase, FaShieldAlt } from "react-icons/fa";
- 
+
 export const projects = [
   {
     id: 1,
+    featured: true,
+    metric: "Attack score ~0.50",
     title: "DP-CTGAN with Rare Minority Sampling",
     tagline:
       "Privacy-preserving synthetic data generation using differentially private CTGAN pipelines.",
     description:
       "Designed and implemented a Differentially Private CTGAN pipeline using PyTorch and Opacus, evaluated across multiple privacy budget configurations on four real-world datasets with formal (ε, δ)-DP guarantees tracked via the Rényi Differential Privacy accountant. Integrated StableNVP normalizing flow scoring and gradient refinement to improve sample fidelity. Benchmarked against PATE-GAN (SynCity) and DP-CGAN (dp-cgans) — DP-CTGAN combined consistently outperformed both on AUC and distributional fidelity (KS). Implemented MIA privacy auditing with KNN-MIA and LR-MIA; confirmed attack scores near 0.50 across all configurations. Tuned hyperparameters with Optuna using a three-stage search.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
+    image: "/dpctgan.webp",
+    detailImage: "/dpctgan.webp",
+    mediaType: "browser",
     role: "ML Researcher",
     year: "2025–2026",
     highlights: [
@@ -46,40 +54,49 @@ export const projects = [
     github: "https://github.com/bikrantnath22/dp-ctgan",
   },
   {
-    id: 2,
-    title: "Athaana — eCommerce (Startup Nalbari, Assam based)",
+    id: 16,
+    rank: 2,
+    status: "Finished",
+    featured: true,
+    metric: "0.82 MRR · 78% P@3 · <50ms cache",
+    title: "Agentic RAG Service with Evaluation",
     tagline:
-      "A full-stack grocery ordering platform with checkout, order tracking, and admin-ready data flows.",
+      "A RAG pipeline that fuses dense and keyword search, reranks, retries on weak evidence, and verifies every cited claim.",
     description:
-      "Developed a production full-stack grocery eCommerce platform for a local startup — product listings, cart, order management, and live order tracking. Implemented user authentication, checkout flow, and order tracking system serving real customers in Nalbari.",
-    image: "/AthaanaPC.gif",
-    detailImage: "/athaana.gif",
-    role: "Full-stack developer",
-    year: "2022",
+      "Built a RAG API over a synthetic 500-page corpus (2,461 chunks). Redis caching serves repeat queries in under 50 ms, against 4.16 s (P50) for a cold query.\n• Designed a LangGraph agent that chooses between 4 tools (retriever, Python, math, web search) and retries when its self-check scores an answer low. It refused 15/15 out-of-domain test queries.\n• Benchmarked on 85 queries: 0.82 MRR (0.91 single-hop), 78% Precision@3, and 153/153 claims LLM-judged as grounded (56 answers); 16 automated tests passing.",
+    role: "AI/ML Engineer",
+    year: "2026",
     highlights: [
-      "Designed responsive shopping and checkout flows for mobile and desktop users.",
-      "Implemented backend APIs for products, carts, authentication, and order tracking.",
-      "Structured the MongoDB data model to support scalable catalog and order records.",
+      "Built a hybrid RAG API fusing dense semantic search and keyword retrieval over a 2,461-chunk corpus with Redis caching.",
+      "Designed a LangGraph agent routing between 4 specialized tools with self-checking and retry on weak evidence.",
+      "Achieved 0.82 MRR (0.91 single-hop), 78% Precision@3, and 153/153 grounded claim verifications across 85 benchmark queries.",
+      "Implemented 16 automated tests and integrated LangSmith tracing with Prometheus metrics.",
     ],
     stack: [
-      { name: "React", icon: <SiReact className="text-blue-400" /> },
-      { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
-      { name: "MongoDB", icon: <SiMongodb className="text-green-600" /> },
-      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-sky-400" /> },
+      { name: "FastAPI", icon: <SiFastapi className="text-teal-400" /> },
+      { name: "Google Gemini", icon: <SiGooglecloud className="text-blue-400" /> },
+      { name: "LangGraph", icon: <FaBrain className="text-green-400" /> },
+      { name: "ChromaDB", icon: <FaDatabase className="text-orange-400" /> },
+      { name: "Sentence-Transformers", icon: <SiHuggingface className="text-yellow-400" /> },
+      { name: "Redis", icon: <SiRedis className="text-red-500" /> },
+      { name: "Docker", icon: <SiDocker className="text-blue-500" /> },
+      { name: "Prometheus", icon: <SiPrometheus className="text-orange-500" /> },
     ],
-    github: "https://github.com/bikrantnath22/AthaanaProdMain",
+    github: "https://github.com/bikrantnath22/Agentic-rag-agent",
   },
   {
     id: 3,
+    featured: true,
+    metric: "4-signal verifier (50/30/20%)",
     title: "AI Research & Fact-Verification Agent",
     tagline:
       "A multi-agent LangGraph system that plans, retrieves, synthesizes, and verifies answers for hallucination risk.",
     description:
       "Built a multi-agent AI research system with LangGraph that decomposes queries into sub-questions, retrieves from a Qdrant vector DB and live Tavily web search, synthesizes answers with inline source citations, and runs a four-signal hallucination verifier (Semantic Entropy + Ensemble Disagreement + Faithfulness). High-risk answers automatically trigger a re-retrieval loop with a refined query. Deployed via FastAPI with Dockerized MCP microservices.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
+    image: null,
+    detailImage: null,
     role: "AI/ML Engineer",
-    year: "2026",
+    year: "2025–2026",
     highlights: [
       "Multi-agent pipeline: Planner → Retriever → Synthesizer → Verifier with automatic re-retrieval loop.",
       "Verifier combines Semantic Entropy (50%), Ensemble Disagreement (30%), and Faithfulness (20%) for hallucination risk scoring.",
@@ -96,16 +113,141 @@ export const projects = [
     github: "https://github.com/bikrantnath22/AI-Research-Fact-Verification-Agent",
   },
   {
+    id: 18,
+    rank: 4,
+    status: "Finished",
+    featured: true,
+    title: "WooCommerce Store Platform with MCP Gateway on Kubernetes",
+    tagline:
+      "Runs WooCommerce stores on Kubernetes and exposes them to an AI agent through MCP servers and a gateway.",
+    description:
+      "Built for the Urumi AI FDE internship take-home. Provisions a WooCommerce store on Kubernetes with a Helm chart (MySQL 8.4, secrets script, bootstrap Job that installs the store, enables cash on delivery and places a test order), runs locally on k3d and targets a VPS with k3s, with a React dashboard and FastAPI backend. Store operations are exposed to an AI chat agent through MCP servers behind a gateway.",
+    role: "Full-Stack / AI Engineer",
+    year: "2026",
+    highlights: [
+      "Helm chart that deploys WooCommerce and MySQL 8.4 on Kubernetes, with a bootstrap Job that installs the store and places a test order.",
+      "Local cluster on k3d inside WSL2; secrets created by a script and kept out of the repo.",
+      // CONFIRM each line below; delete any that is not working:
+      "woo-mcp server with tools such as create_product (name, price, image URL).",
+      "Read-only analytics MCP server using a restricted WooCommerce key.",
+      "Gateway that routes the chat agent to the MCP servers.",
+      "React dashboard and chat agent on a FastAPI backend.",
+    ],
+    stack: [
+      { name: "Kubernetes", icon: <SiKubernetes className="text-blue-500" /> },
+      { name: "Helm", icon: <SiHelm className="text-blue-400" /> },
+      { name: "MySQL", icon: <SiMysql className="text-blue-500" /> },
+      { name: "WooCommerce", icon: <SiWoocommerce className="text-purple-400" /> },
+      { name: "FastAPI", icon: <SiFastapi className="text-teal-400" /> },
+      { name: "React", icon: <SiReact className="text-blue-400" /> },
+      { name: "k3d / k3s", icon: <SiDocker className="text-cyan-400" /> },
+    ],
+    github: "https://github.com/bikrantnath22/urumi-mcp-platform",
+  },
+  {
+    id: 2,
+    featured: true,
+    title: "Athaana — eCommerce (Startup Nalbari, Assam based)",
+    tagline:
+      "A full-stack grocery ordering platform with checkout, order tracking, and admin-ready data flows.",
+    description:
+      "Developed a full-stack grocery eCommerce platform for a local startup in Nalbari, reaching 1000+ real orders before the business closed — product listings, cart, order management, and order tracking. Implemented user authentication, checkout flow, and order tracking system serving real customers.",
+    video: "/AthaanaPC.mp4",
+    webm: "/AthaanaPC.webm",
+    image: "/AthaanaPC.gif",
+    detailVideo: "/AthaanaPC.mp4",
+    detailWebm: "/AthaanaPC.webm",
+    detailImage: "/AthaanaPC.gif",
+    phoneVideo: "/athaana.mp4",
+    phoneWebm: "/athaana.webm",
+    phoneImage: "/athaana.gif",
+    mediaType: "browser",
+    role: "Co-Founder & Full-Stack Developer",
+    year: "2022",
+    highlights: [
+      "Built and launched a full-stack grocery eCommerce platform for a local startup in Nalbari, reaching 1000+ real orders before the business closed.",
+      "Designed responsive shopping and checkout flows for mobile and desktop users.",
+      "Implemented backend APIs for products, carts, authentication, and order tracking.",
+      "Structured the MongoDB data model to support scalable catalog and order records.",
+    ],
+    stack: [
+      { name: "React", icon: <SiReact className="text-blue-400" /> },
+      { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
+      { name: "MongoDB", icon: <SiMongodb className="text-green-600" /> },
+      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-sky-400" /> },
+    ],
+    github: "https://github.com/bikrantnath22/AthaanaProdMain",
+  },
+  {
+    id: 11,
+    featured: true,
+    title: "VR Computer Literacy Assessment",
+    tagline:
+      "A Meta Quest learning and assessment prototype for improving student engagement.",
+    description:
+      "Designed a VR-based computer literacy learning and assessment system for school students on Meta Quest, supported by a companion mobile and desktop app for progress tracking. Developed assessment modules to deliver quizzes, collect responses, and track per-student performance — 3D VR interface simulated computer hardware interactions. Conducted controlled experiment comparing VR vs. text-based learning groups; VR group demonstrated measurably higher engagement and quiz comprehension scores. Proposed a hybrid pedagogy model combining text-based theory with VR practical simulations.",
+    image: "/Vr.gif",
+    detailImage: "/Vr.gif",
+    video: "/Vr.mp4",
+    webm: "/Vr.webm",
+    mediaType: "square",
+    role: "VR and full-stack developer",
+    year: "2024",
+    highlights: [
+      "Received ₹1 lakh seed funding (NGIN, 2024) to develop this project.",
+      "Built interactive Unity modules for quiz-based learning and practical computer literacy tasks.",
+      "Connected learning progress to a companion app for tracking student performance.",
+      "Proposed a hybrid model that combines text theory with VR simulations for stronger engagement.",
+      "VR group demonstrated measurably higher engagement and comprehension scores in controlled testing.",
+    ],
+    stack: [
+      { name: "Unity", icon: <SiUnity className="text-gray-400" /> },
+      { name: "C#", icon: <FaCode className="text-purple-500" /> },
+      { name: "React Native", icon: <SiReact className="text-blue-400" /> },
+      { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
+      { name: "MongoDB", icon: <SiMongodb className="text-green-600" /> },
+    ],
+  },
+  {
+    id: 5,
+    featured: false,
+    title: "eCafe — Online Food Ordering",
+    tagline:
+      "A full-stack cafe ordering platform with Google auth, Cloudinary images, real-time order tracking, and role-based access.",
+    description:
+      "Built a full-stack food ordering platform for eCafe — React frontend with Zustand state management and a Node.js/Express backend. Features Google OAuth sign-in, role-based access (Customer / Admin / Superadmin), mobile-first cart and checkout flow, COD order placement and status tracking, Cloudinary image hosting, and server-controlled open/closed hours so ordering availability is never dependent on the device clock.",
+    image: null,
+    detailImage: null,
+    role: "Full-Stack Developer",
+    year: "2025",
+    highlights: [
+      "Server-controlled open/closed status via computed isOpen boolean — ordering never depends on device clock.",
+      "Google OAuth with role-based access: Customer, Admin, and Superadmin with JWT httpOnly cookie sessions.",
+      "Zustand cart persisted to localStorage, Cloudinary image hosting for menu items.",
+      "Full RESTful API: menu, cart, addresses, orders, settings with mobile-first React UI.",
+    ],
+    stack: [
+      { name: "React", icon: <SiReact className="text-blue-400" /> },
+      { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
+      { name: "MongoDB", icon: <SiMongodb className="text-green-600" /> },
+      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-sky-400" /> },
+      { name: "Google Auth", icon: <SiGooglecloud className="text-yellow-400" /> },
+    ],
+    github: "https://github.com/bikrantnath22/Cafe-res",
+  },
+  {
     id: 4,
+    featured: false,
+    metric: "4 input + 2 output layers",
     title: "RAG Guardrail System",
     tagline:
       "A multi-layered input/output security shield protecting RAG systems from prompt injections and data exfiltration.",
     description:
       "Designed and built a comprehensive security guardrail system for RAG-based AI assistants, defending against prompt injections, jailbreaks, and sensitive data leakage. Implemented a 4-layer input guard (Regex → DeBERTa classifier → Semantic Similarity via MiniLM-L6 → LLM Judge) and a 2-layer output guard (PII Redaction + Sensitivity Leak Check). Includes an interactive glassmorphism dashboard with a real-time toggleable guardrail switch and role-based access control (Guest/Employee/Admin) for testing data boundaries.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
+    image: null,
+    detailImage: null,
     role: "AI Security Engineer",
-    year: "2026",
+    year: "2025",
     highlights: [
       "4-layer input guard: Regex heuristics → DeBERTa classifier → MiniLM-L6 semantic similarity → LLM Judge fallback.",
       "Role-aware output PII redaction and sensitivity leak verification across public/restricted/confidential data tiers.",
@@ -122,43 +264,96 @@ export const projects = [
     github: "https://github.com/bikrantnath22/RAG-Guardrail-System",
   },
   {
-    id: 5,
-    title: "VALTA Cafe — Online Food Ordering",
+    id: 8,
+    featured: false,
+    title: "LLM Hallucination Detector",
     tagline:
-      "A full-stack cafe ordering platform with Google auth, Cloudinary images, real-time order tracking, and role-based access.",
+      "An information-theoretic pipeline using Semantic Entropy and Ensemble Disagreement to flag hallucinating LLMs.",
     description:
-      "Built a production-ready full-stack food ordering platform for VALTA Cafe — React frontend with Zustand state management and a Node.js/Express backend. Features Google OAuth sign-in, role-based access (Customer / Admin / Superadmin), mobile-first cart and checkout flow, COD order placement and status tracking, Cloudinary image hosting, and server-controlled open/closed hours so ordering availability is never dependent on the device clock.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
-    role: "Full-stack developer",
-    year: "2026",
+      "Designed an end-to-end, locally verifiable hallucination detection pipeline for LLMs using two complementary techniques: Semantic Entropy (clustering generative variance via NLI-based bidirectional entailment, then computing Shannon entropy over cluster distributions) and Ensemble Disagreement (cross-examining factual claims from an 8B vs. 70B model). High entropy or cross-model contradiction signals hallucination risk without requiring external retrieval. Served via FastAPI with HuggingFace Transformers and Groq API.",
+    image: null,
+    detailImage: null,
+    role: "AI/ML Engineer",
+    year: "2025",
     highlights: [
-      "Server-controlled open/closed status via computed isOpen boolean — ordering never depends on device clock.",
-      "Google OAuth with role-based access: Customer, Admin, and Superadmin with JWT httpOnly cookie sessions.",
-      "Zustand cart persisted to localStorage, Cloudinary image hosting for menu items.",
-      "Full RESTful API: menu, cart, addresses, orders, settings with mobile-first React UI.",
+      "Semantic Entropy: N high-temperature samples → NLI-based bidirectional entailment clustering → Shannon entropy hallucination risk.",
+      "Ensemble Disagreement: cross-model factual claim comparison between 8B and 70B LLMs via Groq API.",
+      "No external RAG needed — interrogates the model's internal consistency for epistemic uncertainty.",
+      "FastAPI service with HuggingFace Transformers (DeBERTa NLI), locally verifiable on any dataset.",
     ],
     stack: [
-      { name: "React", icon: <SiReact className="text-blue-400" /> },
-      { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
-      { name: "MongoDB", icon: <SiMongodb className="text-green-600" /> },
-      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-sky-400" /> },
-      { name: "Google Auth", icon: <SiGooglecloud className="text-yellow-400" /> },
+      { name: "Python", icon: <SiPython className="text-blue-400" /> },
+      { name: "FastAPI", icon: <SiFastapi className="text-teal-400" /> },
+      { name: "PyTorch", icon: <SiPytorch className="text-orange-500" /> },
+      { name: "LLM API", icon: <FaBrain className="text-pink-400" /> },
     ],
-    github: "https://github.com/bikrantnath22/Cafe-res",
+    github: "https://github.com/bikrantnath22/llm-hallucination-detector",
   },
-
+  {
+    id: 20,
+    rank: 9,
+    status: "Finished",
+    featured: false,
+    title: "Chat with Your Documents (Agentic RAG)",
+    tagline:
+      "Internship project: agentic RAG with routing, self-check, re-ranking and a document chat app.",
+    description:
+      "Built during the Skilaudit internship. Starts with basic RAG (ChromaDB, sentence-transformers, top-4 retrieval) and adds agentic routing, self-checking with up to 2 query-rewrite retries, multi-source ingestion with metadata, top-10 re-ranking to the best 3 to 4 chunks, sub-query rewriting and a chat-with-your-documents app.",
+    role: "AI/ML Engineer Intern",
+    year: "2026",
+    highlights: [
+      "Engineered agentic routing and query decomposition to direct user queries through specialized retrieval paths.",
+      "Built self-checking evaluation mechanism with automatic query rewriting and up to two retries.",
+      "Multi-source ingestion pipeline supporting PDF, CSV, and TXT with structured metadata into ChromaDB.",
+      "Cross-encoder re-ranking filtering top-10 candidate chunks down to the highest-confidence 3 to 4 chunks.",
+      "Shipped a Streamlit app that visualizes the agent's routing decisions and citations live alongside answers.",
+    ],
+    stack: [
+      { name: "Python", icon: <SiPython className="text-blue-400" /> },
+      { name: "ChromaDB", icon: <FaDatabase className="text-orange-400" /> },
+      { name: "Sentence-Transformers", icon: <SiHuggingface className="text-yellow-400" /> },
+      { name: "Streamlit", icon: <SiStreamlit className="text-red-400" /> },
+    ],
+    github: "https://github.com/bikrantnath22/Internship-agentic-rag",
+  },
+  {
+    id: 12,
+    featured: false,
+    metric: "< 200ms latency",
+    title: "AI Chat Agent — Human-like Messaging",
+    tagline:
+      "An AI-powered conversational agent that replicates individual messaging styles using LLMs.",
+    description:
+      "Built an AI-powered conversational agent that replicates individual messaging styles using LLM-based generation with persistent memory/context handling. Designed the system to learn from prior conversations and adapt tone, vocabulary, and response cadence to match a target user's communication patterns. Implemented real-time message delivery using Node.js + WebSockets, with sub-200ms response latency under normal load.",
+    image: "/chatbot.webp",
+    detailImage: "/chatbot.webp",
+    role: "AI/ML Developer",
+    year: "2025",
+    highlights: [
+      "Replicates individual messaging styles using LLM-based generation with persistent memory.",
+      "Adapts tone, vocabulary, and response cadence from prior conversation patterns.",
+      "Sub-200ms response latency using Node.js + WebSockets for real-time delivery.",
+    ],
+    stack: [
+      { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
+      { name: "WebSockets", icon: <FaPlug className="text-blue-400" /> },
+      { name: "LLM API", icon: <FaBrain className="text-pink-400" /> },
+      { name: "AI Agents", icon: <FaRobot className="text-cyan-400" /> },
+    ],
+  },
   {
     id: 6,
+    featured: false,
+    metric: "2000+ seeded txns · 10× anomaly",
     title: "SQL Bank Fraud Detection System",
     tagline:
       "A pure-SQL bank fraud detection engine with real-time triggers, stored procedures, and risk-weighted flagging.",
     description:
       "Built a comprehensive SQL-based fraud detection system for banking transactions in MySQL 8.x — pure relational intelligence, no external ML frameworks. Features 2000+ seeded transactions with planted fraud scenarios, an AFTER INSERT trigger for real-time per-transaction evaluation, stored procedures for on-demand risk assessment, and a SQL VIEW for dashboard reporting. Detects High Velocity (5+ txns in 2 min), High Value Anomaly (10× account average), and Structuring/Smurfing patterns.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
+    image: null,
+    detailImage: null,
     role: "Data Engineer",
-    year: "2026",
+    year: "2025",
     highlights: [
       "AFTER INSERT trigger for real-time per-transaction fraud evaluation with configurable risk weight thresholds.",
       "Detects High Velocity, High Value Anomaly, and Structuring (Smurfing) fraud patterns.",
@@ -171,18 +366,19 @@ export const projects = [
     ],
     github: "https://github.com/bikrantnath22/SQL-Fraud-Detection-",
   },
-
   {
     id: 7,
+    featured: false,
+    metric: "AUC = 0.846",
     title: "Telco Customer Churn Analysis",
     tagline:
       "End-to-end analytics pipeline — EDA, K-Means segmentation, SQL BI, and Random Forest churn prediction (AUC 0.846).",
     description:
       "Performed a full analytical pipeline on the IBM Telco Customer Churn dataset (7,043 customers, 21 features) — from raw data cleaning and EDA to K-Means customer segmentation, financial impact analysis, retention curve modeling, MySQL database creation for BI pipelines, and a predictive churn model. Best-fit model selection landed on Random Forest with AUC = 0.846.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
+    image: null,
+    detailImage: null,
     role: "Data Analyst / ML Engineer",
-    year: "2026",
+    year: "2025",
     highlights: [
       "Full analytical pipeline: data cleaning → EDA → segmentation → financial impact → retention curves → prediction.",
       "K-Means clustering for customer segmentation with Silhouette Score optimization.",
@@ -199,39 +395,16 @@ export const projects = [
     github: "https://github.com/bikrantnath22/Telco-Customer-Churn",
   },
   {
-    id: 8,
-    title: "LLM Hallucination Detector",
-    tagline:
-      "An information-theoretic pipeline using Semantic Entropy and Ensemble Disagreement to flag hallucinating LLMs.",
-    description:
-      "Designed an end-to-end, locally verifiable hallucination detection pipeline for LLMs using two complementary techniques: Semantic Entropy (clustering generative variance via NLI-based bidirectional entailment, then computing Shannon entropy over cluster distributions) and Ensemble Disagreement (cross-examining factual claims from an 8B vs. 70B model). High entropy or cross-model contradiction signals hallucination risk without requiring external retrieval. Served via FastAPI with HuggingFace Transformers and Groq API.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
-    role: "AI/ML Engineer",
-    year: "2026",
-    highlights: [
-      "Semantic Entropy: N high-temperature samples → NLI-based bidirectional entailment clustering → Shannon entropy hallucination risk.",
-      "Ensemble Disagreement: cross-model factual claim comparison between 8B and 70B LLMs via Groq API.",
-      "No external RAG needed — interrogates the model's internal consistency for epistemic uncertainty.",
-      "FastAPI service with HuggingFace Transformers (DeBERTa NLI), locally verifiable on any dataset.",
-    ],
-    stack: [
-      { name: "Python", icon: <SiPython className="text-blue-400" /> },
-      { name: "FastAPI", icon: <SiFastapi className="text-teal-400" /> },
-      { name: "PyTorch", icon: <SiPytorch className="text-orange-500" /> },
-      { name: "LLM API", icon: <FaBrain className="text-pink-400" /> },
-    ],
-    github: "https://github.com/bikrantnath22/llm-hallucination-detector",
-  },
-  {
     id: 9,
+    featured: false,
+    metric: "20% audit sample",
     title: "Image Annotation & Quality-Audit Pipeline",
     tagline:
       "An end-to-end data annotation and quality-control workflow with dual-pass auditing and automated reporting.",
     description:
       "Built a structured image annotation and quality-control pipeline following a formal SOP: images are labeled (bounding box + class) in two independent passes, then audited using IoU for bounding box overlap agreement and Cohen's Kappa for label agreement. Outputs a structured quality audit CSV report and visualizations. Designed to simulate real-world annotation quality workflows used in computer vision data pipelines.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
+    image: null,
+    detailImage: null,
     role: "ML Data Engineer",
     year: "2025",
     highlights: [
@@ -250,13 +423,14 @@ export const projects = [
   },
   {
     id: 10,
+    featured: false,
     title: "Text Data Quality Checker",
     tagline:
       "A Python pipeline and Streamlit dashboard for auditing real Amazon review data quality before ML use.",
     description:
       "Built a comprehensive text data quality auditing pipeline for real Amazon review data — normalizes raw CSV input into a clean audit format, then checks each review against multiple quality rules: schema validation, language detection, grammar/spelling flags, and content flags (profanity, PII exposure). Outputs a structured CSV report and an interactive Streamlit dashboard for visual quality inspection.",
-    image: "/dpctgan.png",
-    detailImage: "/dpctgan.png",
+    image: null,
+    detailImage: null,
     role: "Data Engineer",
     year: "2025",
     highlights: [
@@ -274,64 +448,17 @@ export const projects = [
     github: "https://github.com/bikrantnath22/Text-quality-checker",
   },
   {
-    id: 11,
-    title: "VR Computer Literacy Assessment",
-    tagline:
-      "A Meta Quest learning and assessment prototype for improving student engagement.",
-    description:
-      "Designed a VR-based computer literacy learning and assessment system for school students on Meta Quest, supported by a companion mobile and desktop app for progress tracking. Developed assessment modules to deliver quizzes, collect responses, and track per-student performance — 3D VR interface simulated computer hardware interactions. Conducted controlled experiment comparing VR vs. text-based learning groups; VR group demonstrated measurably higher engagement and quiz comprehension scores. Proposed a hybrid pedagogy model combining text-based theory with VR practical simulations.",
-    image: "/Vr.gif",
-    detailImage: "/Vr.gif",
-    role: "VR and full-stack developer",
-    year: "2023-2024",
-    highlights: [
-      "Built interactive Unity modules for quiz-based learning and practical computer literacy tasks.",
-      "Connected learning progress to a companion app for tracking student performance.",
-      "Proposed a hybrid model that combines text theory with VR simulations for stronger engagement.",
-      "VR group demonstrated measurably higher engagement and comprehension scores in controlled testing.",
-    ],
-    stack: [
-      { name: "Unity", icon: <SiUnity className="text-gray-400" /> },
-      { name: "C#", icon: <FaCode className="text-purple-500" /> },
-      { name: "React Native", icon: <SiReact className="text-blue-400" /> },
-      { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
-      { name: "MongoDB", icon: <SiMongodb className="text-green-600" /> },
-    ],
-  },
-  {
-    id: 12,
-    title: "AI Chat Agent — Human-like Messaging",
-    tagline:
-      "An AI-powered conversational agent that replicates individual messaging styles using LLMs.",
-    description:
-      "Built an AI-powered conversational agent that replicates individual messaging styles using LLM-based generation with persistent memory/context handling. Designed the system to learn from prior conversations and adapt tone, vocabulary, and response cadence to match a target user's communication patterns. Implemented real-time message delivery using Node.js + WebSockets, with sub-200ms response latency under normal load.",
-    image: "/chatbot.png",
-    detailImage: "/chatbot.png",
-    role: "AI/ML Developer",
-    year: "2025",
-    highlights: [
-      "Replicates individual messaging styles using LLM-based generation with persistent memory.",
-      "Adapts tone, vocabulary, and response cadence from prior conversation patterns.",
-      "Sub-200ms response latency using Node.js + WebSockets for real-time delivery.",
-    ],
-    stack: [
-      { name: "Node.js", icon: <SiNodedotjs className="text-green-500" /> },
-      { name: "WebSockets", icon: <FaPlug className="text-blue-400" /> },
-      { name: "LLM API", icon: <FaBrain className="text-pink-400" /> },
-      { name: "AI Agents", icon: <FaRobot className="text-cyan-400" /> },
-    ],
-  },
-  {
     id: 13,
+    featured: false,
     title: "Animal Rescue Platform",
     tagline:
       "A real-time rescue coordination platform with NGO matching and geolocation alerts.",
     description:
       "Built a full-stack NGO-facing rescue coordination platform with React.js, Node.js (WebSockets), MongoDB, and Cloudinary image uploads. Implemented real-time geolocation-based NGO matching and alert dispatch, reducing manual coordination overhead for rescue case intake. Designed an admin dashboard with case tracking, status analytics, and NGO management — supporting multi-role access.",
-    image: "/Animal.png",
-    detailImage: "/Animal.png",
+    image: "/Animal.webp",
+    detailImage: "/Animal.webp",
     role: "Full-stack developer",
-    year: "2024-2025",
+    year: "2024",
     highlights: [
       "Implemented real-time NGO matching and status updates using WebSockets.",
       "Integrated location-based rescue alerts to speed up response coordination.",
@@ -347,6 +474,7 @@ export const projects = [
   },
   {
     id: 14,
+    featured: false,
     title: "Task Management System",
     tagline:
       "A company task platform with role-based access, deadlines, messaging, and attachments.",
@@ -370,13 +498,14 @@ export const projects = [
   },
   {
     id: 15,
+    featured: false,
     title: "Vastramaniae — Shopify Clothing Store",
     tagline:
       "A customized Shopify storefront for an online clothing brand with Liquid templates.",
     description:
       "Customized a Shopify storefront for an online clothing brand — implemented Liquid templates for product pages, collections, and UI enhancements. Focused on delivering a polished shopping experience with clean product layouts and brand-consistent styling.",
-    image: "/vastramaniae.png",
-    detailImage: "/vastramaniae.png",
+    image: "/vastramaniae.webp",
+    detailImage: "/vastramaniae.webp",
     role: "Frontend developer",
     year: "2024",
     highlights: [

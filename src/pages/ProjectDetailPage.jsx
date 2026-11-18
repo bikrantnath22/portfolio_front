@@ -24,6 +24,21 @@ const ProjectDetailPage = () => {
   const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
   const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
 
+  const handleBackToProjects = (e) => {
+    if (e) e.preventDefault();
+    navigate("/#project");
+    setTimeout(() => {
+      const el = document.getElementById("project");
+      if (el) {
+        if (window.lenis) {
+          window.lenis.scrollTo(el, { offset: -60, duration: 0.8 });
+        } else {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }, 450);
+  };
+
   // For Athaana (id: 2), support toggling between desktop and mobile portrait media
   const activeProjectMedia = phoneView && project.id === 2 ? {
     ...project,
@@ -42,7 +57,7 @@ const ProjectDetailPage = () => {
     >
       <motion.button
         type="button"
-        onClick={() => navigate("/#project")}
+        onClick={handleBackToProjects}
         className="mb-8 px-6 py-2.5 rounded-full font-semibold flex items-center gap-2 text-black bg-cyan-400 hover:bg-cyan-300 shadow-[0_4px_20px_rgba(34,211,238,0.3)] transition-all cursor-pointer text-xs font-mono uppercase tracking-wider"
         whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.96 }}
@@ -244,7 +259,7 @@ const ProjectDetailPage = () => {
 
         <button
           type="button"
-          onClick={() => navigate("/#project")}
+          onClick={handleBackToProjects}
           className="px-5 py-2 rounded-full text-xs font-mono uppercase tracking-wider bg-white/5 hover:bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 hover:border-cyan-400/60 transition-all cursor-pointer flex items-center gap-2"
         >
           <ArrowLeftOutlined /> All Projects

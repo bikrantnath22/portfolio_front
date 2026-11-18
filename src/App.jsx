@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 import Header from "./components/Header";
 import StarsBackground from "./components/StarBackGround";
 import Home from "./pages/Home";
@@ -21,15 +22,23 @@ function ScrollManager() {
         attempts += 1;
         const el = document.getElementById(id);
         if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
           clearInterval(interval);
-        } else if (attempts > 20) {
+          if (window.lenis) {
+            window.lenis.scrollTo(el, { offset: -60, duration: 0.8 });
+          } else {
+            el.scrollIntoView({ behavior: "smooth" });
+          }
+        } else if (attempts > 30) {
           clearInterval(interval);
         }
-      }, 50);
+      }, 40);
       return () => clearInterval(interval);
     } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { immediate: true });
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }
     }
   }, [location.pathname, location.hash]);
 
@@ -96,10 +105,14 @@ function App() {
     }
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.2,
+      infinite: false,
     });
+    window.lenis = lenis;
 
     let rafId;
     function raf(time) {
@@ -111,6 +124,7 @@ function App() {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      window.lenis = null;
     };
   }, []);
 

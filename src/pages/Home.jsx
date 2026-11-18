@@ -34,8 +34,8 @@ const RevealSection = ({ children, id, className = "" }) => (
 
 const Home = ({ children }) => {
   return (
-    <div className="bg-[#020409] text-white selection:bg-cyan-400 selection:text-black">
-      <div className="overflow-y-auto scroll-smooth">
+    <div className="bg-[#020409] text-white selection:bg-cyan-400 selection:text-black w-full min-h-screen">
+      <div className="w-full">
         {/* Hero / Profile */}
         <section
           id="Home"

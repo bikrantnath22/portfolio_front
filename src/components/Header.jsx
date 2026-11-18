@@ -42,6 +42,20 @@ export default function Header() {
     { id: "about", title: "Skills", icon: <AppstoreOutlined /> },
   ];
 
+  const handleNavClick = (e, id) => {
+    if (window.location.pathname === "/") {
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        if (window.lenis) {
+          window.lenis.scrollTo(el, { offset: -60, duration: 0.9 });
+        } else {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
+  };
+
   return (
     <>
       {/* DESKTOP MINIMAL STICKY HEADER */}
@@ -77,6 +91,7 @@ export default function Header() {
                 <a
                   key={item.id}
                   href={`/#${item.id}`}
+                  onClick={(e) => handleNavClick(e, item.id)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 relative ${
                     isActive
                       ? "text-cyan-400 font-semibold"
@@ -109,12 +124,12 @@ export default function Header() {
         </div>
       </motion.header>
 
-      {/* MOBILE FLOATING NAV PILL */}
+      {/* MOBILE FLOATING NAV PILL (Guaranteed responsive, fits 320px-450px viewports without cropping) */}
       <motion.nav
         initial={{ x: "-50%", y: 40, opacity: 0 }}
         animate={{ x: "-50%", y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="md:hidden fixed bottom-6 left-1/2 z-50 bg-[#040914]/90 backdrop-blur-xl px-4 py-2 rounded-full flex items-center gap-5 shadow-[0_8px_32px_rgba(0,0,0,0.7)] border border-cyan-400/25"
+        transition={{ duration: 0.4, delay: 0.1 }}
+        className="md:hidden fixed bottom-4 left-1/2 z-50 w-[calc(100vw-24px)] max-w-sm bg-[#040914]/95 backdrop-blur-2xl px-2 py-1.5 rounded-full flex items-center justify-between shadow-[0_8px_32px_rgba(0,0,0,0.85),0_0_15px_rgba(34,211,238,0.12)] border border-cyan-400/30"
       >
         {navItems.map((item) => {
           const isActive = activeSection === item.id;
@@ -122,19 +137,20 @@ export default function Header() {
             <a
               key={item.id}
               href={`/#${item.id}`}
-              className={`relative flex flex-col items-center justify-center p-1.5 transition-all duration-200 ${
+              onClick={(e) => handleNavClick(e, item.id)}
+              className={`relative flex-1 min-w-0 flex flex-col items-center justify-center py-1 transition-all duration-200 ${
                 isActive
-                  ? "text-cyan-400 scale-105"
+                  ? "text-cyan-400 font-semibold scale-105"
                   : "text-gray-400 hover:text-white"
               }`}
               title={item.title}
             >
-              <span className="text-lg">{item.icon}</span>
-              <span className="text-[9px] font-mono tracking-wider mt-0.5 uppercase">
+              <span className="text-base sm:text-lg">{item.icon}</span>
+              <span className="text-[9px] font-mono tracking-tight mt-0.5 uppercase truncate max-w-full text-center">
                 {item.title}
               </span>
               {isActive && (
-                <span className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]" />
+                <span className="absolute -bottom-0.5 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]" />
               )}
             </a>
           );

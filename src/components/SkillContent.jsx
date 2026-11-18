@@ -86,8 +86,13 @@ const SkillContent = () => {
       setFormData({ name: "", email: "", description: "" });
       setSuccess(true);
       setTimeout(() => setSuccess(false), 4000);
-    } catch {
-      setMessage("Failed to send message. Please reach out directly at bikrantnath4@gmail.com");
+    } catch (err) {
+      const serverError = err.response?.data?.error || err.response?.data?.message;
+      setMessage(
+        serverError
+          ? `Delivery failed: ${serverError}`
+          : "Failed to send message. Please reach out directly at bikrantnath4@gmail.com"
+      );
       setSuccess(false);
     } finally {
       setLoading(false);

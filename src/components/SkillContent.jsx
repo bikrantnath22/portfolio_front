@@ -78,16 +78,26 @@ const SkillContent = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        "https://portfolio-back-j2mg.onrender.com/send-email",
-        formData
-      );
+      let response;
+      try {
+        // 1. Primary: Netlify serverless function (runs Nodemailer without Render's port blocks)
+        response = await axios.post("/.netlify/functions/send-email", formData);
+      } catch (netlifyErr) {
+        // 2. Secondary fallback: Render backend service
+        response = await axios.post(
+          "https://portfolio-back-j2mg.onrender.com/send-email",
+          formData
+        );
+      }
       setMessage(response.data.message || "Message sent successfully!");
       setFormData({ name: "", email: "", description: "" });
       setSuccess(true);
       setTimeout(() => setSuccess(false), 4000);
     } catch (err) {
-      const serverError = err.response?.data?.error || err.response?.data?.message;
+      const serverError =
+        err.response?.data?.details ||
+        err.response?.data?.error ||
+        err.response?.data?.message;
       setMessage(
         serverError
           ? `Delivery failed: ${serverError}`

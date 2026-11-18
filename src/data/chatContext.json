@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T16:03:28.590Z",
+  "generatedAt": "2026-11-18T16:05:24.411Z",
   "author": {
     "name": "Bikrant Nath",
     "title": "AI/ML Engineer & Full-Stack Developer",
@@ -29,29 +29,6 @@
         "ChromaDB",
         "Groq (gpt-oss-120b)",
         "Sentence-Transformers"
-      ]
-    },
-    {
-      "id": 4,
-      "role": "Graduate Researcher (Differential Privacy & ML)",
-      "company": "Tezpur University",
-      "duration": "Aug 2025 – Jul 2026",
-      "location": "Tezpur, Assam",
-      "highlights": [
-        "Built DP-CTGAN with rare-class sampling (PyTorch, Opacus) so differential-privacy noise no longer erases rare cases like fraud in synthetic tabular data.",
-        "Evaluated on 4 datasets (Credit Card Fraud, Adult Census, Taiwan Credit Card, MIMIC-III) at privacy budget ε = 3.",
-        "On Credit Card Fraud (0.17% fraud) reached AUPRC 0.7933 and F1 0.7512 with near-zero privacy leakage."
-      ],
-      "tech": [
-        "Python",
-        "PyTorch",
-        "CTGAN",
-        "Opacus DP-SGD",
-        "Rényi accountant",
-        "normalizing flows",
-        "Optuna",
-        "Pandas",
-        "Scikit-learn"
       ]
     },
     {

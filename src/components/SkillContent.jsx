@@ -81,12 +81,17 @@ const SkillContent = () => {
       let response;
       try {
         // 1. Primary: Netlify serverless function (runs Nodemailer without Render's port blocks)
-        response = await axios.post("/.netlify/functions/send-email", formData);
+        response = await axios.post("/.netlify/functions/send-email", formData, { timeout: 10000 });
       } catch (netlifyErr) {
-        // 2. Secondary fallback: Render backend service
+        // If Netlify function returned a specific response error, throw it directly
+        if (netlifyErr.response?.data) {
+          throw netlifyErr;
+        }
+        // 2. Secondary fallback: Render backend service (with timeout to prevent hanging)
         response = await axios.post(
           "https://portfolio-back-j2mg.onrender.com/send-email",
-          formData
+          formData,
+          { timeout: 8000 }
         );
       }
       setMessage(response.data.message || "Message sent successfully!");

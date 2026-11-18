@@ -67,8 +67,18 @@ exports.handler = async (event) => {
       };
     }
 
-    const GMAIL_USER = getEnv("GMAIL_USER") || "bikrantnath4@gmail.com";
-    const GMAIL_PASS = getEnv("GMAIL_PASS");
+    const GMAIL_USER =
+      getEnv("GMAIL_USER") ||
+      getEnv("GMAIL_EMAIL") ||
+      "bikrantnath4@gmail.com";
+
+    const GMAIL_PASS =
+      getEnv("GMAIL_PASS") ||
+      getEnv("GMAIL_APP_PASSWORD") ||
+      getEnv("GMAIL_PASSWORD") ||
+      getEnv("pass") ||
+      getEnv("PASS") ||
+      "jpgeysqtwebtguui";
 
     if (!GMAIL_PASS) {
       return {
